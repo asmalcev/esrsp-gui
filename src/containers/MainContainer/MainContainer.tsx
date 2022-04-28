@@ -1,6 +1,7 @@
+import { useRouter } from 'next/router';
 import { NextLinkComposed } from '../../components/NextLinkCompose';
-import { styled } from '@mui/material/styles';
 import {
+	styled,
 	AppBar,
 	List,
 	Link,
@@ -14,6 +15,8 @@ import styles from './MainContainer.styles';
 
 const MainContainer = ({ children }) => {
 
+	const router = useRouter();
+
 	const GridContainer = styled('div')( styles.gridContainer );
 	const ContentContainer = styled('div')( styles.contentContainer );
 	const FooterContainer = styled('div')( styles.footerContainer )
@@ -23,7 +26,36 @@ const MainContainer = ({ children }) => {
 	const Footer = styled(Stack)( styles.footer );
 
 	const LogoLink = styled(Link)( styles.logo );
-	
+
+
+	const linksData = [
+		{
+			text: 'Расписание',
+			href: '/schedule'
+		},
+		{
+			text: 'Список групп',
+			href: '/groups'
+		},
+		{
+			text: 'Мероприятия',
+			href: '/events'
+		}
+	];
+
+	const links = linksData.map(linkData => 
+		<ListItemButton
+			key={linkData.text}
+			component={NextLinkComposed}
+			to={{
+				pathname: linkData.href
+			}}
+			selected={router.asPath === linkData.href}
+		>
+			<ListItemText>{linkData.text}</ListItemText>
+		</ListItemButton>
+	);
+
 
 	return (
 		<GridContainer>
@@ -44,20 +76,7 @@ const MainContainer = ({ children }) => {
 				justifyContent="space-between"
 			>
 				<List>
-					<ListItemButton
-						component={NextLinkComposed}
-						to={{
-							pathname: '/schedule'
-						}}
-					>
-						<ListItemText>Расписание</ListItemText>
-					</ListItemButton>
-					<ListItemButton>
-						<ListItemText>Список групп</ListItemText>
-					</ListItemButton>
-					<ListItemButton>
-						<ListItemText>Мероприятия</ListItemText>
-					</ListItemButton>
+					{ links }
 				</List>
 
 				<FooterContainer>
@@ -73,8 +92,8 @@ const MainContainer = ({ children }) => {
 						direction="row"
 						justifyContent="space-between"
 					>
-						<Typography variant="subtitle2">&copy; Alexander Malcev</Typography>
-						<Typography variant="subtitle2">v0.1.0</Typography>
+						<Typography variant="subtitle1">&copy; Alexander Malcev</Typography>
+						<Typography variant="subtitle1">v0.1.0</Typography>
 					</Footer>
 				</FooterContainer>
 			</Menu>

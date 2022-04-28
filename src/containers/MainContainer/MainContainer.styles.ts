@@ -16,14 +16,18 @@ export default {
 	menu: ({theme}) => ({
 		gridColumn: '1 / 3',
 
-		height: '100%'
+		height: '100%',
+
+		'& .MuiListItemButton-root.Mui-selected': {
+			backgroundColor: theme.palette.background.dark
+		}
 	}),
 	contentContainer: ({theme}) => ({
 		gridColumn: '3 / 13',
 
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.background.main,
-		boxShadow: theme.boxShadow
+		boxShadow: `inset ${theme.boxShadow}`
 	}),
 	logo: ({theme}) => ({
 		color: theme.palette.primary.contrastText

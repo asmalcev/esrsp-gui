@@ -14,15 +14,17 @@ export const theme = createTheme({
 		h2: {
 			fontSize: 20,
 		},
-		subtitle2: {
-			fontSize: 12
+		subtitle1: {
+			fontSize: 12,
+			color: '#757575'
 		}
 
 	},
 	palette: {
 		background: {
 			main: '#FAFAFA',
-			footer: '#EBEBEB'
+			footer: '#EBEBEB',
+			dark: 'rgba(0, 0, 0, 0.05)'
 		},
 		primary: {
 			main: '#fff',
@@ -32,5 +34,5 @@ export const theme = createTheme({
 			main: '#4FC3F7'
 		}
 	},
-	boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.05)'
+	boxShadow: '0 0 5px rgba(0, 0, 0, 0.05)'
 });
