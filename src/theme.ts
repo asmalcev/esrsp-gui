@@ -3,9 +3,16 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
 	typography: {
 		fontFamily: '\'Inter\', sans-serif',
+		// fontWeightLight: 600,
+		// fontWeightMedium: 600,
+		// fontWeightBold: 600,
+		// fontWeightRegular: 600,
 
 		h1: {
 			fontSize: 24,
+		},
+		h2: {
+			fontSize: 20,
 		},
 		subtitle2: {
 			fontSize: 12
