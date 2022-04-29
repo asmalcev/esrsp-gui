@@ -12,4 +12,8 @@ export default {
 			marginBottom: theme.spacing(2)
 		}
 	}),
+	arrow: ({theme}) => ({
+		color: theme.palette.primary.dark,
+		fontSize: 16
+	})
 };

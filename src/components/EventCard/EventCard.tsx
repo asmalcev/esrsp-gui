@@ -2,7 +2,8 @@ import {
 	styled,
 	Typography,
 	Paper,
-	Stack
+	Stack,
+	Icon
 } from "@mui/material";
 
 import styles from './EventCard.styles';
@@ -11,6 +12,8 @@ const EventCard = ({}) => {
 
 	const Container = styled(Paper)( styles.container );
 	const Content = styled('div')( styles.content );
+
+	const ArrowDownward = styled(Icon)( styles.arrow );
 	
 	return (
 		<Container>
@@ -18,7 +21,7 @@ const EventCard = ({}) => {
 				alignItems="center"
 			>
 				<Typography variant="subtitle1">10:50</Typography>
-				<Typography variant="subtitle1">to</Typography>
+				<ArrowDownward>arrow_downward</ArrowDownward>
 				<Typography variant="subtitle1">12:20</Typography>
 			</Stack>
 
