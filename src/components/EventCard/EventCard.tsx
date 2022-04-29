@@ -8,7 +8,7 @@ import {
 
 import styles from './EventCard.styles';
 
-const EventCard = ({}) => {
+const EventCard = ({ data }) => {
 
 	const Container = styled(Paper)( styles.container );
 	const Content = styled('div')( styles.content );
@@ -20,15 +20,15 @@ const EventCard = ({}) => {
 			<Stack
 				alignItems="center"
 			>
-				<Typography variant="subtitle1">10:50</Typography>
+				<Typography variant="subtitle1">{ data.timeStart }</Typography>
 				<ArrowDownward>arrow_downward</ArrowDownward>
-				<Typography variant="subtitle1">12:20</Typography>
+				<Typography variant="subtitle1">{ data.timeEnd }</Typography>
 			</Stack>
 
 			<Content>
-				<Typography>Разработка пользовательских интерфейсов</Typography>
-				<Typography variant="subtitle1">И595</Typography>
-				<Typography variant="subtitle1">218* - Практика</Typography>
+				<Typography>{ data.name }</Typography>
+				<Typography variant="subtitle1">{ data.members }</Typography>
+				<Typography variant="subtitle1">{ data.place }</Typography>
 			</Content>
 		</Container>
 	);

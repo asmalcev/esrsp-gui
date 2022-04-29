@@ -14,6 +14,11 @@ export default {
 	}),
 	arrow: ({theme}) => ({
 		color: theme.palette.primary.dark,
-		fontSize: 16
+
+		'.MuiPaper-root &': {
+			margin: `${theme.spacing(1)} 0`,
+
+			fontSize: theme.spacing(3),
+		}
 	})
 };

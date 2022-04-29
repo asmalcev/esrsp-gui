@@ -18,12 +18,15 @@ export default {
 
 		height: '100%',
 
-		'& .MuiListItemButton-root.Mui-selected': {
+		'& .MuiListItemButton-root.Mui-selected, & .MuiListItemButton-root.Mui-selected:hover': {
 			backgroundColor: theme.palette.background.dark
 		}
 	}),
 	contentContainer: ({theme}) => ({
 		gridColumn: '3 / 13',
+
+		overflowX: 'hidden',
+		overflowY: 'auto',
 
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.background.main,

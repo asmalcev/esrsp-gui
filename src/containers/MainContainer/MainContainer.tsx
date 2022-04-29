@@ -43,17 +43,22 @@ const MainContainer = ({ children }) => {
 		}
 	];
 
-	const links = linksData.map(linkData => 
-		<ListItemButton
-			key={linkData.text}
-			component={NextLinkComposed}
-			to={{
-				pathname: linkData.href
-			}}
-			selected={router.asPath === linkData.href}
-		>
-			<ListItemText>{linkData.text}</ListItemText>
+	const links = linksData.map(linkData => {
+		const isActive = router.asPath === linkData.href;
+
+		return (
+			<ListItemButton
+				key={linkData.text}
+				component={isActive ? 'a': NextLinkComposed}
+				to={{
+					pathname: linkData.href
+				}}
+				selected={isActive}
+			>
+				<ListItemText>{linkData.text}</ListItemText>
 		</ListItemButton>
+		)
+	}
 	);
 
 

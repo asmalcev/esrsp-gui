@@ -1,10 +1,25 @@
-import { Typography } from "@mui/material";
-import EventCard from "../EventCard";
+import {
+	styled,
+	Typography
+} from "@mui/material";
+import EventCard, { SkeletonEventCard } from "../EventCard";
 
-const ScheduleDay = ({}) => {
+import styles from './ScheduleDay.styles';
+
+const ScheduleDay = ({ dayData }) => {
+
+	const DayName = styled(Typography)( styles.dayName );
+
+	const lessons = dayData.lessons.map((lesson, index) =>
+		<EventCard
+			key={ lesson.name + index }
+			data={ lesson }
+		/>
+	);
+	
 	return <>
-		<Typography variant="h2">27 марта</Typography>
-		<EventCard />
+		<DayName variant="h2">{ dayData.date }</DayName>
+		{ lessons }
 	</>;
 }
 
