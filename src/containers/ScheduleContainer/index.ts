@@ -1,3 +1,5 @@
-import ScheduleContainer from './ScheduleContainer';
+import Schedule from './Schedule';
+import ScheduleView from './ScheduleView';
 
-export default ScheduleContainer;
+export default Schedule;
+export { ScheduleView };

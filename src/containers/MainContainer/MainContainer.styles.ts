@@ -19,25 +19,22 @@ export default {
 		height: '100%',
 
 		'& .MuiListItemButton-root.Mui-selected, & .MuiListItemButton-root.Mui-selected:hover': {
-			backgroundColor: theme.palette.background.dark
+			backgroundColor: theme.palette.customBackground.dark
 		}
 	}),
-	contentContainer: ({theme}) => ({
+	contentContainer: ({theme}) : any => ({
 		gridColumn: '3 / 13',
 
 		overflowX: 'hidden',
 		overflowY: 'auto',
 
 		padding: theme.spacing(2),
-		backgroundColor: theme.palette.background.main,
+		backgroundColor: theme.palette.customBackground.main,
 		boxShadow: `inset ${theme.boxShadow}`
-	}),
-	logo: ({theme}) => ({
-		color: theme.palette.primary.contrastText
 	}),
 	footer: ({theme}) => ({
 		padding: theme.spacing(2),
-		backgroundColor: theme.palette.background.footer,
+		backgroundColor: theme.palette.customBackground.footer,
 	}),
 	footerContainer: ({theme}) => ({
 		color: theme.palette.primary.dark

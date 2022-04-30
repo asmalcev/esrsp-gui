@@ -25,8 +25,6 @@ const MainContainer = ({ children }) => {
 	const Header = styled(AppBar)( styles.appBar );
 	const Footer = styled(Stack)( styles.footer );
 
-	const LogoLink = styled(Link)( styles.logo );
-
 
 	const linksData = [
 		{
@@ -66,7 +64,7 @@ const MainContainer = ({ children }) => {
 		<GridContainer>
 
 			<Header position="relative">
-				<LogoLink
+				<Link
 					component={NextLinkComposed}
 					to={{
 						pathname: '/'
@@ -74,7 +72,7 @@ const MainContainer = ({ children }) => {
 					underline="none"
 				>
 					<Typography variant="h1">Электронный журнал</Typography>
-				</LogoLink>
+				</Link>
 			</Header>
 
 			<Menu
