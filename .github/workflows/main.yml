@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag esrsp-gui:$(date +%s)
+      run: docker build . --file Dockerfile --tag esrsp-gui:latest
 #     - name: Build the Docker image
 #       run: docker run 
     - name: Clean docker images
