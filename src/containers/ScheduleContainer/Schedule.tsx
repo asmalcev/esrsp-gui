@@ -1,4 +1,7 @@
+import { useRef, useState } from "react";
 import ScheduleView from "./ScheduleView";
+
+import {months, weekDays} from "./dateData";
 
 const isOddWeek = (date : Date) : Boolean => {
 	const startDate = new Date(date.getFullYear(), 0, 1);
@@ -13,17 +16,65 @@ const isOddWeek = (date : Date) : Boolean => {
 	return Boolean(weekNumber % 2);
 }
 
+const scheduleToData = (schedule, oddMondayDate) => {
+	const currentDate = new Date(oddMondayDate);
+
+	const data = [];
+	for (let index = 0; index < 14; index++) {
+		data.push({
+			date: {
+				jsdate: new Date(currentDate),
+				date: `${currentDate.getDate()} ${months[currentDate.getMonth()]}`,
+				weekDay: weekDays[currentDate.getDay()]
+			},
+			lessons: []
+		});
+		currentDate.setDate(currentDate.getDate() + 1);
+	}
+
+	schedule.forEach(day => {
+		data[day.order].lessons = day.lessons;
+	});
+
+	return data;
+}
+
 const Schedule = ({ scheduleData }) => {
-	console.log(scheduleData);
 
 	const currentDate = new Date();
 	const _isOddWeek = isOddWeek(currentDate);
 	const currentDayInOrder = currentDate.getDay() + (_isOddWeek ? 0 : 7);
-	console.log(currentDayInOrder);
-	
-	
-	// return <ScheduleView scheduleData={scheduleData}/>
-	return <p>hi</p>;
+
+	currentDate.setDate(currentDate.getDate() - currentDayInOrder + 1); // date of the odd monday
+
+	const [data, updateData] = useState(
+		scheduleToData(scheduleData, currentDate)
+	);
+	const currentIndex = useRef(currentDayInOrder);
+
+	const handleLoader = loaderType => {
+		// if (loaderType === 'upper') {
+		// 	const oddMondayDate = new Date(data[0].date.jsdate);
+		// 	oddMondayDate.setDate(oddMondayDate.getDate() - 14);
+
+		// 	currentIndex.current += 14;
+
+		// 	updateData( scheduleToData(scheduleData, oddMondayDate).concat(data) );
+		// } else {
+		// 	const oddMondayDate = new Date(data[data.length - 1].date.jsdate);
+		// 	oddMondayDate.setDate(oddMondayDate.getDate() + 1);
+
+		// 	updateData( data.concat( scheduleToData(scheduleData, oddMondayDate) ) );
+		// }
+	}
+
+	return (
+		<ScheduleView
+			scheduleData={ data }
+			currentIndex={ currentIndex.current - 1 }
+			handleLoader={ handleLoader }/>
+		// <p>schedule</p>
+	);
 }
 
 export default Schedule;

@@ -30,7 +30,9 @@ export default {
 
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.customBackground.main,
-		boxShadow: `inset ${theme.boxShadow}`
+		boxShadow: `inset ${theme.boxShadow}`,
+
+		scrollMargin: theme.spacing(2)
 	}),
 	footer: ({theme}) => ({
 		padding: theme.spacing(2),

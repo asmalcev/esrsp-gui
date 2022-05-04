@@ -8,7 +8,7 @@ import {
 
 import styles from './EventCard.styles';
 
-const EventCard = ({ data }) => {
+const EventCard = ({ data, customRef, ...rest }) => {
 
 	const Container = styled(Paper)( styles.container );
 	const Content = styled('div')( styles.content );
@@ -16,7 +16,7 @@ const EventCard = ({ data }) => {
 	const ArrowDownward = styled(Icon)( styles.arrow );
 	
 	return (
-		<Container>
+		<Container ref={ customRef } {...rest}>
 			<Stack
 				alignItems="center"
 			>

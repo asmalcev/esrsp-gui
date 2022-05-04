@@ -1,7 +1,8 @@
+import React from "react";
 import { Skeleton, useTheme } from "@mui/material";
 import EventCard from "./EventCard";
 
-const SkeletonEventCard = ({}) => {
+const SkeletonEventCard = ({ customRef, ...rest }) => {
 	const theme = useTheme();
 
 	const data = {
@@ -12,7 +13,12 @@ const SkeletonEventCard = ({}) => {
 		place: <Skeleton animation="wave" width={ theme.spacing(6) }/>
 	};
 
-	return <EventCard data={ data }/>
+	return (
+		<EventCard
+			data={ data }
+			customRef={ customRef }
+			{...rest}/>
+	);
 }
 
 export default SkeletonEventCard;
