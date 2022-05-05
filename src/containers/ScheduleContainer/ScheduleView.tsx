@@ -1,25 +1,79 @@
-import { styled } from "@mui/material";
 import { useEffect, useRef } from "react";
+
+import { styled } from "@mui/material";
+
 import { SkeletonEventCard } from "../../components/EventCard";
 import ScheduleDay from "../../components/ScheduleDay";
+import DatePicker from "../../components/DatePicker";
+
+import { throttle } from "../../utils";
 
 import styles from './ScheduleView.styles';
 
 const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 
-	const upperLoader = useRef(null);
+	/**
+	 * useRef for HTML Elements
+	 */
+	// const upperLoader = useRef(null);
 	const lowerLoader = useRef(null);
 	const scrollChild = useRef(null);
-	const currentDayElement = useRef(null);
+	const scrollTarget = useRef(null);
 
+
+	/**
+	 * useRef for storing Intersection Observer
+	 */
+	const loaderObserver = useRef(null);
+
+	/**
+	 * styled components
+	 */
+	const Layout = styled('div')( styles.layout );
+	const DaysContainer = styled('div')( styles.daysContainer );
+	const DatePickerContainer = styled('div')( styles.datePickerContainer );
+
+
+	const days = scheduleData.map((day, index) =>
+		<ScheduleDay
+			key={ day.date.date }
+			customRef={currentIndex === index ? scrollTarget : null}
+			dayData={ day }/>
+	);
+
+
+	/**
+	 * onMount
+	 * scroll to target element (often for today card)
+	 */
 	useEffect(() => {
 		const scrollArea = scrollChild.current.parentNode;
 
-		currentDayElement.current.scrollIntoView();
+		const handleScroll = throttle(e => {
+			e.target.querySelectorAll('*[data-scroll-follow]').forEach(sf => {
+				sf.style.marginTop = `${e.target.scrollTop}px`;
+			});
+		}, 5);
+		scrollArea.addEventListener('scroll', handleScroll);
 
-		const loaderObserver = new IntersectionObserver( ([entry]) => {
+		scrollTarget.current.scrollIntoView();
+	}, []);
+
+
+	/**
+	 * onRerender
+	 * necessary to recreate Intersection Observer cause upperLoader and lowerLoader are recreating in DOM and refs drop
+	 * and handlerLoader updates with every rerender
+	 */
+	useEffect(() => {
+		const scrollArea = scrollChild.current.parentNode;
+
+		loaderObserver.current = new IntersectionObserver( ([entry]) => {
+			/**
+			 * update data when loader in viewport
+			 */
 			if (entry.intersectionRatio > 0) {
-				if (entry.target instanceof HTMLElement) {
+				if (entry.target instanceof HTMLElement) { // need to get access to dataset
 					handleLoader(entry.target.dataset.loader);
 				}
 			}
@@ -28,38 +82,31 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 			threshold: 0
 		});
 
-		loaderObserver.observe(upperLoader.current);
-		loaderObserver.observe(lowerLoader.current);
+		// loaderObserver.current.observe(upperLoader.current);
+		loaderObserver.current.observe(lowerLoader.current);
 
 		return () => {
-			loaderObserver.disconnect();
+			loaderObserver.current.disconnect();
 		};
-	}, []);
+	});
 
-	const Layout = styled('div')( styles.layout );
-	const DaysContainer = styled('div')( styles.daysContainer );
-
-	const days = scheduleData.map((day, index) =>
-		<ScheduleDay
-			key={ day.date.date }
-			customRef={currentIndex === index ? currentDayElement : null}
-			dayData={ day }/>
-	);
-
-	// useEffect(() => {
-	// 	console.log('prop update', currentIndex);
-	// }, [currentIndex]);
 
 	return <Layout ref={scrollChild}>
+
 		<DaysContainer>
-			<SkeletonEventCard
+			{/* <SkeletonEventCard
 				customRef={upperLoader}
-				data-loader="upper"/>
+				data-loader="upper"/> */}
 			{ days }
 			<SkeletonEventCard
 				customRef={lowerLoader}
 				data-loader="lower"/>
 		</DaysContainer>
+
+		<DatePickerContainer data-scroll-follow>
+			<DatePicker
+				label="Перейти к дате"/>
+		</DatePickerContainer>
 	</Layout>;
 }
 

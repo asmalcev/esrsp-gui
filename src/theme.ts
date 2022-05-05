@@ -25,6 +25,10 @@ declare module '@mui/material/styles' {
 	interface PaletteOptions {
 		customBackground?: BackgroundObject;
 	}
+
+	interface Components {
+		MuiPickersDay? : any;
+	}
 }
 
 
@@ -64,5 +68,17 @@ export const theme = createTheme({
 		}
 	},
 	boxShadow: '0 0 5px rgba(0, 0, 0, 0.05)',
-	borderRadius: '4px'
+	borderRadius: '4px',
+
+	components: {
+		MuiPickersDay: {
+			styleOverrides: {
+				root: {
+					'&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:focus': {
+						backgroundColor: '#4FC3F7',
+					}
+				}
+			}
+		},
+	}
 });

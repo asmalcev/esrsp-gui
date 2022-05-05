@@ -7,12 +7,14 @@ export default {
 		height: '100vh',
 		padding: '0'
 	}),
+
 	appBar: ({theme}) => ({
 		gridColumn: '1 / 13',
 
 		padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
 		boxShadow: 'none'
 	}),
+
 	menu: ({theme}) => ({
 		gridColumn: '1 / 3',
 
@@ -22,22 +24,23 @@ export default {
 			backgroundColor: theme.palette.customBackground.dark
 		}
 	}),
+
 	contentContainer: ({theme}) : any => ({
 		gridColumn: '3 / 13',
 
 		overflowX: 'hidden',
-		overflowY: 'auto',
+		overflowY: 'scroll',
 
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.customBackground.main,
 		boxShadow: `inset ${theme.boxShadow}`,
-
-		scrollMargin: theme.spacing(2)
 	}),
+
 	footer: ({theme}) => ({
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.customBackground.footer,
 	}),
+
 	footerContainer: ({theme}) => ({
 		color: theme.palette.primary.dark
 	}),

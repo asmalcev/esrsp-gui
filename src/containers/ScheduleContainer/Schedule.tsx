@@ -61,10 +61,10 @@ const Schedule = ({ scheduleData }) => {
 
 		// 	updateData( scheduleToData(scheduleData, oddMondayDate).concat(data) );
 		// } else {
-		// 	const oddMondayDate = new Date(data[data.length - 1].date.jsdate);
-		// 	oddMondayDate.setDate(oddMondayDate.getDate() + 1);
+			const oddMondayDate = new Date(data[data.length - 1].date.jsdate);
+			oddMondayDate.setDate(oddMondayDate.getDate() + 1);
 
-		// 	updateData( data.concat( scheduleToData(scheduleData, oddMondayDate) ) );
+			updateData( data.concat( scheduleToData(scheduleData, oddMondayDate) ) );
 		// }
 	}
 
@@ -73,7 +73,6 @@ const Schedule = ({ scheduleData }) => {
 			scheduleData={ data }
 			currentIndex={ currentIndex.current - 1 }
 			handleLoader={ handleLoader }/>
-		// <p>schedule</p>
 	);
 }
 
