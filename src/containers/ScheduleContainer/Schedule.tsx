@@ -53,19 +53,19 @@ const Schedule = ({ scheduleData }) => {
 	const currentIndex = useRef(currentDayInOrder);
 
 	const handleLoader = loaderType => {
-		// if (loaderType === 'upper') {
-		// 	const oddMondayDate = new Date(data[0].date.jsdate);
-		// 	oddMondayDate.setDate(oddMondayDate.getDate() - 14);
+		if (loaderType === 'upper') {
+			const oddMondayDate = new Date(data[0].date.jsdate);
+			oddMondayDate.setDate(oddMondayDate.getDate() - 14);
 
-		// 	currentIndex.current += 14;
+			currentIndex.current += 14;
 
-		// 	updateData( scheduleToData(scheduleData, oddMondayDate).concat(data) );
-		// } else {
+			updateData( scheduleToData(scheduleData, oddMondayDate).concat(data) );
+		} else {
 			const oddMondayDate = new Date(data[data.length - 1].date.jsdate);
 			oddMondayDate.setDate(oddMondayDate.getDate() + 1);
 
 			updateData( data.concat( scheduleToData(scheduleData, oddMondayDate) ) );
-		// }
+		}
 	}
 
 	return (

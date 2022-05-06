@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { styled } from "@mui/material";
 
 import { SkeletonEventCard } from "../../components/EventCard";
 import ScheduleDay from "../../components/ScheduleDay";
 import DatePicker from "../../components/DatePicker";
+import StyledTooltip from "../../components/StyledTooltip";
 
 import { throttle } from "../../utils";
 
@@ -15,7 +16,7 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 	/**
 	 * useRef for HTML Elements
 	 */
-	// const upperLoader = useRef(null);
+	const upperLoader = useRef(null);
 	const lowerLoader = useRef(null);
 	const scrollChild = useRef(null);
 	const scrollTarget = useRef(null);
@@ -26,20 +27,23 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 	 */
 	const loaderObserver = useRef(null);
 
+
+	/**
+	 * define scroll target type:
+	 * null |
+	 * 'today' |
+	 * 'choosedDate' |
+	 * 'secondOddMonday' - need after uploading data from above
+	 */
+	const [ scrollTargetType, setScrollTargetType ] = useState<null | string>('today');
+
+
 	/**
 	 * styled components
 	 */
 	const Layout = styled('div')( styles.layout );
 	const DaysContainer = styled('div')( styles.daysContainer );
 	const DatePickerContainer = styled('div')( styles.datePickerContainer );
-
-
-	const days = scheduleData.map((day, index) =>
-		<ScheduleDay
-			key={ day.date.date }
-			customRef={currentIndex === index ? scrollTarget : null}
-			dayData={ day }/>
-	);
 
 
 	/**
@@ -55,8 +59,6 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 			});
 		}, 5);
 		scrollArea.addEventListener('scroll', handleScroll);
-
-		scrollTarget.current.scrollIntoView();
 	}, []);
 
 
@@ -70,11 +72,18 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 
 		loaderObserver.current = new IntersectionObserver( ([entry]) => {
 			/**
-			 * update data when loader in viewport
+			 * upload data when loader in viewport
 			 */
 			if (entry.intersectionRatio > 0) {
 				if (entry.target instanceof HTMLElement) { // need to get access to dataset
-					handleLoader(entry.target.dataset.loader);
+					const loaderType = entry.target.dataset.loader;
+					handleLoader(loaderType);
+
+					if (loaderType === 'upper') {
+						setScrollTargetType('secondOddMonday');
+					} else {
+						setScrollTargetType(null);
+					}
 				}
 			}
 		}, {
@@ -82,8 +91,10 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 			threshold: 0
 		});
 
-		// loaderObserver.current.observe(upperLoader.current);
+		loaderObserver.current.observe(upperLoader.current);
 		loaderObserver.current.observe(lowerLoader.current);
+
+		scrollTarget.current?.scrollIntoView();
 
 		return () => {
 			loaderObserver.current.disconnect();
@@ -91,12 +102,25 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 	});
 
 
+	const days = scheduleData.map((day, index) =>
+		<ScheduleDay
+			key={ day.date.jsdate }
+			dayData={ day }
+			customRef={
+				scrollTargetType === 'today' ?
+					(currentIndex === index ? scrollTarget : null) :
+					scrollTargetType === 'secondOddMonday' ?
+						(index === 14 ? scrollTarget : null) :
+						null
+			}/>
+	);
+
 	return <Layout ref={scrollChild}>
 
 		<DaysContainer>
-			{/* <SkeletonEventCard
+			<SkeletonEventCard
 				customRef={upperLoader}
-				data-loader="upper"/> */}
+				data-loader="upper"/>
 			{ days }
 			<SkeletonEventCard
 				customRef={lowerLoader}
@@ -105,7 +129,8 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 
 		<DatePickerContainer data-scroll-follow>
 			<DatePicker
-				label="Перейти к дате"/>
+				label="Перейти к дате"
+				helperText="Выберете дату, чтобы перейти к ней в расписании"/>
 		</DatePickerContainer>
 	</Layout>;
 }

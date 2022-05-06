@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, createElement, FunctionComponent, ComponentClass } from 'react';
 
 import { styled, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -14,26 +14,49 @@ interface DatePickerProps {
 	mask?: string;
 
 	helperText?: string;
-	showHelperText?: boolean;
 
 	onChangeHandler?: (newValue : Date | string | number) => {};
 }
 
 const DatePicker = ({
-		label,
 		mask,
+		label,
+		wrapper,
 		helperText,
-		showHelperText,
 		onChangeHandler
 	} : DatePickerProps) => {
 	const [value, setValue] = useState<Date | string | number>(new Date());
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const onChange = newValue => {
 		setValue(newValue);
 		onChangeHandler && onChangeHandler(newValue);
 	}
 
+	/**
+	 * DatePicker was done controlled component to except user keyboard input
+	 */
+	const onFocus = () => {
+		setIsOpen(true);
+	}
+
+	const onOpen = () => {
+		setIsOpen(true);
+	}
+
+	const onClose = () => {
+		setIsOpen(false);
+	}
+
 	const StyledMuiDatePicker = styled(MuiDatePicker)( styles.datePicker );
+
+	const getTextField = params => (
+		<TextField
+			{...params}
+			color="secondary"
+			helperText={ helperText }
+			onFocus={ onFocus } />
+	);
 
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs} locale={ru_locale}>
@@ -42,13 +65,10 @@ const DatePicker = ({
 				mask={ mask || '__.__.____'}
 				value={ value }
 				onChange={ onChange }
-				okText={'ОК'}
-				renderInput={(params) =>
-					<TextField
-						{...params}
-						color="secondary"
-						helperText={(showHelperText || false) && (helperText || 'дд.мм.гггг')} />
-				}/>
+				open={ isOpen }
+				onOpen={ onOpen }
+				onClose={ onClose }
+				renderInput={ getTextField }/>
 		</LocalizationProvider>
 	);
 }
