@@ -1,14 +1,4 @@
 export default {
-	layout: ({theme}) => ({
-		display: 'flex',
-
-		paddingLeft: theme.spacing(22),
-
-		'&': {
-			position: 'relative',
-		}
-	}),
-
 	daysContainer: ({theme}) => ({
 		width: theme.spacing(54)
 	}),

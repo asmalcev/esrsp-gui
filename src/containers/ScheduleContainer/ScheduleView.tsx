@@ -5,7 +5,7 @@ import { styled } from "@mui/material";
 import { SkeletonEventCard } from "../../components/EventCard";
 import ScheduleDay from "../../components/ScheduleDay";
 import DatePicker from "../../components/DatePicker";
-import StyledTooltip from "../../components/StyledTooltip";
+import Layout from "../Layout";
 
 import { throttle } from "../../utils";
 
@@ -41,7 +41,6 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 	/**
 	 * styled components
 	 */
-	const Layout = styled('div')( styles.layout );
 	const DaysContainer = styled('div')( styles.daysContainer );
 	const DatePickerContainer = styled('div')( styles.datePickerContainer );
 

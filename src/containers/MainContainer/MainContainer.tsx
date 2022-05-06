@@ -56,8 +56,7 @@ const MainContainer = ({ children }) => {
 				<ListItemText>{linkData.text}</ListItemText>
 		</ListItemButton>
 		)
-	}
-	);
+	});
 
 
 	return (
