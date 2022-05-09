@@ -9,5 +9,10 @@ export default {
 		backgroundColor: theme.palette.primary.main,
 		boxShadow: theme.boxShadow,
 		borderRadius: theme.borderRadius
+	}),
+
+	optionLink: ({theme}) => ({
+		textDecoration: 'none',
+		color: theme.palette.primary.contrastText
 	})
 };

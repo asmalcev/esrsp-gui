@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 import Layout from "../Layout";
+import { NextLinkComposed } from "../../components/NextLinkCompose";
 
 import styles from './GroupsView.styles';
 
@@ -18,14 +19,44 @@ const GroupsView = ({
 
 	const StyledStack = styled(Stack)( styles.stack );
 	const GroupListItem = styled(ListItemButton)( styles.groupListItem );
+	const OptionLink = styled('a')( styles.optionLink );
+
 
 	const groups = groupsData.map(group =>
 		<GroupListItem
 			key={ group.id }
+			// @ts-ignore
+			component={ NextLinkComposed }
+			to={{
+				pathname: `/groups/${group.id}`
+			}}
 		>
 			<ListItemText>{ group.name }</ListItemText>
 		</GroupListItem>
 	);
+
+	const searchTextField = params => (
+		<TextField
+			{...params}
+			label="Найти группу"
+			color="secondary"
+			InputProps={{
+				...params.InputProps,
+				type: 'search',
+			}}
+		/>
+	);
+
+	const searchOption = (params, option, state) => {
+		return (
+			<OptionLink
+				{...params}
+				href={`/groups/${option.id}`}
+			>{
+				option.name
+			}</OptionLink>
+		);
+	}
 
 	return (
 		<Layout>
@@ -33,21 +64,15 @@ const GroupsView = ({
 				<Autocomplete
 					freeSolo
 					disableClearable
-					options={ groupsData.map(option => option.name) }
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							label="Найти группу"
-							color="secondary"
-							InputProps={{
-								...params.InputProps,
-								type: 'search',
-							}}
-						/>
-					)}
+					options={ groupsData }
+					getOptionLabel={ (option : { name }) => option.name }
+					renderInput={ searchTextField }
+					renderOption={ searchOption }
 				/>
 				<List>
-					{ groups }
+					{
+						groups
+					}
 				</List>
 			</StyledStack>
 		</Layout>
