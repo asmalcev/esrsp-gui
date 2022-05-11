@@ -1,6 +1,5 @@
 import {
 	styled,
-	Grid
 } from '@mui/material';
 
 import styles from './GroupGrid.styles';
@@ -9,49 +8,49 @@ const GroupGrid = ({
 
 }) => {
 
-	const columns = ['Имя', '01.04', '01.08'];
+	const columns = ['Имя', '01.04', '01.08', '01.12', '01.16', '01.20', '01.24', '01.28', '02.02'];
 	const rows = [
-		['Александров Владимир', '', ''],
-		['Билбиотеков Дмитрий', '4', ''],
+		['Александров Владимир', '', '', '', '3', '5', '', '', '4'],
+		['Библиотеков Дмитрий', '4', '', '', '', '5', '', '', '3'],
+		['Георгиев Антон', '', '4', '4', '', '', '5', '', ''],
 	];
+	// const columns = ['Имя', '01.04', '01.08'];
+	// const rows = [
+	// 	['Александров Владимир', '', '3'],
+	// 	['Библиотеков Дмитрий', '4', ''],
+	// ];
 
+	const layoutProps = {
+		columns: columns.length
+	};
 
-	const GridContainer = styled(Grid)( styles.gridContainer );
+	const GridLayoutContainer = styled('div')( styles.gridLayout.bind(null, layoutProps) );
+	const GridCell = styled('div')( styles.gridCell.bind(null, layoutProps) );
 
 	const firstRowElements = columns.map(column => (
-		<Grid
-			item
+		<GridCell
 			key={column}
-			xs={1}
 		>
 			<b>{ column }</b>
-		</Grid>
+		</GridCell>
 	));
 
 	const otherRowsElements = rows.map((row, i) => row.map((cell, j) => (
-		<Grid
-			item
+		<GridCell
 			key={`${i} ${j}`}
-			xs={1}
 		>
 			{ cell }
-		</Grid>
+		</GridCell>
 	)));
 
-	return (
-		<GridContainer
-			container
-			columns={columns.length}
-			spacing={1}
-		>
-			{
-				firstRowElements
-			}
-			{
-				otherRowsElements
-			}
-		</GridContainer>
-	);
+	return <GridLayoutContainer>
+		{
+			firstRowElements
+		}
+		{
+			otherRowsElements
+		}
+	</GridLayoutContainer>;
 }
 
 export default GroupGrid;
