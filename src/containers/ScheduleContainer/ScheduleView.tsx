@@ -11,7 +11,13 @@ import { throttle } from "../../utils";
 
 import styles from './ScheduleView.styles';
 
-const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
+const ScheduleView = ({
+	scheduleData,
+	currentIndex,
+	handleLoader,
+	updateCurrentDate,
+	currentDate
+}) => {
 
 	/**
 	 * useRef for HTML Elements
@@ -43,6 +49,14 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 	 */
 	const DaysContainer = styled('div')( styles.daysContainer );
 	const DatePickerContainer = styled('div')( styles.datePickerContainer );
+
+
+	/**
+	 * date picker change handler
+	 */
+	const onDateChange = value => {
+		updateCurrentDate( value?.$d );
+	}
 
 
 	/**
@@ -126,11 +140,13 @@ const ScheduleView = ({ scheduleData, currentIndex, handleLoader }) => {
 				data-loader="lower"/>
 		</DaysContainer>
 
-		<DatePickerContainer data-scroll-follow>
+		{/* <DatePickerContainer data-scroll-follow>
 			<DatePicker
 				label="Перейти к дате"
-				helperText="Выберете дату, чтобы перейти к ней в расписании"/>
-		</DatePickerContainer>
+				helperText="Выберете дату, чтобы перейти к ней в расписании"
+				onChangeHandler={ onDateChange }
+				stdValue={ currentDate }/>
+		</DatePickerContainer> */}
 	</Layout>;
 }
 

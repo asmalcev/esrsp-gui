@@ -19,7 +19,7 @@ const GroupsView = ({
 
 	const StyledStack = styled(Stack)( styles.stack );
 	const GroupListItem = styled(ListItemButton)( styles.groupListItem );
-	const OptionLink = styled('a')( styles.optionLink );
+	const OptionLink = styled(NextLinkComposed)( styles.optionLink );
 
 
 	const groups = groupsData.map(group =>
@@ -51,7 +51,9 @@ const GroupsView = ({
 		return (
 			<OptionLink
 				{...params}
-				href={`/groups/${option.id}`}
+				to={{
+					pathname: `/groups/${option.id}`
+				}}
 			>{
 				option.name
 			}</OptionLink>

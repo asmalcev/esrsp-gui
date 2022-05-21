@@ -5,6 +5,7 @@ import MainContainer from '../../src/containers/MainContainer';
 import GroupGrid from '../../src/components/GroupGrid';
 
 const Group = ({
+	groupData
 }) => {
 	const router = useRouter();
 	const { id } = router.query;
@@ -21,3 +22,12 @@ const Group = ({
 }
 
 export default Group;
+
+export async function getServerSideProps(context) {
+	const res = await fetch('http://0.0.0.0:3000/api/group');
+	const groupData = await res.json();	
+
+	return {
+		props: { groupData }
+	}
+}

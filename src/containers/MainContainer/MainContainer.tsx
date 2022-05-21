@@ -35,10 +35,10 @@ const MainContainer = ({ children }) => {
 			text: 'Список групп',
 			href: '/groups'
 		},
-		{
-			text: 'Мероприятия',
-			href: '/events'
-		}
+		// {
+		// 	text: 'Мероприятия',
+		// 	href: '/events'
+		// }
 	];
 
 	const links = linksData.map(linkData => {

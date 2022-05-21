@@ -22,7 +22,7 @@ export default {
 		{ theme }
 	) => ({
 		minWidth: theme.spacing(10),
-		padding: theme.spacing(1),
+		padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
 
 		'&': {
 			textAlign: 'center',
@@ -39,15 +39,17 @@ export default {
 		 * Not first column
 		 */
 		[`&:not(:nth-of-type(${props.columns}n + 1))`]: {
-			borderLeft: `1px solid #000`
+			borderLeft: `0.5px solid ${theme.palette.primary.dark}`
 		},
 
 		/**
 		 * Only even rows
 		 */
-		[Array.from(
-			{length: props.columns},
-			(_, i) => `&:nth-of-type(${props.columns * 2}n + ${i + 1})`).join(',')
+		[
+			Array.from(
+				{length: props.columns},
+				(_, i) => `&:nth-of-type(${props.columns * 2}n + ${i + 1 + props.columns})`
+			).join(',')
 		]: {
 			background: 'rgba(0, 0, 0, 0.05)'
 		},

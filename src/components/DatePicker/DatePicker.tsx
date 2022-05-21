@@ -10,22 +10,24 @@ import ru_locale from 'dayjs/locale/ru';
 import styles from './DatePicker.styles';
 
 interface DatePickerProps {
+	stdValue?: Date | string | number;
+
 	label?: string;
 	mask?: string;
 
 	helperText?: string;
 
-	onChangeHandler?: (newValue : Date | string | number) => {};
+	onChangeHandler?: (newValue : any) => void;
 }
 
 const DatePicker = ({
 		mask,
 		label,
-		wrapper,
+		stdValue,
 		helperText,
 		onChangeHandler
 	} : DatePickerProps) => {
-	const [value, setValue] = useState<Date | string | number>(new Date());
+	const [value, setValue] = useState<Date | string | number>(stdValue || new Date());
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const onChange = newValue => {

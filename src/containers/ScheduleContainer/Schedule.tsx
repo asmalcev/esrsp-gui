@@ -41,15 +41,13 @@ const scheduleToData = (schedule, oddMondayDate) => {
 
 const Schedule = ({ scheduleData }) => {
 
-	const currentDate = new Date();
+	const [currentDate, setCurrentDate] = useState(new Date());
 	const _isOddWeek = isOddWeek(currentDate);
 	const currentDayInOrder = currentDate.getDay() + (_isOddWeek ? 0 : 7);
 
 	currentDate.setDate(currentDate.getDate() - currentDayInOrder + 1); // date of the odd monday
 
-	const [data, updateData] = useState(
-		scheduleToData(scheduleData, currentDate)
-	);
+	const [data, updateData] = useState( scheduleToData(scheduleData, currentDate) );
 	const currentIndex = useRef(currentDayInOrder);
 
 	const handleLoader = loaderType => {
@@ -68,11 +66,18 @@ const Schedule = ({ scheduleData }) => {
 		}
 	}
 
+	const handleCurrentDateUpdate = (value : Date) => {
+		setCurrentDate(value);
+		updateData( scheduleToData(scheduleData, currentDate) );
+	}
+
 	return (
 		<ScheduleView
 			scheduleData={ data }
 			currentIndex={ currentIndex.current - 1 }
-			handleLoader={ handleLoader }/>
+			handleLoader={ handleLoader }
+			updateCurrentDate={ handleCurrentDateUpdate }
+			currentDate={ currentDate }/>
 	);
 }
 
