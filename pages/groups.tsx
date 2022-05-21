@@ -13,7 +13,7 @@ const Groups = ({ groupsData }) => {
 			<GroupsContainer groupsData={ groupsData } />
 		</MainContainer>
 	</>;
-};
+}
 
 export default Groups;
 
@@ -23,5 +23,5 @@ export async function getServerSideProps(context) {
 
 	return {
 		props: { groupsData }
-	}
+	};
 }

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import MainContainer from '../../src/containers/MainContainer';
-import GroupGrid from '../../src/components/GroupGrid';
+import GroupContainer from '../../src/containers/GroupContainer';
 
 const Group = ({
 	groupData
@@ -15,8 +15,7 @@ const Group = ({
 			<title>Группы - ESRSP</title>
 		</Head>
 		<MainContainer>
-			<p>Группа {id}</p>
-			<GroupGrid />
+			<GroupContainer groupData={ groupData }/>
 		</MainContainer>
 	</>;
 }
@@ -29,5 +28,5 @@ export async function getServerSideProps(context) {
 
 	return {
 		props: { groupData }
-	}
+	};
 }

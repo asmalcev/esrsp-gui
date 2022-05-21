@@ -6,20 +6,11 @@ import {
 import styles from './GroupGrid.styles';
 
 const GroupGrid = ({
-
+	data
 }) => {
 
-	const columns = ['И597', '01.04', '01.08', '01.12', '01.16', '01.20', '01.24', '01.28', '02.02', '02.06', '02.10'];
-	const rows = [
-		['Александров Владимир', '', '', '', '3', '5', '', '', '4', '', ''],
-		['Библиотеков Дмитрий', '4', '', '', '', '5', '', '', '3', '', ''],
-		['Георгиев Антон', '', '4', '4', '', '', '5', '', '', '', ''],
-	];
-	// const columns = ['Имя', '01.04', '01.08'];
-	// const rows = [
-	// 	['Александров Владимир', '', '3'],
-	// 	['Библиотеков Дмитрий', '4', ''],
-	// ];
+	const columns = data.table.columnsRow;
+	const rows = data.table.rows;
 
 	const layoutProps = {
 		columns: columns.length
