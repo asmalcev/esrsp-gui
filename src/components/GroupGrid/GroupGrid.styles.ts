@@ -8,7 +8,7 @@ export default {
 		{ theme }
 	) => ({
 		display: 'grid',
-		gridTemplateColumns: `${theme.spacing(40)} repeat(${props.columns - 1}, max-content)`,
+		gridTemplateColumns: `${theme.spacing(30)} repeat(${props.columns - 1}, max-content)`,
 
 		paddingBottom: theme.spacing(1),
 
@@ -21,7 +21,7 @@ export default {
 		props : LayoutProps,
 		{ theme }
 	) => ({
-		minWidth: theme.spacing(10),
+		minWidth: theme.spacing(6),
 		padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
 
 		'&': {
@@ -38,7 +38,7 @@ export default {
 		/**
 		 * Not first column
 		 */
-		[`&:not(:nth-of-type(${props.columns}n + 1))`]: {
+		[`&:not(:nth-of-type(${props.columns}n + 1), :nth-of-type(${props.columns}n + 2))`]: {
 			borderLeft: `0.5px solid ${theme.palette.primary.dark}`
 		},
 

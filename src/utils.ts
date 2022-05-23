@@ -41,7 +41,15 @@ function throttle(func, ms) {
 	return wrapper;
 }
 
+const groupBy = (xs, key) => {
+	return xs.reduce((rv, x) => {
+		(rv[x[key]] = rv[x[key]] || []).push(x);
+		return rv;
+	}, {});
+}
+
 export {
 	debounce,
-	throttle
+	throttle,
+	groupBy
 };

@@ -100,7 +100,7 @@ const MainContainer = ({ children }) => {
 				</FooterContainer>
 			</Menu>
 			
-			<ContentContainer>
+			<ContentContainer className="styled-scroll">
 				{ children }
 			</ContentContainer>
 		</GridContainer>

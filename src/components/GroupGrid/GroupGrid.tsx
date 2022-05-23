@@ -43,7 +43,7 @@ const GroupGrid = ({
 		</GridCell>
 	)));
 
-	return <GridLayoutContainer>
+	return <GridLayoutContainer className="styled-scroll">
 		{
 			firstRowElements
 		}

@@ -1,5 +1,6 @@
 export default {
-	groupGrid: ({theme}) => ({
-		paddingTop: theme.spacing(2)
+	layout: ({theme}) => ({
+		paddingTop: theme.spacing(4),
+		paddingRight: theme.spacing(2)
 	})
 };

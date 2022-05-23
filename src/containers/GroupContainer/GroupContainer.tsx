@@ -11,11 +11,11 @@ const GroupContainer = ({
 	groupData
 }) => {
 
-	const StyledGroupGrid = styled(GroupGrid)( styles.groupGrid );
+	const StyledLayout = styled(Layout)( styles.layout );
 
-	return <Layout>
-		<StyledGroupGrid data={ groupData }/>
-	</Layout>
+	return <StyledLayout>
+		<GroupGrid data={ groupData }/>
+	</StyledLayout>
 }
 
 export default GroupContainer;
