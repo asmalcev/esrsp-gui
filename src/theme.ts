@@ -64,7 +64,8 @@ export const theme = createTheme({
 			dark: '#757575'
 		},
 		secondary: {
-			main: '#4FC3F7'
+			main: '#4FC3F7',
+			contrastText: '#fff'
 		}
 	},
 	boxShadow: '0 0 5px rgba(0, 0, 0, 0.05)',

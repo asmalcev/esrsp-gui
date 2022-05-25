@@ -1,5 +1,9 @@
-import { styled } from "@mui/material";
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import {
+	styled,
+	Tooltip,
+	TooltipProps,
+	tooltipClasses
+} from "@mui/material";
 
 const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
 	<Tooltip
