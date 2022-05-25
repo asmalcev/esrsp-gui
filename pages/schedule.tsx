@@ -1,8 +1,25 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+
+import { useApp } from './_app';
 import MainContainer from '../src/containers/MainContainer';
 import ScheduleContainer from '../src/containers/ScheduleContainer';
 
-const Schedule = ({ scheduleData }) => {
+const Schedule = () => {
+	const appContext = useApp();
+
+	const [scheduleData, setScheduleData] = useState(null);
+
+	// useEffect(() => {
+
+	// 	const fetchData = async () => {
+	// 		const res = await fetch(`/api/schedule/${appContext.userId}`);
+	// 		setScheduleData(await res.json());
+	// 	}
+
+	// 	fetchData();
+	// }, []);
+
 	return <>
 		<Head>
 			<title>Расписание - ESRSP</title>
@@ -14,12 +31,3 @@ const Schedule = ({ scheduleData }) => {
 };
 
 export default Schedule;
-
-export async function getServerSideProps(context) {
-	const res = await fetch('http://0.0.0.0:3000/api/schedule');
-	const scheduleData = await res.json();	
-
-	return {
-		props: { scheduleData }
-	};
-}

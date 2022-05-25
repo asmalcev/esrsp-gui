@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import ScheduleView from "./ScheduleView";
 
-import {months, weekDays} from "./dateData";
+import { SkeletonEventCard } from "../../components/EventCard";
+import Layout from "../Layout";
+import { Stack } from "@mui/material";
+
+import { months, weekDays } from "./dateData";
 
 const isOddWeek = (date : Date) : Boolean => {
 	const startDate = new Date(date.getFullYear(), 0, 1);
@@ -40,6 +44,16 @@ const scheduleToData = (schedule, oddMondayDate) => {
 }
 
 const Schedule = ({ scheduleData }) => {
+
+	if (!scheduleData) {
+		return <Layout>
+			<Stack>
+				<SkeletonEventCard customRef={null}/>
+				<SkeletonEventCard customRef={null}/>
+				<SkeletonEventCard customRef={null}/>
+			</Stack>
+		</Layout>;
+	}
 
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const _isOddWeek = isOddWeek(currentDate);

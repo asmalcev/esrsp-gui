@@ -24,16 +24,16 @@ const AuthContainer = () => {
 
 	useEffect(() => {
 		const jwt = window.localStorage.jwt;
-		if (jwt === undefined) {
-			console.log('should login');
-		} else {
+		if (jwt !== undefined) {
 			appContext.updateLoggedin(true);
 		}
 	}, [])
 
 	const handleClick = () => {
 		window.localStorage.jwt = 'some-jwt';
+
 		appContext.updateLoggedin(true);
+		appContext.updateUserId(3);
 	}
 
 	return <AuthLayout

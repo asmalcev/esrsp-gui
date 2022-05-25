@@ -1,5 +1,5 @@
-import sql from '../../src/db';
-import { groupBy } from '../../src/utils';
+import sql from '../../../src/db';
+import { groupBy } from '../../../src/utils';
 
 const getSchedule = async (id) => {
 	const schedule = await sql`
@@ -61,7 +61,8 @@ const getSchedule = async (id) => {
 }
 
 export default async (req, res) => {
-	const result = await getSchedule(3);
+	const { id } = req.query;
+	const result = await getSchedule(id);
 
 	res.status(200).json(result);
 }

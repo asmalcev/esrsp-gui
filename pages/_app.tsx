@@ -11,8 +11,8 @@ import AuthContainer from '../src/containers/AuthContainer';
  * App Context Type
  */
 type appContextType = {
-	userId: number;
-	loggedin: boolean;
+	userId: number | null;
+	loggedin: boolean | null;
 
 	updateUserId: (n : number) => void;
 	updateLoggedin: (b : boolean) => void;
