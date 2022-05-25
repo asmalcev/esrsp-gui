@@ -1,7 +1,7 @@
 import sql from '../../../src/db';
 import { groupBy } from '../../../src/utils';
 
-const getSchedule = async (id) => {
+const getSchedule = async id => {
 	const schedule = await sql`
 	select
 		D.name as name,
@@ -62,7 +62,7 @@ const getSchedule = async (id) => {
 
 export default async (req, res) => {
 	const { id } = req.query;
-	const result = await getSchedule(id);
+	const response = await getSchedule(id);
 
-	res.status(200).json(result);
+	res.status(200).json(response);
 }

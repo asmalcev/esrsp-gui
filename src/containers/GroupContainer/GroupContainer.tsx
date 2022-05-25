@@ -1,5 +1,6 @@
 import {
-	styled
+	styled,
+	Typography
 } from '@mui/material';
 
 import GroupGrid from '../../components/GroupGrid';
@@ -14,6 +15,7 @@ const GroupContainer = ({
 	const StyledLayout = styled(Layout)( styles.layout );
 
 	return <StyledLayout>
+		<Typography variant="h2">{ groupData.discipline }</Typography>
 		<GroupGrid data={ groupData }/>
 	</StyledLayout>
 }

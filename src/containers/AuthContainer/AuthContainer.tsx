@@ -33,7 +33,6 @@ const AuthContainer = () => {
 		window.localStorage.jwt = 'some-jwt';
 
 		appContext.updateLoggedin(true);
-		appContext.updateUserId(3);
 	}
 
 	return <AuthLayout

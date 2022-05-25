@@ -10,15 +10,17 @@ const Schedule = () => {
 
 	const [scheduleData, setScheduleData] = useState(null);
 
-	// useEffect(() => {
+	useEffect(() => {
 
-	// 	const fetchData = async () => {
-	// 		const res = await fetch(`/api/schedule/${appContext.userId}`);
-	// 		setScheduleData(await res.json());
-	// 	}
+		const fetchData = async () => {
+			const res = await fetch(`/api/schedule/${appContext.userId}`);
+			setScheduleData(await res.json());
+		}
 
-	// 	fetchData();
-	// }, []);
+		if (appContext.loggedin && !scheduleData) {
+			fetchData();
+		}
+	});
 
 	return <>
 		<Head>

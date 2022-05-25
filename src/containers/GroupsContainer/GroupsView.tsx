@@ -16,6 +16,9 @@ import styles from './GroupsView.styles';
 const GroupsView = ({
 	groupsData
 }) => {
+	if (!groupsData) {
+		groupsData = [];
+	}
 
 	const StyledStack = styled(Stack)( styles.stack );
 	const GroupListItem = styled(ListItemButton)( styles.groupListItem );
@@ -24,14 +27,14 @@ const GroupsView = ({
 
 	const groups = groupsData.map(group =>
 		<GroupListItem
-			key={ group.id }
+			key={`${group.groupid}-${group.disciplineid}`}
 			// @ts-ignore
 			component={ NextLinkComposed }
 			to={{
-				pathname: `/groups/${group.id}`
+				pathname: `/groups/${group.groupid}/${group.disciplineid}`
 			}}
 		>
-			<ListItemText>{ group.name }</ListItemText>
+			<ListItemText>{`${group.groupname} - ${group.discipline}`}</ListItemText>
 		</GroupListItem>
 	);
 
@@ -52,13 +55,17 @@ const GroupsView = ({
 			<OptionLink
 				{...params}
 				to={{
-					pathname: `/groups/${option.id}`
+					pathname: `/groups/${option.groupid}/${option.disciplineid}`
 				}}
-			>{
-				option.name
-			}</OptionLink>
+			>
+				{`${option.groupname} - ${option.discipline}`}
+			</OptionLink>
 		);
 	}
+
+	const getOptionLabel = (
+		option : { groupname, discipline }
+	) => `${option.groupname} - ${option.discipline}`;
 
 	return (
 		<Layout>
@@ -67,7 +74,7 @@ const GroupsView = ({
 					freeSolo
 					disableClearable
 					options={ groupsData }
-					getOptionLabel={ (option : { name }) => option.name }
+					getOptionLabel={ getOptionLabel }
 					renderInput={ searchTextField }
 					renderOption={ searchOption }
 				/>

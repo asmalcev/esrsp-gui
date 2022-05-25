@@ -1,15 +1,11 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
-import MainContainer from '../../src/containers/MainContainer';
-import GroupContainer from '../../src/containers/GroupContainer';
+import MainContainer from '../../../src/containers/MainContainer';
+import GroupContainer from '../../../src/containers/GroupContainer';
 
 const Group = ({
 	groupData
 }) => {
-	const router = useRouter();
-	const { id } = router.query;
-
 	return <>
 		<Head>
 			<title>Группы - ESRSP</title>
@@ -23,8 +19,10 @@ const Group = ({
 export default Group;
 
 export async function getServerSideProps(context) {
+	const { groupid, disciplineid } = context.query;
+
 	const res = await fetch('http://0.0.0.0:3000/api/group');
-	const groupData = await res.json();	
+	const groupData = await res.json();
 
 	return {
 		props: { groupData }

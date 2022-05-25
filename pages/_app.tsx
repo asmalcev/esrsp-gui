@@ -38,7 +38,7 @@ const AppProvider = ({ Component, pageProps } : AppProps) => {
 	/**
 	 * App states
 	 */
-	const [userId, setUserId] = useState<number>(null);
+	const [userId, setUserId] = useState<number>(3);
 	const [loggedin, setLoggedin] = useState<boolean>(false);
 
 
