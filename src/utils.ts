@@ -71,10 +71,21 @@ const getddmm = (date : Date) : string => {
 	return `${sdd}.${smm}`;
 }
 
+const jwtfetch = (
+	url: string,
+	method?: 'POST' | 'GET' | 'PUT' | 'DELETE'
+) => fetch(url, {
+	method: method || 'GET',
+	body: JSON.stringify({
+		jwt: window.localStorage.jwt
+	})
+});
+
 export {
 	debounce,
 	throttle,
 	groupBy,
 	isOddWeek,
-	getddmm
+	getddmm,
+	jwtfetch
 };
