@@ -1,24 +1,12 @@
 import { useRef, useState } from "react";
+
+import { Stack } from "@mui/material";
+import Layout from "../Layout";
+import { SkeletonEventCard } from "../../components/EventCard";
 import ScheduleView from "./ScheduleView";
 
-import { SkeletonEventCard } from "../../components/EventCard";
-import Layout from "../Layout";
-import { Stack } from "@mui/material";
-
+import { isOddWeek } from '../../utils';
 import { months, weekDays } from "./dateData";
-
-const isOddWeek = (date : Date) : Boolean => {
-	const startDate = new Date(date.getFullYear(), 0, 1);
-	const days = Math.floor(
-		(date.getTime() - startDate.getTime()) / // diff in ms
-		(24 * 60 * 60 * 1000)
-	);
-
-	const weekNumber = Math.ceil(
-		(date.getDay() + 1 + days) / 7);
-
-	return Boolean(weekNumber % 2);
-}
 
 const scheduleToData = (schedule, oddMondayDate) => {
 	const currentDate = new Date(oddMondayDate);

@@ -21,7 +21,7 @@ export default Group;
 export async function getServerSideProps(context) {
 	const { groupid, disciplineid } = context.query;
 
-	const res = await fetch('http://0.0.0.0:3000/api/group');
+	const res = await fetch(`http://0.0.0.0:3000/api/group/${groupid}/${disciplineid}`);
 	const groupData = await res.json();
 
 	return {

@@ -48,8 +48,33 @@ const groupBy = (xs, key) => {
 	}, {});
 }
 
+const isOddWeek = (date : Date) : Boolean => {
+	const startDate = new Date(date.getFullYear(), 0, 1);
+	const days = Math.floor(
+		(date.getTime() - startDate.getTime()) / // diff in ms
+		(24 * 60 * 60 * 1000)
+	);
+
+	const weekNumber = Math.ceil(
+		(date.getDay() + 1 + days) / 7);
+
+	return Boolean(weekNumber % 2);
+}
+
+const getddmm = (date : Date) : string => {
+	const dd = date.getDate();
+	const mm = date.getMonth() + 1;
+
+	const sdd = dd < 10 ? `0${dd}` : dd;
+	const smm = mm < 10 ? `0${mm}` : mm;
+
+	return `${sdd}.${smm}`;
+}
+
 export {
 	debounce,
 	throttle,
-	groupBy
+	groupBy,
+	isOddWeek,
+	getddmm
 };

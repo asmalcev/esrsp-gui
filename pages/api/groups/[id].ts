@@ -12,7 +12,7 @@ const getGroups = async id => {
 		right join flow as F on F.id = C.flowid
 		join studentgroup as SG on F.studentgroupid = SG.id
 		where teacherid = ${id}
-		order by D.id, SG.id;
+		order by SG.id, D.id;
 	`;
 
 	return groups;
