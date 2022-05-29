@@ -13,7 +13,7 @@ const Schedule = () => {
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await fetch(`/api/schedule/${appContext.userId}`);
+			const res = await fetch(`/api/schedule/${appContext.user.id}`);
 			setScheduleData(await res.json());
 		}
 

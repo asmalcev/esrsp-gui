@@ -11,6 +11,10 @@ export default {
 	appBar: ({theme}) => ({
 		gridColumn: '1 / 13',
 
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+
 		padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
 		boxShadow: 'none'
 	}),

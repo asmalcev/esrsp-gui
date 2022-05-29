@@ -11,6 +11,8 @@ import {
 	Stack
 } from '@mui/material';
 
+import UserInfo from '../../components/UserInfo';
+
 import styles from './MainContainer.styles';
 
 const MainContainer = ({ children }) => {
@@ -72,6 +74,8 @@ const MainContainer = ({ children }) => {
 				>
 					<Typography variant="h1">Электронный журнал</Typography>
 				</Link>
+
+				<UserInfo />
 			</Header>
 
 			<Menu

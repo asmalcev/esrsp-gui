@@ -8,13 +8,25 @@ import { theme } from '../src/theme';
 import AuthContainer from '../src/containers/AuthContainer';
 
 /**
+ * User type
+ */
+type userType = {
+	id?: number | null;
+	login?: string;
+	usertype?: string;
+
+	name?: string;
+	email?: string;
+}
+
+/**
  * App Context Type
  */
 type appContextType = {
-	userId: number | null;
+	user: userType | null;
 	loggedin: boolean | null;
 
-	updateUserId: (n : number) => void;
+	updateUser: (n : userType) => void;
 	updateLoggedin: (b : boolean) => void;
 }
 
@@ -23,10 +35,10 @@ type appContextType = {
  * App Context Object
  */
 export const AppContext = createContext<appContextType>({
-	userId: null,
+	user: null,
 	loggedin: false,
 
-	updateUserId: () => {},
+	updateUser: () => {},
 	updateLoggedin: () => {},
 });
 
@@ -38,19 +50,19 @@ const AppProvider = ({ Component, pageProps } : AppProps) => {
 	/**
 	 * App states
 	 */
-	const [userId, setUserId] = useState<number>(3);
+	const [user, setUser] = useState<userType>(null);
 	const [loggedin, setLoggedin] = useState<boolean>(false);
 
 
 	/**
 	 * States update handlers
 	 */
-	const updateUserId = newUserId => {
-		setUserId(newUserId);
+	const updateUser = user => {
+		setUser(user);
 	}
 
-	const updateLoggedin = newState => {
-		setLoggedin(newState);
+	const updateLoggedin = state => {
+		setLoggedin(state);
 	}
 
 
@@ -58,10 +70,10 @@ const AppProvider = ({ Component, pageProps } : AppProps) => {
 	 * Building app context object
 	 */
 	const contextObj = {
-		userId,
+		user,
 		loggedin,
 
-		updateUserId,
+		updateUser,
 		updateLoggedin,
 	};
 

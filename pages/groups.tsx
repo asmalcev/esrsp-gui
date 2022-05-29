@@ -14,7 +14,7 @@ const Groups = () => {
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await fetch(`/api/groups/${appContext.userId}`);
+			const res = await fetch(`/api/groups/${appContext.user.id}`);
 			setGroupsData(await res.json());
 		}
 
