@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Paper,
 	Stack,
 	styled,
@@ -6,7 +7,8 @@ import {
 } from '@mui/material';
 import {
 	useRef,
-	useEffect
+	useState,
+	useEffect,
 } from 'react';
 
 import { useApp } from '../../../pages/_app';
@@ -22,6 +24,9 @@ const AuthContainer = () => {
 
 	const formRef = useRef(null);
 
+	const [loading, setLoading] = useState(true);
+	const [alertElement, setAlertElement] = useState(null);
+
 	const AuthLayout = styled(Stack)( styles.container );
 	const AuthPaper = styled(Paper)( styles.paper );
 
@@ -32,57 +37,89 @@ const AuthContainer = () => {
 		if (jwt !== undefined) {
 			jwtfetch('/api/auth', 'POST')
 				.then(resp => {
-					console.log(resp);
+					if (resp.status === 200) {
+						appContext.updateLoggedin(true);
+					} else {
+						setLoading(false);
+					}
 				})
-			// appContext.updateLoggedin(true);
+		} else {
+			setLoading(false);
 		}
 	}, []);
 
-	const handleClick = () => {
+	const handleClick = e => {
+		e.preventDefault();
 		fetch('/api/auth', {
 			method: 'POST',
 			body: JSON.stringify({
 				login: formRef.current.elements.login.value,
 				password: formRef.current.elements.password.value,
 			})
-		}).then(resp => resp.json())
-			.then(data => {
-				window.localStorage.jwt = data.jwt;
+		}).then(resp => {
+			if (resp.status === 200) {
+				return resp.json();
+			} else if (resp.status === 404) {
+				setAlertElement(
+					<Alert severity="error">Аккаунт с таким логином не существует</Alert>
+				);
+			} else if (resp.status === 400) {
+				setAlertElement(
+					<Alert severity="error">Неверный пароль</Alert>
+				);
+			}
+		}).then(data => {
+				console.log(data);
+
+				// window.localStorage.jwt = data.jwt;
 				// appContext.updateLoggedin(true);
 			});
+	}
+
+	const hideAlert = () => {
+		if (alertElement) {
+			setAlertElement(null);
+		}
 	}
 
 	return <AuthLayout
 		direction="row"
 		justifyContent="center"
 	>
-		<Stack justifyContent="center">
-			<AuthPaper>
-				<Typography variant="h1">Войти в аккаунт</Typography>
-				<form ref={formRef}>
-					<InputBox spacing={2}>
-						<StyledTextField
-							label="Логин"
-							name="login"
-							autoFocus={true}
+		{
+			!loading &&
+			<Stack justifyContent="center">
+				<AuthPaper>
+					<Typography variant="h1">Войти в аккаунт</Typography>
+					<form ref={formRef}>
+						<InputBox spacing={2}>
+							<StyledTextField
+								label="Логин"
+								name="login"
+								autoFocus={true}
+								fullWidth={true}
+								onChange={hideAlert}
+								required/>
+							<StyledTextField
+								label="Пароль"
+								type="password"
+								name="password"
+								fullWidth={true}
+								onChange={hideAlert}
+								required/>
+							{ alertElement }
+						</InputBox>
+						<StyledButton
+							onClick={handleClick}
 							fullWidth={true}
-							required/>
-						<StyledTextField
-							label="Пароль"
-							type="password"
-							name="password"
-							fullWidth={true}
-							required/>
-					</InputBox>
-					<StyledButton
-						onClick={handleClick}
-						fullWidth={true}
-					>
-						Войти
-					</StyledButton>
-				</form>
-			</AuthPaper>
-		</Stack>
+							type="submit"
+						>
+							Войти
+						</StyledButton>
+					</form>
+				</AuthPaper>
+			</Stack>
+		}
 	</AuthLayout>;
 }
 
