@@ -6,18 +6,18 @@ import MainContainer from '../src/containers/MainContainer';
 import ScheduleContainer from '../src/containers/ScheduleContainer';
 
 const Schedule = () => {
-	const appContext = useApp();
+	const { user } = useApp();
 
 	const [scheduleData, setScheduleData] = useState(null);
 
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await fetch(`/api/schedule/${appContext.user.id}`);
+			const res = await fetch(`/api/schedule/${user.id}`);
 			setScheduleData(await res.json());
 		}
 
-		if (appContext.loggedin && !scheduleData) {
+		if (user.loggedin && !scheduleData) {
 			fetchData();
 		}
 	});

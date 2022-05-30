@@ -17,6 +17,8 @@ type userType = {
 
 	name?: string;
 	email?: string;
+
+	loggedin: boolean;
 }
 
 /**
@@ -24,22 +26,25 @@ type userType = {
  */
 type appContextType = {
 	user: userType | null;
-	loggedin: boolean | null;
 
 	updateUser: (n : userType) => void;
-	updateLoggedin: (b : boolean) => void;
 }
+
+
+const defaultValues = {
+	user: {
+		loggedin: false
+	}
+};
 
 
 /**
  * App Context Object
  */
 export const AppContext = createContext<appContextType>({
-	user: null,
-	loggedin: false,
+	user: defaultValues.user,
 
 	updateUser: () => {},
-	updateLoggedin: () => {},
 });
 
 
@@ -47,22 +52,11 @@ export const AppContext = createContext<appContextType>({
  * App Provider - Next App
  */
 const AppProvider = ({ Component, pageProps } : AppProps) => {
-	/**
-	 * App states
-	 */
-	const [user, setUser] = useState<userType>(null);
-	const [loggedin, setLoggedin] = useState<boolean>(false);
 
+	const [user, setUser] = useState<userType>(defaultValues.user);
 
-	/**
-	 * States update handlers
-	 */
 	const updateUser = user => {
 		setUser(user);
-	}
-
-	const updateLoggedin = state => {
-		setLoggedin(state);
 	}
 
 
@@ -71,16 +65,13 @@ const AppProvider = ({ Component, pageProps } : AppProps) => {
 	 */
 	const contextObj = {
 		user,
-		loggedin,
-
 		updateUser,
-		updateLoggedin,
 	};
 
 	return <AppContext.Provider value={contextObj}>
 		<ThemeProvider theme={theme}>
 			{
-				loggedin ?
+				user.loggedin ?
 					<Component {...pageProps} /> :
 					<AuthContainer />
 			}
@@ -91,5 +82,9 @@ const AppProvider = ({ Component, pageProps } : AppProps) => {
 export const useApp = () => {
 	return useContext(AppContext);
 }
+
+export const localStorageKeys = {
+	jwt: 'jwt'
+};
 
 export default AppProvider;

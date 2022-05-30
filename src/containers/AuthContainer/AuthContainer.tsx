@@ -8,7 +8,7 @@ import {
 	useEffect,
 } from 'react';
 
-import { useApp } from '../../../pages/_app';
+import { useApp, localStorageKeys } from '../../../pages/_app';
 import AuthForm from '../../components/AuthForm';
 
 import { jwtfetch } from '../../utils';
@@ -32,7 +32,7 @@ const AuthContainer = () => {
 			/**
 			 * if localStorage stores jwt => then check if it valid
 			 */
-			const jwt = window.localStorage.jwt;
+			const jwt = window.localStorage[localStorageKeys.jwt];
 			if (jwt !== undefined) {
 				const resp = await jwtfetch('/api/auth', 'POST');
 	
@@ -43,9 +43,9 @@ const AuthContainer = () => {
 						email: data.email,
 						name: data.fullname,
 						login: data.login,
-						usertype: data.usertype === 0 ? 'admin' : 'teacher'
+						usertype: data.usertype === 1 ? 'admin' : 'teacher',
+						loggedin: true
 					});
-					appContext.updateLoggedin(true);
 				} else {
 					setLoading(false);
 				}
@@ -78,15 +78,15 @@ const AuthContainer = () => {
 			 */
 			const data = await resp.json();
 
-			window.localStorage.jwt = data.jwt;
+			window.localStorage[localStorageKeys.jwt] = data.jwt;
 			appContext.updateUser({
 				id: data.userid,
 				email: data.email,
 				name: data.fullname,
 				login: data.login,
-				usertype: data.usertype === 0 ? 'admin' : 'teacher'
+				usertype: data.usertype === 1 ? 'admin' : 'teacher',
+				loggedin: true
 			});
-			appContext.updateLoggedin(true);
 		} else if (resp.status === 404) {
 			/**
 			 * Account not found

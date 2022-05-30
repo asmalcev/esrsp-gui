@@ -7,18 +7,18 @@ import GroupsContainer from '../src/containers/GroupsContainer';
 
 
 const Groups = () => {
-	const appContext = useApp();
+	const { user } = useApp();
 
 	const [groupsData, setGroupsData] = useState(null);
 
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await fetch(`/api/groups/${appContext.user.id}`);
+			const res = await fetch(`/api/groups/${user.id}`);
 			setGroupsData(await res.json());
 		}
 
-		if (appContext.loggedin && !groupsData) {
+		if (user.loggedin && !groupsData) {
 			fetchData();
 		}
 	});

@@ -1,13 +1,29 @@
-import { Typography } from "@mui/material";
-import { useApp } from "../../../pages/_app";
+import { Typography, Button, Stack } from "@mui/material";
+import { useApp, localStorageKeys } from "../../../pages/_app";
 
 const UserInfo = () => {
-	const { user } = useApp();
-	// console.log(user);
+	const { user, updateUser } = useApp();
 
-	return <div>
+	const clickHandler = () => {
+		window.localStorage.removeItem(localStorageKeys.jwt);
+		updateUser({
+			loggedin: false
+		});
+	}
+
+	return <Stack
+		flexDirection="row"
+		alignItems="center"
+	>
 		<Typography>{ user.name }</Typography>
-	</div>;
+		<Button
+			color="secondary"
+			onClick={clickHandler}
+			sx={{
+				marginLeft: '16px'
+			}}
+		>Выйти</Button>
+	</Stack>;
 }
 
 export default UserInfo;
