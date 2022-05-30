@@ -12,7 +12,7 @@ const StyledButton = styled(
 		{...props}/>
 )(
 	({theme}) => ({
-		padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+		padding: theme.spacing(1),
 		boxShadow: theme.boxShadow
 	})
 );

@@ -1,9 +1,10 @@
+import { useRouter } from 'next/router';
+
 import {
 	Alert, Snackbar
 } from '@mui/material';
 
 import {
-	useRef,
 	useState,
 	useEffect,
 } from 'react';
@@ -20,6 +21,8 @@ interface AlertState {
 }
 
 const AuthContainer = () => {
+	const router = useRouter();
+
 	const appContext = useApp();
 
 	const [loading, setLoading] = useState<boolean>(true);
@@ -84,6 +87,7 @@ const AuthContainer = () => {
 				usertype: data.usertype === 1 ? 'admin' : 'teacher',
 				loggedin: true
 			});
+			router.push('/');
 		} else if (resp.status === 404) {
 			/**
 			 * Account not found

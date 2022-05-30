@@ -84,7 +84,8 @@ export default async (req, res) => {
 					() => ``
 				)
 			])
-		}
+		},
+		rawGroup: group
 	};
 
 	res.status(200).json(response);

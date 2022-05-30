@@ -11,6 +11,7 @@ export default {
 		gridTemplateColumns: `${theme.spacing(30)} repeat(${props.columns - 1}, max-content)`,
 
 		paddingBottom: theme.spacing(1),
+		marginRight: theme.spacing(6),
 
 		'&': {
 			overflowX: 'auto'
@@ -53,5 +54,23 @@ export default {
 		]: {
 			background: 'rgba(0, 0, 0, 0.05)'
 		},
+		'&:hover': {
+			background: 'rgba(0, 0, 0, 0.05)'
+		}
 	}),
+
+	iconsContainer: ({theme}) => ({
+		'&': {
+			position: 'fixed',
+			right: theme.spacing(4)
+		},
+
+		'& .MuiIcon-root': {
+			fontSize: theme.spacing(3.5)
+		}
+	}),
+
+	cellInput: ({theme}) => ({
+		width: theme.spacing(6)
+	})
 };
