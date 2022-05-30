@@ -5,41 +5,48 @@ import {
 	Typography,
 } from '@mui/material';
 
+import {
+	useRef,
+} from 'react';
+
 import StyledButton from '../../components/StyledButton';
 import StyledTextField from '../../components/StyledTextField';
 
 import styles from './AuthForm.styles';
 
-interface AuthFormProps {
-	loading: boolean;
 
+interface formSubmitHandlerProps {
 	login: string;
 	password: string;
+}
 
-	onLoginChange: any;
-	onPasswordChange: any;
-
-	handleSubmit: any;
-
-	formRef: any;
-	alert: any;
+interface AuthFormProps {
+	loading: boolean;
+	formSubmitHandler: (props : formSubmitHandlerProps) => void;
 }
 
 const AuthForm = ({
 	loading,
-	login,
-	password,
-	onLoginChange,
-	onPasswordChange,
-	handleSubmit,
-	alert,
-	formRef,
+	formSubmitHandler,
 } : AuthFormProps) => {
+
+	const formRef = useRef(null);
 
 	const AuthLayout = styled(Stack)( styles.container );
 	const AuthPaper = styled(Paper)( styles.paper );
 
 	const InputBox = styled(Stack)( styles.inputBox );
+
+	const onSubmitButtonClick = e => {
+		e.preventDefault();
+
+		const formData = {
+			login: formRef.current.elements.login.value,
+			password: formRef.current.elements.password.value,
+		};
+
+		formSubmitHandler(formData);
+	}
 
 	return <AuthLayout
 		direction="row"
@@ -56,21 +63,16 @@ const AuthForm = ({
 								label="Логин"
 								name="login"
 								fullWidth={true}
-								onChange={onLoginChange}
-								value={login}
 								required/>
 							<StyledTextField
 								label="Пароль"
 								type="password"
 								name="password"
 								fullWidth={true}
-								onChange={onPasswordChange}
-								value={password}
 								required/>
-							{ alert }
 						</InputBox>
 						<StyledButton
-							onClick={handleSubmit}
+							onClick={onSubmitButtonClick}
 							fullWidth={true}
 							type="submit"
 						>

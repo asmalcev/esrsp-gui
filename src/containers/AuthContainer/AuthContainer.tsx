@@ -1,5 +1,5 @@
 import {
-	Alert
+	Alert, Snackbar
 } from '@mui/material';
 
 import {
@@ -13,15 +13,17 @@ import AuthForm from '../../components/AuthForm';
 
 import { jwtfetch } from '../../utils';
 
+
+interface AlertState {
+	value?: JSX.Element;
+	open: boolean;
+}
+
 const AuthContainer = () => {
 	const appContext = useApp();
 
-	const formRef = useRef(null);
-
 	const [loading, setLoading] = useState<boolean>(true);
-	const [login, setLogin] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-	const [alert, setAlert] = useState(null);
+	const [alert, setAlert] = useState<AlertState>({ open: false });
 
 	/**
 	 * on mount useEffect
@@ -61,15 +63,10 @@ const AuthContainer = () => {
 	/**
 	 * handlers
 	 */
-	const handleSubmit = async e => {
-		e.preventDefault();
-
+	const formSubmitHandler = async formData => {
 		const resp = await fetch('/api/auth', {
 			method: 'POST',
-			body: JSON.stringify({
-				login: formRef.current.elements.login.value,
-				password: formRef.current.elements.password.value,
-			})
+			body: JSON.stringify(formData)
 		});
 
 		if (resp.status === 200) {
@@ -91,51 +88,40 @@ const AuthContainer = () => {
 			/**
 			 * Account not found
 			 */
-			setAlert(
-				<Alert severity="error">Аккаунт с таким логином не существует</Alert>
-			);
+			setAlert({
+				value: <Alert severity="error" onClose={onSnackbarClose}>Аккаунта с таким логином не существует</Alert>,
+				open: true
+			});
 		} else if (resp.status === 400) {
 			/**
 			 * Wrong password
 			 */
-			setAlert(
-				<Alert severity="error">Неверный пароль</Alert>
-			);
+			setAlert({
+				value: <Alert severity="error" onClose={onSnackbarClose}>Неверный пароль</Alert>,
+				open: true
+			});
 		}
 	}
 
-	const hideAlert = () => {
-		if (alert) {
-			setAlert(null);
+	const onSnackbarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+		if (reason === 'clickaway') {
+			return;
 		}
+
+		setAlert({
+			open: false
+		});
 	}
 
-	const handleLoginChange = e => {
-		hideAlert();
-		setLogin(e.target.value);
-	}
-
-	const handlePasswordChange = e => {
-		hideAlert();
-		setPassword(e.target.value);
-	}
-
-	return (
+	return <>
 		<AuthForm
 			loading={loading}
-
-			login={login}
-			password={password}
-
-			onLoginChange={handleLoginChange}
-			onPasswordChange={handlePasswordChange}
-
-			formRef={formRef}
-
-			alert={alert}
-			handleSubmit={handleSubmit}
+			formSubmitHandler={formSubmitHandler}
 			/>
-	);
+		<Snackbar open={ alert.open } autoHideDuration={6000} onClose={onSnackbarClose}>
+			{ alert.value }
+		</Snackbar>
+	</>;
 }
 
 export default AuthContainer;
