@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import {
 	styled,
 	Typography,
@@ -15,6 +17,7 @@ import {
 } from 'react';
 
 import Select from '../../common/Select';
+import { jwtfetch } from '../../utils';
 
 import styles from './GroupGrid.styles';
 
@@ -26,6 +29,7 @@ const selectValues = [
 const GroupGrid = ({
 	data
 }) => {
+	const router = useRouter();
 
 	const [editMode, setEditMode] = useState<boolean>(false);
 	const formRef = useRef(null);
@@ -142,15 +146,22 @@ const GroupGrid = ({
 		).filter((input : HTMLInputElement) => input.value)
 		 .map((input : HTMLInputElement) => {
 				const indexes = input.name.split(' ').map(val => Number(val));
+				const reversedDate = columns[indexes[1]].split('.');
+				reversedDate.reverse();
 
 				return {
 					studentid: data.rawGroup[indexes[0]].id,
 					value: input.value,
-					date: `${columns[indexes[1]]}.2022`
+					date: `2022.${reversedDate.join('.')}`
 				};
 		 });
 
-		console.log(formData);
+		if (formData.length) {
+			jwtfetch('/api/academicperformance', 'POST', {
+				data: formData,
+				disciplineid: router.query?.disciplineid
+			});
+		}
 	}
 
 	return <>

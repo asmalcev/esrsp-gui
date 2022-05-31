@@ -1,7 +1,7 @@
-import sql from '../../../src/db';
+import client from '../../../src/db';
 
 const getGroups = async id => {
-	const groups = sql`
+	const groups = await client.query(`
 		select distinct
 			D.name as discipline,
 			D.id as disciplineid,
@@ -13,9 +13,9 @@ const getGroups = async id => {
 		join studentgroup as SG on F.studentgroupid = SG.id
 		where teacherid = ${id}
 		order by SG.id, D.id;
-	`;
+	`).catch(err => console.log(err));
 
-	return groups;
+	return groups.rows;
 }
 
 export default async (req, res) => {

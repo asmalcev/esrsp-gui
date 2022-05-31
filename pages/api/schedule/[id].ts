@@ -1,27 +1,27 @@
-import sql from '../../../src/db';
+import client from '../../../src/db';
 import { groupBy } from '../../../src/utils';
 
 const getSchedule = async id => {
-	const schedule = await sql`
-	select
-		D.name as name,
-		T.fullname as teacher,
-		(
-			select STRING_AGG(SG.name, ', ') from studentgroup as SG
-			where id in (
-				select studentgroupid from flow
-				where id = C.flowid
-			)
-		) as groups,
-		C.place,
-		C.classday,
-		C.classnumber
-	from class as C
-	join discipline as D on D.id = C.disciplineid
-	join teacher as T on T.id = C.teacherid
-	where teacherid = ${id}
-	order by C.classday, C.classnumber;
-	`;
+	const schedule = await client.query(`
+		select
+			D.name as name,
+			T.fullname as teacher,
+			(
+				select STRING_AGG(SG.name, ', ') from studentgroup as SG
+				where id in (
+					select studentgroupid from flow
+					where id = C.flowid
+				)
+			) as groups,
+			C.place,
+			C.classday,
+			C.classnumber
+		from class as C
+		join discipline as D on D.id = C.disciplineid
+		join teacher as T on T.id = C.teacherid
+		where teacherid = ${id}
+		order by C.classday, C.classnumber;
+	`).catch(err => console.log(err));
 
 	const classnumberTimes = [
 		{
@@ -46,7 +46,7 @@ const getSchedule = async id => {
 		}
 	]
 
-	const scheduleGuiVersion = schedule.map(v => ({
+	const scheduleGuiVersion = schedule.rows.map(v => ({
 		members: v.groups,
 
 		...v,

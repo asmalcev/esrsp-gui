@@ -1,30 +1,30 @@
-import sql from '../../../../src/db';
+import client from '../../../../src/db';
 import { isOddWeek, getddmm } from '../../../../src/utils';
 
 const getGroup = async groupid => {
-	const group = sql`
+	const group = await client.query(`
 		select * from student
 		where studentgroupid = ${groupid}
 		order by fullname;
-	`;
+	`).catch(err => console.log(err));
 
-	return group;
+	return group.rows;
 }
 
 const getGroupDisciplineNames = async (groupid, disciplineid) => {
-	const names = sql`
+	const names = await client.query(`
 		select
 			SG.name as name,
 			D.name as discipline
 		from studentgroup as SG, discipline as D
 		where SG.id = ${groupid} and D.id = ${disciplineid};
-	`;
+	`).catch(err => console.log(err));
 
-	return names;
+	return names.rows;
 }
 
 const getGroupDisciplineClassDays = async (groupid, disciplineid) => {
-	const classdays = sql`
+	const classdays = await client.query(`
 		select classday from class
 		where
 			disciplineid = ${disciplineid} and
@@ -32,9 +32,9 @@ const getGroupDisciplineClassDays = async (groupid, disciplineid) => {
 				select id from flow
 				where studentgroupid = ${groupid}
 			);
-	`;
+	`).catch(err => console.log(err));
 
-	return classdays;
+	return classdays.rows;
 }
 
 const classDaysToDates = classdays => {

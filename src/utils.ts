@@ -1,3 +1,5 @@
+import { localStorageKeys } from "../pages/_app";
+
 const debounce = function(fn, time) {
 	let timeout;
 
@@ -73,11 +75,13 @@ const getddmm = (date : Date) : string => {
 
 const jwtfetch = (
 	url: string,
-	method?: 'POST' | 'GET' | 'PUT' | 'DELETE'
+	method?: 'POST' | 'GET' | 'PUT' | 'DELETE',
+	body?: object
 ) => fetch(url, {
 	method: method || 'GET',
 	body: JSON.stringify({
-		jwt: window.localStorage.jwt
+		jwt: window.localStorage[localStorageKeys.jwt],
+		...body
 	})
 });
 

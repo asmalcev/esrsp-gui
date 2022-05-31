@@ -1,22 +1,22 @@
 import jwt from 'jsonwebtoken';
-import sql from '../../src/db';
+import client from '../../src/db';
 
 const getAccounts = async (login : string) => {
-	const accounts = await sql`
+	const accounts = await client.query(`
 		select * from account
-		where login = ${login};
-	`;
+		where login = '${login}';
+	`).catch(err => console.log(err));
 
-	return accounts;
+	return accounts.rows;
 }
 
 const getAccountInfo = async (usertype : number, userid : number) => {
 	if (usertype === 0 || usertype === 1) {
-		const accountInfo = await sql`
+		const accountInfo = await client.query(`
 			select fullname, email from teacher
 			where id = ${userid};
-		`;
-		return accountInfo[0];
+		`).catch(err => console.log(err));
+		return accountInfo.rows[0];
 	}
 }
 
@@ -94,11 +94,33 @@ export default async function(req, res) {
 
 }
 
-export const jwtcheck = (token : string) : boolean => {
+export const jwtcheck = (body : string) : object | null => {
+	/**
+	 * if body is empty => null
+	 */
+	if (body.length === 0) {
+		return null;
+	}
+
 	try {
-		jwt.verify(token, SECRET_KEY);
-		return true;
+		const jbody = JSON.parse(body);
+
+		if (!jbody.jwt) {
+			return null;
+		}
+
+		/**
+		 * return jbody with decoded if all is ok
+		 */
+		const decoded = jwt.verify(jbody.jwt, SECRET_KEY);
+		return {
+			...jbody,
+			jwt: decoded,
+		};
 	} catch (err) {
-		return false;
+		/**
+		 * if can't parse body or verify jwt => null
+		 */
+		return null;
 	}
 }
