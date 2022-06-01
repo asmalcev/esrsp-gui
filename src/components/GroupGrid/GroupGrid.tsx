@@ -169,8 +169,9 @@ const GroupGrid = ({
 						/**
 						 * if value changed => return update request
 						 */
-						 filledCells.current.splice(startTableIndex, 1);
-						 return {
+						filledCells.current.splice(startTableIndex, 1);
+						data.table.rows[indexes[0]][indexes[1]] = input.value;
+						return {
 							method: 'update',
 							studentid: studentid,
 							value: input.value,
@@ -179,6 +180,7 @@ const GroupGrid = ({
 					}
 				}
 
+				data.table.rows[indexes[0]][indexes[1]] = input.value;
 				return {
 					method: 'insert',
 					studentid: studentid,
@@ -196,6 +198,7 @@ const GroupGrid = ({
 				const dateString = `2022.${reversedDate.join('.')}`;
 				const studentid = data.rawGroup[cell.indexes[0]].id;
 	
+				data.table.rows[cell.indexes[0]][cell.indexes[1] + 1] = '';
 				return {
 					method: 'delete',
 					date: dateString,
@@ -210,6 +213,7 @@ const GroupGrid = ({
 				disciplineid: router.query?.disciplineid
 			});
 		}
+		setEditMode(!editMode);
 	}
 
 	return <>
