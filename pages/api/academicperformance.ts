@@ -1,4 +1,5 @@
 import client from '../../src/db';
+import { groupBy } from '../../src/utils';
 import { jwtcheck } from './auth';
 
 interface Mark {
@@ -7,22 +8,47 @@ interface Mark {
 	date: string;
 }
 
-const addAcademicPerfomance = async (marks : Array<Mark>, disciplineid : number) => {
+const addAcademicPerformance = async (marks : Array<Mark>, disciplineid : number) => {
 	const queryRequest = `
 		insert into academicperformancedate(
 			academicperformanceid,
 			date,
 			academicperformance
-		) values ${marks.map(mark =>
+		) values ${ marks.map(mark =>
 		`(
 			(
 				select id from academicperformance
-				where disciplineid = ${disciplineid} and studentid = ${mark.studentid}
+				where disciplineid = ${ disciplineid } and studentid = ${ mark.studentid }
 			),
 			'${ mark.date }',
 			'${ mark.value }'
 		)`).join(',')};
 	`;
+
+	client.query(queryRequest).catch(err => console.log(err));
+}
+
+const updateAcademicPerformace = async (marks : Array<Mark>, disciplineid : number) => {
+	const queryRequest = marks.map(mark => `
+		update academicperformancedate
+		set academicperformance = '${ mark.value }'
+		where academicperformanceid = (
+			select id from academicperformance
+			where disciplineid = ${ disciplineid } and studentid = ${ mark.studentid }
+		) and date = '${ mark.date }';
+	`).join('\n');
+
+	client.query(queryRequest).catch(err => console.log(err));
+}
+
+const deleteAcademicPerformance = async (marks : Array<Mark>, disciplineid : number) => {
+	const queryRequest = marks.map(mark => `
+		delete from academicperformancedate
+		where date = '${ mark.date }' and academicperformanceid = (
+			select id from academicperformance
+			where disciplineid = ${ disciplineid } and studentid = ${ mark.studentid }
+		);
+	`).join('\n');
 
 	client.query(queryRequest).catch(err => console.log(err));
 }
@@ -40,7 +66,19 @@ export default async function(req, res) {
 		return;
 	}
 
-	addAcademicPerfomance(jbody['data'], Number(jbody['disciplineid']));
+	const grouped = groupBy(jbody['data'], 'method');
+
+	const disciplineid = Number(jbody['disciplineid']);
+
+	if (grouped.insert) {
+		addAcademicPerformance(grouped.insert, disciplineid);
+	}
+	if (grouped.update) {
+		updateAcademicPerformace(grouped.update, disciplineid);
+	}
+	if (grouped.delete) {
+		deleteAcademicPerformance(grouped.delete, disciplineid);
+	}
 
 	res.status(200).json({test: 'test'});
 }

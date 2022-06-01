@@ -119,21 +119,6 @@ const GroupGrid = ({
 	}));
 
 
-	// useEffect(() => {
-	// 	filledCells.current = Array.from(
-	// 		formRef.current.elements
-	// 	).filter((input : HTMLInputElement) => input.value)
-	// 	 .map((input : HTMLInputElement) => {
-	// 			const indexes = input.name.split(' ').map(val => Number(val));
-
-	// 			return {
-	// 				indexes: indexes,
-	// 				delete: true
-	// 			};
-	// 	 });
-	// }, []);
-
-
 	const onEditButtonClick = e => {
 		setEditMode(!editMode);
 	}
@@ -141,7 +126,22 @@ const GroupGrid = ({
 	const onSaveButtonClick = e => {
 		e.preventDefault();
 
-		const formData = Array.from(
+		/**
+		 * compute all academic performance that already exists in the table
+		 */
+		filledCells.current = data.table.rows.map(
+			(row, i) => row.slice(1).map(
+				(cell, j) => ({
+					indexes: [i, j],
+					value: cell
+				})
+			).filter(cell => cell.value.length)
+		).filter(row => row.length).flat(1);
+
+		/**
+		 * compute difference between start table state and now
+		 */
+		const formDiff = Array.from(
 			formRef.current.elements
 		).filter((input : HTMLInputElement) => input.value)
 		 .map((input : HTMLInputElement) => {
@@ -149,16 +149,64 @@ const GroupGrid = ({
 				const reversedDate = columns[indexes[1]].split('.');
 				reversedDate.reverse();
 
-				return {
-					studentid: data.rawGroup[indexes[0]].id,
-					value: input.value,
-					date: `2022.${reversedDate.join('.')}`
-				};
-		 });
+				const dateString = `2022.${reversedDate.join('.')}`;
+				const studentid = data.rawGroup[indexes[0]].id;
 
-		if (formData.length) {
+				const startTableIndex = filledCells.current.findIndex(
+					cell => cell.indexes[0] == indexes[0] && cell.indexes[1] == (indexes[1] - 1)
+				);
+				if (startTableIndex > -1) {
+					/**
+					 * if there is already exists element in start table
+					 */
+					if (filledCells.current[startTableIndex].value === input.value) {
+						/**
+						 * if the same value => null to filter
+						 */
+						 filledCells.current.splice(startTableIndex, 1);
+						return null;
+					} else {
+						/**
+						 * if value changed => return update request
+						 */
+						 filledCells.current.splice(startTableIndex, 1);
+						 return {
+							method: 'update',
+							studentid: studentid,
+							value: input.value,
+							date: dateString
+						}
+					}
+				}
+
+				return {
+					method: 'insert',
+					studentid: studentid,
+					value: input.value,
+					date: dateString
+				};
+		 }).filter(el => el).concat(
+			/**
+			 * all the elements that remain in start array has been deleted => need to add them like diff 'delete'
+			 */
+			filledCells.current.map(cell => {
+				const reversedDate = columns[cell.indexes[1] + 1].split('.');
+				reversedDate.reverse();
+	
+				const dateString = `2022.${reversedDate.join('.')}`;
+				const studentid = data.rawGroup[cell.indexes[0]].id;
+	
+				return {
+					method: 'delete',
+					date: dateString,
+					studentid: studentid
+				}
+			})
+		 );
+
+		if (formDiff.length) {
 			jwtfetch('/api/academicperformance', 'POST', {
-				data: formData,
+				data: formDiff,
 				disciplineid: router.query?.disciplineid
 			});
 		}

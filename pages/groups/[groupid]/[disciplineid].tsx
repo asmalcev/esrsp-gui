@@ -8,7 +8,7 @@ const Group = ({
 }) => {
 	return <>
 		<Head>
-			<title>Группы - ESRSP</title>
+			<title>{ groupData.name } Группа - { groupData.discipline } - ESRSP</title>
 		</Head>
 		<MainContainer>
 			<GroupContainer groupData={ groupData }/>
