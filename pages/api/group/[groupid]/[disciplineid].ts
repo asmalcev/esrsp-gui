@@ -65,25 +65,60 @@ const classDaysToDates = classdays => {
 	return dates;
 }
 
+const getGroupAcademicPerfomance = async (groupid, disciplineid) => {
+	const result = await client.query(`
+		select APD.date, APD.academicperformance, S.id as studentid from academicperformancedate as APD
+		join academicperformance as AP on APD.academicperformanceid = AP.id
+		join student as S on S.id = AP.studentid
+		where academicperformanceid in (
+			select id from academicperformance
+			where disciplineid = ${disciplineid} and studentid in (
+				select id from student
+				where studentgroupid = ${groupid}
+			)
+		);
+	`);
+
+	return result.rows.map(
+		row => ({
+			...row,
+			date: getddmm(row.date)
+		})
+	);
+}
+
 export default async (req, res) => {
 	const { groupid, disciplineid } = req.query;
+
 	const group = await getGroup(groupid);
+
 	const [{ name, discipline }] = await getGroupDisciplineNames(groupid, disciplineid);
+
 	const classdays = await getGroupDisciplineClassDays(groupid, disciplineid);
 	const classdates = classDaysToDates(classdays);
+
+	const groupAP = await getGroupAcademicPerfomance(groupid, disciplineid);
+
+	const groupRows = group.map(person => [
+		person.fullname.split(' ').slice(0, 2).join(' '),
+		...Array.from(
+			{length: classdates.length},
+			() => ``
+		)
+	]);
+
+	groupAP.forEach(ap => {
+		const rowIndex = group.findIndex(student => student.id === ap.studentid);
+		const columnIndex = classdates.indexOf(ap.date);
+		groupRows[rowIndex][columnIndex + 1] = ap.academicperformance;
+	});
 
 	const response = {
 		name: name,
 		discipline: discipline,
 		table: {
 			columnsRow: [name, ...classdates],
-			rows: group.map(person => [
-				person.fullname.split(' ').slice(0, 2).join(' '),
-				...Array.from(
-					{length: classdates.length},
-					() => ``
-				)
-			])
+			rows: groupRows
 		},
 		rawGroup: group
 	};
