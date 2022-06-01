@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: beget-vps
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag esrsp-gui:latest
+    - name: Build the Docker image
+      run: docker-compose up -d --force-recreate
+    - name: Clean docker images
+      run: docker image prune -af
