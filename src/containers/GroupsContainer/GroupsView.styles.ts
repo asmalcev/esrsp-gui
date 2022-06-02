@@ -13,6 +13,10 @@ export default {
 
 	optionLink: ({theme}) => ({
 		textDecoration: 'none',
-		color: theme.palette.primary.contrastText
+		color: theme.palette.primary.contrastText,
+
+		'&.MuiAutocomplete-option': {
+			padding: theme.spacing(2),
+		}
 	})
 };

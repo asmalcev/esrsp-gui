@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 
 const client = new Client({
-	host: '192.168.1.197',
+	host: 'localhost',
 	port: 5432,
 	database: 'esrsp_db',
 	user: 'esrsp',

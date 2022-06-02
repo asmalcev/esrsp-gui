@@ -5,7 +5,7 @@ import {
 	ListItemButton,
 	ListItemText,
 	Autocomplete,
-	TextField
+	TextField,
 } from "@mui/material";
 
 import Layout from "../Layout";
@@ -20,6 +20,9 @@ const GroupsView = ({
 		groupsData = [];
 	}
 
+	/**
+	 * styled components
+	 */
 	const StyledStack = styled(Stack)( styles.stack );
 	const GroupListItem = styled(ListItemButton)( styles.groupListItem );
 	const OptionLink = styled(NextLinkComposed)( styles.optionLink );
@@ -71,12 +74,12 @@ const GroupsView = ({
 		<Layout>
 			<StyledStack spacing={2}>
 				<Autocomplete
-					freeSolo
 					disableClearable
 					options={ groupsData }
 					getOptionLabel={ getOptionLabel }
 					renderInput={ searchTextField }
 					renderOption={ searchOption }
+					noOptionsText="Не найдено"
 				/>
 				<List>
 					{
