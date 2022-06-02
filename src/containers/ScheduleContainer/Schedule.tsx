@@ -8,6 +8,11 @@ import ScheduleView from "./ScheduleView";
 import { isOddWeek } from '../../utils';
 import { months, weekDays } from "./dateData";
 
+
+/**
+ * generate data for rendering
+ * based on schedule and date of the first day 2 weeks
+ */
 const scheduleToData = (schedule, oddMondayDate) => {
 	const currentDate = new Date(oddMondayDate);
 
@@ -31,8 +36,21 @@ const scheduleToData = (schedule, oddMondayDate) => {
 	return data;
 }
 
+const fixDate = (date : Date) : [Date, number] => {
+	const _isOddWeek = isOddWeek(date);
+	const currentDayInOrder = date.getDay() + (_isOddWeek ? 0 : 7);
+
+	const oddMonday = new Date(date);
+	oddMonday.setDate(oddMonday.getDate() - currentDayInOrder + 1); // date of the odd monday
+
+	return [oddMonday, currentDayInOrder];
+}
+
 const Schedule = ({ scheduleData }) => {
 
+	/**
+	 * if schedule data is null | undefined => display skeletons
+	 */
 	if (!scheduleData) {
 		return <Layout>
 			<Stack>
@@ -43,15 +61,17 @@ const Schedule = ({ scheduleData }) => {
 		</Layout>;
 	}
 
-	const [currentDate, setCurrentDate] = useState(new Date());
-	const _isOddWeek = isOddWeek(currentDate);
-	const currentDayInOrder = currentDate.getDay() + (_isOddWeek ? 0 : 7);
 
-	currentDate.setDate(currentDate.getDate() - currentDayInOrder + 1); // date of the odd monday
+	const currentDate = useRef<Date>(new Date());
+	const [oddMonday, currentDayInOrder] = fixDate(currentDate.current);
+	const currentIndex = useRef(currentDayInOrder - 1);
 
-	const [data, updateData] = useState( scheduleToData(scheduleData, currentDate) );
-	const currentIndex = useRef(currentDayInOrder);
+	const [data, updateData] = useState( scheduleToData(scheduleData, oddMonday) );
 
+
+	/**
+	 * called when one of the loaders appears in viewport
+	 */
 	const handleLoader = loaderType => {
 		if (loaderType === 'upper') {
 			const oddMondayDate = new Date(data[0].date.jsdate);
@@ -68,18 +88,22 @@ const Schedule = ({ scheduleData }) => {
 		}
 	}
 
-	const handleCurrentDateUpdate = (value : Date) => {
-		setCurrentDate(value);
-		updateData( scheduleToData(scheduleData, currentDate) );
+
+	const onCurrentDateUpdate = (value : Date) => {
+		currentDate.current = value;
+		const [oddMonday, currentDayInOrder] = fixDate(currentDate.current);
+		currentIndex.current = currentDayInOrder - 1;
+
+		updateData( scheduleToData(scheduleData, oddMonday) );
 	}
 
 	return (
 		<ScheduleView
 			scheduleData={ data }
-			currentIndex={ currentIndex.current - 1 }
+			currentIndex={ currentIndex.current }
 			handleLoader={ handleLoader }
-			updateCurrentDate={ handleCurrentDateUpdate }
-			currentDate={ currentDate }/>
+			updateCurrentDate={ onCurrentDateUpdate }
+			currentDate={ currentDate.current }/>
 	);
 }
 

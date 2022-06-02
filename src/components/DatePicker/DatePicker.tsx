@@ -20,6 +20,8 @@ type DatePickerProps = {
 	onChangeHandler?: (newValue : any) => void;
 }
 
+const StyledMuiDatePicker = styled(MuiDatePicker)( styles.datePicker );
+
 const DatePicker = ({
 		mask,
 		label,
@@ -49,8 +51,6 @@ const DatePicker = ({
 	const onClose = () => {
 		setIsOpen(false);
 	}
-
-	const StyledMuiDatePicker = styled(MuiDatePicker)( styles.datePicker );
 
 	const getTextField = params => (
 		<TextField
