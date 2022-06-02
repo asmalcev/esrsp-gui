@@ -5,7 +5,6 @@ import {
 	Typography,
 	IconButton,
 	Icon,
-	TextField,
 	Stack,
 	MenuItem
 } from '@mui/material';
@@ -13,13 +12,13 @@ import {
 import {
 	useState,
 	useRef,
-	useEffect,
 } from 'react';
 
 import Select from '../../common/Select';
 import { jwtfetch } from '../../utils';
 
 import styles from './GroupGrid.styles';
+import StyledTooltip from '../StyledTooltip';
 
 
 const selectValues = [
@@ -45,7 +44,6 @@ const GroupGrid = ({
 	const GridLayoutContainer = styled('form')( styles.gridLayout.bind(null, layoutProps) );
 	const GridCell = styled('div')( styles.gridCell.bind(null, layoutProps) );
 	const IconsContainer = styled(Stack)( styles.iconsContainer );
-	// const CellInput = styled(TextField)( styles.cellInput );
 	const CellInput = styled(Select)( styles.cellInput );
 
 	const firstRowElements = columns.map(
@@ -78,7 +76,6 @@ const GroupGrid = ({
 		/**
 		 * now done with select with no validation
 		 */
-
 		const shouldClear = (value : string) : boolean => value === 'Очистить';
 
 		return (
@@ -103,19 +100,6 @@ const GroupGrid = ({
 				</CellInput>
 			</GridCell>
 		);
-		// return (
-		// 	<GridCell
-		// 		key={`${i} ${j}`}
-		// 	>
-		// 		<CellInput
-		// 			variant="standard"
-		// 			color="secondary"
-		// 			name={`${i} ${j}`}
-		// 		>
-		// 			{ cell }
-		// 		</CellInput>
-		// 	</GridCell>
-		// );
 	}));
 
 
@@ -208,7 +192,7 @@ const GroupGrid = ({
 		 );
 
 		if (formDiff.length) {
-			jwtfetch('/api/academicperformance', 'POST', {
+			jwtfetch('/api/academicperformance', {
 				data: formDiff,
 				disciplineid: router.query?.disciplineid
 			});
@@ -226,22 +210,30 @@ const GroupGrid = ({
 			}
 		</GridLayoutContainer>
 		<IconsContainer spacing={2}>
-			<IconButton
-				onClick={onEditButtonClick}
-				color={editMode ? 'secondary' : 'default'}
-				sx={{
-					backgroundColor: editMode ? 'rgba(0, 0, 0, 0.04)' : ''
-				}}>
-				<Icon>edit</Icon>
-			</IconButton>
+			<StyledTooltip
+				title="Редактировать"
+				placement="left">
+				<IconButton
+					onClick={onEditButtonClick}
+					color={editMode ? 'secondary' : 'default'}
+					sx={{
+						backgroundColor: editMode ? 'rgba(0, 0, 0, 0.04)' : ''
+					}}>
+					<Icon>edit</Icon>
+				</IconButton>
+			</StyledTooltip>
 			{
 				editMode &&
-				<IconButton
-					onClick={onSaveButtonClick}
-					type="submit"
-					color="secondary">
-					<Icon>save</Icon>
-				</IconButton>
+				<StyledTooltip
+					title="Сохранить"
+					placement="left">
+					<IconButton
+						onClick={onSaveButtonClick}
+						type="submit"
+						color="secondary">
+						<Icon>save</Icon>
+					</IconButton>
+				</StyledTooltip>
 			}
 		</IconsContainer>
 	</>;

@@ -9,7 +9,7 @@ import ru_locale from 'dayjs/locale/ru';
 
 import styles from './DatePicker.styles';
 
-interface DatePickerProps {
+type DatePickerProps = {
 	stdValue?: Date | string | number;
 
 	label?: string;

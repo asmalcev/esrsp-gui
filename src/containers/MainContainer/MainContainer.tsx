@@ -15,18 +15,18 @@ import UserInfo from '../../components/UserInfo';
 
 import styles from './MainContainer.styles';
 
+
+const GridContainer = styled('div')( styles.gridContainer );
+const ContentContainer = styled('div')( styles.contentContainer );
+const FooterContainer = styled('div')( styles.footerContainer )
+
+const Menu = styled(Stack)( styles.menu );
+const Header = styled(AppBar)( styles.appBar );
+const Footer = styled(Stack)( styles.footer );
+
 const MainContainer = ({ children }) => {
 
 	const router = useRouter();
-
-	const GridContainer = styled('div')( styles.gridContainer );
-	const ContentContainer = styled('div')( styles.contentContainer );
-	const FooterContainer = styled('div')( styles.footerContainer )
-
-	const Menu = styled(Stack)( styles.menu );
-	const Header = styled(AppBar)( styles.appBar );
-	const Footer = styled(Stack)( styles.footer );
-
 
 	const linksData = [
 		{
@@ -99,7 +99,7 @@ const MainContainer = ({ children }) => {
 						justifyContent="space-between"
 					>
 						<Typography variant="subtitle1">&copy; Alexander Malcev</Typography>
-						<Typography variant="subtitle1">v0.1.0</Typography>
+						<Typography variant="subtitle1">v0.9.1</Typography>
 					</Footer>
 				</FooterContainer>
 			</Menu>

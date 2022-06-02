@@ -4,7 +4,8 @@
 3) axios вместо fetch
 4) AuthService для запросов
 5) переработать if-ы в mount useEffect в AuthContainer
-6) доделать AuthContainer и AuthForm
+6) доделать AuthContainer и AuthForm ✅
 7) хранить хэши паролей
 8) требовать jwt на всех страницах и всех api
 9) проверять, может ли пользователь редактировать данные
+10) исправить прыгающую AuthForm
