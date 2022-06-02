@@ -41,7 +41,7 @@ const fixDate = (date : Date) : [Date, number] => {
 	const currentDayInOrder = date.getDay() + (_isOddWeek ? 0 : 7);
 
 	const oddMonday = new Date(date);
-	oddMonday.setDate(oddMonday.getDate() - currentDayInOrder + 1); // date of the odd monday
+	oddMonday.setDate(oddMonday.getDate() - currentDayInOrder); // date of the odd monday
 
 	return [oddMonday, currentDayInOrder];
 }
@@ -64,7 +64,7 @@ const Schedule = ({ scheduleData }) => {
 
 	const currentDate = useRef<Date>(new Date());
 	const [oddMonday, currentDayInOrder] = fixDate(currentDate.current);
-	const currentIndex = useRef(currentDayInOrder - 1);
+	const currentIndex = useRef(currentDayInOrder);
 
 	const [data, updateData] = useState( scheduleToData(scheduleData, oddMonday) );
 
@@ -92,7 +92,7 @@ const Schedule = ({ scheduleData }) => {
 	const onCurrentDateUpdate = (value : Date) => {
 		currentDate.current = value;
 		const [oddMonday, currentDayInOrder] = fixDate(currentDate.current);
-		currentIndex.current = currentDayInOrder - 1;
+		currentIndex.current = currentDayInOrder;
 
 		updateData( scheduleToData(scheduleData, oddMonday) );
 	}
