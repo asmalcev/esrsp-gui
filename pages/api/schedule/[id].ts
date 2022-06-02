@@ -1,5 +1,6 @@
 import client from '../../../src/db';
 import { groupBy } from '../../../src/utils';
+import { jwtcheck } from '../auth';
 
 const getSchedule = async id => {
 	const schedule = await client.query(`
@@ -62,6 +63,18 @@ const getSchedule = async id => {
 
 export default async (req, res) => {
 	const { id } = req.query;
+
+	if (req.method !== 'POST') {
+		res.status(400).json({text: 'Only POST method'});
+		return;
+	}
+	const jbody = jwtcheck(req.body);
+	if (!jbody) {
+		res.status(401).json({text: 'Wrong JWT or it was not provided'});
+		return;
+	}
+
+
 	const response = await getSchedule(id);
 
 	res.status(200).json(response);

@@ -8,13 +8,11 @@ import {
 
 import styles from './EventCard.styles';
 
+const Container = styled(Paper)( styles.container );
+const Content = styled('div')( styles.content );
+const ArrowDownward = styled(Icon)( styles.arrow );
+
 const EventCard = ({ data, customRef, ...rest }) => {
-
-	const Container = styled(Paper)( styles.container );
-	const Content = styled('div')( styles.content );
-
-	const ArrowDownward = styled(Icon)( styles.arrow );
-	
 	return (
 		<Container ref={ customRef } {...rest}>
 			<Stack

@@ -75,10 +75,9 @@ const getddmm = (date : Date) : string => {
 
 const jwtfetch = (
 	url: string,
-	method?: 'POST' | 'GET' | 'PUT' | 'DELETE',
 	body?: object
 ) => fetch(url, {
-	method: method || 'GET',
+	method: 'POST',
 	body: JSON.stringify({
 		jwt: window.localStorage[localStorageKeys.jwt],
 		...body

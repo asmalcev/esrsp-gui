@@ -13,6 +13,10 @@ import { NextLinkComposed } from "../../components/NextLinkCompose";
 
 import styles from './GroupsView.styles';
 
+const StyledStack = styled(Stack)( styles.stack );
+const GroupListItem = styled(ListItemButton)( styles.groupListItem );
+const OptionLink = styled(NextLinkComposed)( styles.optionLink );
+
 const GroupsView = ({
 	groupsData
 }) => {
@@ -20,21 +24,13 @@ const GroupsView = ({
 		groupsData = [];
 	}
 
-	/**
-	 * styled components
-	 */
-	const StyledStack = styled(Stack)( styles.stack );
-	const GroupListItem = styled(ListItemButton)( styles.groupListItem );
-	const OptionLink = styled(NextLinkComposed)( styles.optionLink );
-
-
 	const groups = groupsData.map(group =>
 		<GroupListItem
 			key={`${group.groupid}-${group.disciplineid}`}
 			// @ts-ignore
 			component={ NextLinkComposed }
 			to={{
-				pathname: `/groups/${group.groupid}/${group.disciplineid}`
+				pathname: `/group/${group.groupid}/${group.disciplineid}`
 			}}
 		>
 			<ListItemText>{`${group.groupname} - ${group.discipline}`}</ListItemText>
@@ -58,7 +54,7 @@ const GroupsView = ({
 			<OptionLink
 				{...params}
 				to={{
-					pathname: `/groups/${option.groupid}/${option.disciplineid}`
+					pathname: `/group/${option.groupid}/${option.disciplineid}`
 				}}
 			>
 				{`${option.groupname} - ${option.discipline}`}

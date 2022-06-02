@@ -11,6 +11,10 @@ import { throttle } from "../../utils";
 
 import styles from './ScheduleView.styles';
 
+
+const DaysContainer = styled('div')( styles.daysContainer );
+const DatePickerContainer = styled('div')( styles.datePickerContainer );
+
 const ScheduleView = ({
 	scheduleData,
 	currentIndex,
@@ -42,13 +46,6 @@ const ScheduleView = ({
 	 * 'secondOddMonday' - need after uploading data from above
 	 */
 	const [ scrollTargetType, setScrollTargetType ] = useState<null | string>('today');
-
-
-	/**
-	 * styled components
-	 */
-	const DaysContainer = styled('div')( styles.daysContainer );
-	const DatePickerContainer = styled('div')( styles.datePickerContainer );
 
 
 	/**

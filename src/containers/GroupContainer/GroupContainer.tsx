@@ -8,12 +8,11 @@ import Layout from '../Layout';
 
 import styles from './GroupContainer.styles';
 
+const StyledLayout = styled(Layout)( styles.layout );
+
 const GroupContainer = ({
 	groupData
 }) => {
-
-	const StyledLayout = styled(Layout)( styles.layout );
-
 	return <StyledLayout>
 		<Typography variant="h2">{ groupData.discipline }</Typography>
 		<GroupGrid data={ groupData }/>

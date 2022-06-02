@@ -5,6 +5,8 @@ import { useApp } from './_app';
 import MainContainer from '../src/containers/MainContainer';
 import ScheduleContainer from '../src/containers/ScheduleContainer';
 
+import { jwtfetch } from '../src/utils';
+
 const Schedule = () => {
 	const { user } = useApp();
 
@@ -13,7 +15,7 @@ const Schedule = () => {
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await fetch(`/api/schedule/${user.id}`);
+			const res = await jwtfetch(`/api/schedule/${user.id}`);
 			setScheduleData(await res.json());
 		}
 

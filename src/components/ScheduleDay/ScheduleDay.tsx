@@ -6,11 +6,10 @@ import EventCard from "../EventCard";
 
 import styles from './ScheduleDay.styles';
 
+const DayName = styled(Typography)( styles.dayName );
+const ZeroLessons = styled(Typography)( styles.zeroLessons );
+
 const ScheduleDay = ({ dayData, customRef }) => {
-
-	const DayName = styled(Typography)( styles.dayName );
-	const ZeroLessons = styled(Typography)( styles.zeroLessons );
-
 	const lessons = dayData.lessons.map((lesson, index) =>
 		<EventCard
 			key={ lesson.name + index }

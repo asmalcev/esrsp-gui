@@ -4,7 +4,7 @@ import { useApp, localStorageKeys } from "../../../pages/_app";
 const UserInfo = () => {
 	const { user, updateUser } = useApp();
 
-	const clickHandler = () => {
+	const onClick = () => {
 		window.localStorage.removeItem(localStorageKeys.jwt);
 		updateUser({
 			loggedin: false
@@ -18,7 +18,7 @@ const UserInfo = () => {
 		<Typography>{ user.name }</Typography>
 		<Button
 			color="secondary"
-			onClick={clickHandler}
+			onClick={onClick}
 			sx={{
 				marginLeft: '16px'
 			}}
