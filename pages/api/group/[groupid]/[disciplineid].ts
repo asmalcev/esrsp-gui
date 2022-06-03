@@ -1,5 +1,6 @@
 import client from '../../../../src/db';
 import { isOddWeek, getddmm } from '../../../../src/utils';
+import { jwtcheck } from '../../auth';
 
 const getGroup = async groupid => {
 	const group = await client.query(`
@@ -88,6 +89,16 @@ const getGroupAcademicPerfomance = async (groupid, disciplineid) => {
 }
 
 export default async (req, res) => {
+	if (req.method !== 'POST') {
+		res.status(400).json({text: 'Only POST method'});
+		return;
+	}
+	const jbody = jwtcheck(req.body);
+	if (!jbody) {
+		res.status(401).json({text: 'Wrong JWT or it was not provided'});
+		return;
+	}
+
 	const { groupid, disciplineid } = req.query;
 
 	const group = await getGroup(groupid);

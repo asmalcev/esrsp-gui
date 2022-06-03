@@ -52,6 +52,10 @@ const DatePicker = ({
 		setIsOpen(false);
 	}
 
+	const onAccept = () => {
+		setIsOpen(false);
+	}
+
 	const getTextField = params => (
 		<TextField
 			{...params}
@@ -70,6 +74,7 @@ const DatePicker = ({
 				open={ isOpen }
 				onOpen={ onOpen }
 				onClose={ onClose }
+				onAccept={ onAccept }
 				renderInput={ getTextField }/>
 		</LocalizationProvider>
 	);

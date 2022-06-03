@@ -54,6 +54,10 @@ const deleteAcademicPerformance = async (marks : Array<Mark>, disciplineid : num
 }
 
 export default async function(req, res) {
+	if (req.method !== 'POST') {
+		res.status(400).json({text: 'Only POST method'});
+		return;
+	}
 	const jbody = jwtcheck(req.body);
 
 	if (!jbody) {

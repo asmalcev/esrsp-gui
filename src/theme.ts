@@ -8,8 +8,8 @@ declare module '@mui/material/styles' {
 	}
 	
 	interface ThemeOptions {
-		boxShadow: string;
-		borderRadius: string;
+		boxShadow?: string;
+		borderRadius?: string;
 	}
 
 	interface BackgroundObject {
@@ -19,7 +19,7 @@ declare module '@mui/material/styles' {
 	}
 
 	interface Palette {
-		customBackground: BackgroundObject;
+		customBackground?: BackgroundObject;
 	}
 
 	interface PaletteOptions {
@@ -82,4 +82,14 @@ export const theme = createTheme({
 			}
 		},
 	}
+});
+
+
+export const contrastTheme = createTheme(theme, {
+	palette: {
+		customBackground: {
+			dark: 'rgba(0, 0, 0, 0.1)' 
+		}
+	},
+	boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
 });

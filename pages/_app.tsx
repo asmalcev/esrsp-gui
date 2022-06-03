@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material';
 import { createContext, useContext, useState } from 'react';
 
-import { theme } from '../src/theme';
+import { theme, contrastTheme } from '../src/theme';
 import AuthContainer from '../src/containers/AuthContainer';
 
 /**

@@ -18,5 +18,5 @@ export default {
 		'&.MuiAutocomplete-option': {
 			padding: theme.spacing(2),
 		}
-	})
+	}),
 };
