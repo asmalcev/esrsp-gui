@@ -3,6 +3,6 @@ version: '3'
 services:
   esrp-gui: #This is the name of our Nextjs application.
     image: esrsp-gui:latest      
+    restart: always
     network_mode: "host"
-    ports:
-      - "3000:3000"
+
