@@ -1,4 +1,6 @@
+import logger from '../../../services/logger';
 import client from '../../../src/db';
+import { jwtcheck } from '../auth';
 
 const getGroups = async id => {
 	const groups = await client.query(`
@@ -19,6 +21,21 @@ const getGroups = async id => {
 }
 
 export default async (req, res) => {
+	logger.info({
+		url: req.url,
+		method: req.method,
+	});
+
+	if (req.method !== 'POST') {
+		res.status(400).json({text: 'Only POST method'});
+		return;
+	}
+	const jbody = jwtcheck(req.body);
+	if (!jbody) {
+		res.status(401).json({text: 'Wrong JWT or it was not provided'});
+		return;
+	}
+
 	const { id } = req.query;
 	const response = await getGroups(id);
 

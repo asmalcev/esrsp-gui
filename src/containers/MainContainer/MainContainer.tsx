@@ -37,10 +37,6 @@ const MainContainer = ({ children }) => {
 			text: 'Список групп',
 			href: '/groups'
 		},
-		// {
-		// 	text: 'Мероприятия',
-		// 	href: '/events'
-		// }
 	];
 
 	const links = linksData.map(linkData => {
@@ -86,20 +82,20 @@ const MainContainer = ({ children }) => {
 				</List>
 
 				<FooterContainer>
-					<List>
+					{/* <List>
 						<ListItemButton>
 							<ListItemText>Настройки</ListItemText>
 						</ListItemButton>
 						<ListItemButton>
 							<ListItemText>Справка</ListItemText>
 						</ListItemButton>
-					</List>
+					</List> */}
 					<Footer
 						direction="row"
 						justifyContent="space-between"
 					>
 						<Typography variant="subtitle1">&copy; Alexander Malcev</Typography>
-						<Typography variant="subtitle1">v0.9.1</Typography>
+						<Typography variant="subtitle1">v0.9.2</Typography>
 					</Footer>
 				</FooterContainer>
 			</Menu>

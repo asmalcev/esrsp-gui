@@ -42,7 +42,6 @@ const ScheduleView = ({
 	 * define scroll target type:
 	 * null |
 	 * 'today' |
-	 * 'choosedDate' |
 	 * 'secondOddMonday' - need after uploading data from above
 	 */
 	const [ scrollTargetType, setScrollTargetType ] = useState<null | string>('today');
@@ -52,7 +51,8 @@ const ScheduleView = ({
 	 * date picker change handler
 	 */
 	const onDateChange = value => {
-		updateCurrentDate( value?.$d );
+		updateCurrentDate(value?.$d);
+		setScrollTargetType('today');
 	}
 
 
@@ -137,13 +137,13 @@ const ScheduleView = ({
 				data-loader="lower"/>
 		</DaysContainer>
 
-		{/* <DatePickerContainer data-scroll-follow>
+		<DatePickerContainer data-scroll-follow>
 			<DatePicker
 				label="Перейти к дате"
 				helperText="Выберете дату, чтобы перейти к ней в расписании"
 				onChangeHandler={ onDateChange }
 				stdValue={ currentDate }/>
-		</DatePickerContainer> */}
+		</DatePickerContainer>
 	</Layout>;
 }
 

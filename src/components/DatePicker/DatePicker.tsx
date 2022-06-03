@@ -20,6 +20,8 @@ type DatePickerProps = {
 	onChangeHandler?: (newValue : any) => void;
 }
 
+const StyledMuiDatePicker = styled(MuiDatePicker)( styles.datePicker );
+
 const DatePicker = ({
 		mask,
 		label,
@@ -50,7 +52,9 @@ const DatePicker = ({
 		setIsOpen(false);
 	}
 
-	const StyledMuiDatePicker = styled(MuiDatePicker)( styles.datePicker );
+	const onAccept = () => {
+		setIsOpen(false);
+	}
 
 	const getTextField = params => (
 		<TextField
@@ -70,6 +74,7 @@ const DatePicker = ({
 				open={ isOpen }
 				onOpen={ onOpen }
 				onClose={ onClose }
+				onAccept={ onAccept }
 				renderInput={ getTextField }/>
 		</LocalizationProvider>
 	);
