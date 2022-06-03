@@ -1,3 +1,4 @@
+import logger from '../../services/logger';
 import client from '../../src/db';
 import { groupBy } from '../../src/utils';
 import { jwtcheck } from './auth';
@@ -54,6 +55,11 @@ const deleteAcademicPerformance = async (marks : Array<Mark>, disciplineid : num
 }
 
 export default async function(req, res) {
+	logger.info({
+		url: req.url,
+		method: req.method,
+	});
+
 	if (req.method !== 'POST') {
 		res.status(400).json({text: 'Only POST method'});
 		return;

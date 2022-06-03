@@ -1,3 +1,4 @@
+import logger from '../../../services/logger';
 import client from '../../../src/db';
 import { groupBy } from '../../../src/utils';
 import { jwtcheck } from '../auth';
@@ -62,6 +63,11 @@ const getSchedule = async id => {
 }
 
 export default async (req, res) => {
+	logger.info({
+		url: req.url,
+		method: req.method,
+	});
+
 	const { id } = req.query;
 
 	if (req.method !== 'POST') {

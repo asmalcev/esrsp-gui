@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import logger from '../../services/logger';
 import client from '../../src/db';
 
 const getAccounts = async (login : string) => {
@@ -23,6 +24,11 @@ const getAccountInfo = async (usertype : number, userid : number) => {
 const SECRET_KEY = '3sG&Z-J5T3LE$?vRGy#*+6?hu#@aKZD9tR2L^A?2AR-gmSDDaHW_?5Uzdur_^FtPe88+42jy&tYvGU*7hZ%@7-AaBJ3n!YFt&v*CMTUd+LueWM-aUW5EWSF$En*Ypz8H';
 
 export default async function(req, res) {
+	logger.info({
+		url: req.url,
+		method: req.method,
+	});
+
 	if (req.method !== 'POST') {
 		res.status(400).json({text: 'Only POST method'});
 		return;

@@ -1,3 +1,4 @@
+import logger from '../../../services/logger';
 import client from '../../../src/db';
 import { jwtcheck } from '../auth';
 
@@ -20,6 +21,11 @@ const getGroups = async id => {
 }
 
 export default async (req, res) => {
+	logger.info({
+		url: req.url,
+		method: req.method,
+	});
+
 	if (req.method !== 'POST') {
 		res.status(400).json({text: 'Only POST method'});
 		return;
