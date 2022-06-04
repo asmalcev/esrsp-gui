@@ -12,6 +12,7 @@ import {
 import {
 	useState,
 	useRef,
+	useEffect,
 } from 'react';
 
 import Select from '../../common/Select';
@@ -25,6 +26,10 @@ const selectValues = [
 	'2', '3', '4', '5', 'н', 'Очистить'
 ];
 
+const IconsContainer = styled(Stack)( styles.iconsContainer );
+const CellInput = styled(Select)( styles.cellInput );
+const FloatingStack = styled(Stack)( styles.floatingStack );
+
 const GroupGrid = ({
 	data
 }) => {
@@ -32,38 +37,59 @@ const GroupGrid = ({
 
 	const [editMode, setEditMode] = useState<boolean>(false);
 	const formRef = useRef(null);
-	const filledCells = useRef(null);
 
 	const columns = data.table.columnsRow;
 	const rows = data.table.rows;
 
 	const layoutProps = {
-		columns: columns.length
+		columns: columns.length - 1
 	};
 
+	/**
+	 * styled components
+	 */
 	const GridLayoutContainer = styled('form')( styles.gridLayout.bind(null, layoutProps) );
 	const GridCell = styled('div')( styles.gridCell.bind(null, layoutProps) );
-	const IconsContainer = styled(Stack)( styles.iconsContainer );
-	const CellInput = styled(Select)( styles.cellInput );
+
+	const floatingColumnContent = [];
 
 	const firstRowElements = columns.map(
 		(
 			column,
 			index
-		) => (
-		<GridCell
-			key={column}
-		>
-			{
-				index === 0 ?
-				( <Typography variant="h2">{ column }</Typography> ) :
-				column
+		) => {
+			if (index === 0) {
+				floatingColumnContent.push((
+					<GridCell key={column} className="first-column">
+						<Typography variant="h2">{ column }</Typography>
+					</GridCell>
+				));
+
+				return null;
 			}
-		</GridCell>
-	));
+
+			return (
+				<GridCell key={column}>
+					{ column }
+				</GridCell>
+			);
+		});
 
 	const otherRowsElements = rows.map((row, i) => row.map((cell, j) => {
-		if (!editMode || j === 0) {
+		if (j === 0) {
+			floatingColumnContent.push((
+				<GridCell
+					key={`${i} ${j}`}
+					className="first-column"
+				>
+					{ cell }
+				</GridCell>
+			));
+
+			return null;
+		}
+
+		if (!editMode) {
 			return (
 				<GridCell
 					key={`${i} ${j}`}
@@ -103,17 +129,12 @@ const GroupGrid = ({
 	}));
 
 
-	const onEditButtonClick = e => {
-		setEditMode(!editMode);
-	}
 
-	const onSaveButtonClick = e => {
-		e.preventDefault();
-
+	const computeDiff = () => {
 		/**
 		 * compute all academic performance that already exists in the table
 		 */
-		filledCells.current = data.table.rows.map(
+		 const initialCells = data.table.rows.map(
 			(row, i) => row.slice(1).map(
 				(cell, j) => ({
 					indexes: [i, j],
@@ -136,24 +157,24 @@ const GroupGrid = ({
 				const dateString = `2022.${reversedDate.join('.')}`;
 				const studentid = data.rawGroup[indexes[0]].id;
 
-				const startTableIndex = filledCells.current.findIndex(
+				const startTableIndex = initialCells.findIndex(
 					cell => cell.indexes[0] == indexes[0] && cell.indexes[1] == (indexes[1] - 1)
 				);
 				if (startTableIndex > -1) {
 					/**
 					 * if there is already exists element in start table
 					 */
-					if (filledCells.current[startTableIndex].value === input.value) {
+					if (initialCells[startTableIndex].value === input.value) {
 						/**
 						 * if the same value => null to filter
 						 */
-						 filledCells.current.splice(startTableIndex, 1);
+						 initialCells.splice(startTableIndex, 1);
 						return null;
 					} else {
 						/**
 						 * if value changed => return update request
 						 */
-						filledCells.current.splice(startTableIndex, 1);
+						initialCells.splice(startTableIndex, 1);
 						data.table.rows[indexes[0]][indexes[1]] = input.value;
 						return {
 							method: 'update',
@@ -175,7 +196,7 @@ const GroupGrid = ({
 			/**
 			 * all the elements that remain in start array has been deleted => need to add them like diff 'delete'
 			 */
-			filledCells.current.map(cell => {
+			initialCells.map(cell => {
 				const reversedDate = columns[cell.indexes[1] + 1].split('.');
 				reversedDate.reverse();
 	
@@ -191,49 +212,148 @@ const GroupGrid = ({
 			})
 		 );
 
+		return formDiff;
+	}
+
+
+
+	const checkUnsavedData = () => {
+		if (!formRef.current) {
+			return;
+		}
+
+		const formDiff = computeDiff();
+
+		if (formDiff.length) {
+			/**
+			 * if there are unsaved changes
+			 */
+			const shouldSave = confirm('Несохраненные данные будут потеряны. Сохранить?');
+
+			if (shouldSave) {
+				jwtfetch('/api/academicperformance', {
+					data: formDiff,
+					disciplineid: router.query?.disciplineid
+				});
+			}
+		}
+	}
+
+	/**
+	 * Router event handlers
+	 */
+	useEffect(() => {
+		router.events.on('routeChangeStart', checkUnsavedData);
+
+		// const browserUnsavedCheck = e => {
+		// 	const formDiff = computeDiff();
+
+		// 	if (formDiff.length) {
+		// 		e.preventDefault();
+		// 		e.returnValue = '';
+		// 	}
+		// }
+
+		// window.addEventListener('beforeunload', browserUnsavedCheck);
+
+		return () => {
+			router.events.off('routeChangeStart', checkUnsavedData);
+			// window.removeEventListener('beforeunload', browserUnsavedCheck);
+		}
+	}, []);
+
+
+
+	/**
+	 * Event handlers
+	 */
+	const saveData = () => {
+		const formDiff = computeDiff();
+
 		if (formDiff.length) {
 			jwtfetch('/api/academicperformance', {
 				data: formDiff,
 				disciplineid: router.query?.disciplineid
 			});
 		}
+	}
+
+	const onEditButtonClick = e => {
+		if (editMode) {
+			saveData();
+		}
 		setEditMode(!editMode);
 	}
 
+	const onSaveButtonClick = e => {
+		e.preventDefault();
+
+		saveData();
+		setEditMode(false);
+	}
+
+	const onCancelButtonClick = e => {
+		const shouldCancel = confirm('Вся несохраненная информация удалится. Продолжить?');
+
+		if (shouldCancel) {
+			setEditMode(false);
+		}
+	}
+
 	return <>
-		<GridLayoutContainer className="styled-scroll" ref={formRef}>
-			{
-				firstRowElements
-			}
-			{
-				otherRowsElements
-			}
-		</GridLayoutContainer>
+		<Stack flexDirection="row">
+			<FloatingStack>
+				{
+					floatingColumnContent
+				}
+			</FloatingStack>
+			<GridLayoutContainer
+				className="styled-scroll"
+				ref={editMode ? formRef : null}
+			>
+				{
+					firstRowElements
+				}
+				{
+					otherRowsElements
+				}
+			</GridLayoutContainer>
+		</Stack>
 		<IconsContainer spacing={2}>
-			<StyledTooltip
-				title="Редактировать"
-				placement="left">
-				<IconButton
-					onClick={onEditButtonClick}
-					color={editMode ? 'secondary' : 'default'}
-					sx={{
-						backgroundColor: editMode ? 'rgba(0, 0, 0, 0.04)' : ''
-					}}>
-					<Icon>edit</Icon>
-				</IconButton>
-			</StyledTooltip>
 			{
-				editMode &&
-				<StyledTooltip
-					title="Сохранить"
-					placement="left">
-					<IconButton
-						onClick={onSaveButtonClick}
-						type="submit"
-						color="secondary">
-						<Icon>save</Icon>
-					</IconButton>
-				</StyledTooltip>
+				editMode ? (<>
+					<StyledTooltip
+						title="Сохранить"
+						placement="left">
+						<IconButton
+							onClick={ onSaveButtonClick }
+							type="submit"
+							color="secondary"
+						>
+							<Icon>save</Icon>
+						</IconButton>
+					</StyledTooltip>
+					<StyledTooltip
+						title="Отменить"
+						placement="left">
+						<IconButton
+							onClick={ onCancelButtonClick }
+							type="submit"
+						>
+							<Icon>close</Icon>
+						</IconButton>
+					</StyledTooltip>
+				</>) : (
+					<StyledTooltip
+						title="Редактировать"
+						placement="left">
+						<IconButton
+							onClick={ onEditButtonClick }
+						>
+							<Icon>edit</Icon>
+						</IconButton>
+					</StyledTooltip>
+				)
 			}
 		</IconsContainer>
 	</>;

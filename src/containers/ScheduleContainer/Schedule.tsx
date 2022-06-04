@@ -37,6 +37,10 @@ const scheduleToData = (schedule, oddMondayDate) => {
 }
 
 const fixDate = (date : Date) : [Date, number] => {
+	if (!date) {
+		date = new Date();
+	}
+
 	const _isOddWeek = isOddWeek(date);
 	const currentDayInOrder = date.getDay() + (_isOddWeek ? 0 : 7);
 
