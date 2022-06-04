@@ -1,5 +1,5 @@
 import logger from '../../../services/logger';
-import client from '../../../src/db';
+import client from '../../../services/db';
 import { jwtcheck } from '../auth';
 
 const getGroups = async id => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import logger from '../../services/logger';
-import client from '../../src/db';
+import client from '../../services/db';
 
 const getAccounts = async (login : string) => {
 	const accounts = await client.query(`
@@ -21,8 +21,6 @@ const getAccountInfo = async (usertype : number, userid : number) => {
 	}
 }
 
-const SECRET_KEY = '3sG&Z-J5T3LE$?vRGy#*+6?hu#@aKZD9tR2L^A?2AR-gmSDDaHW_?5Uzdur_^FtPe88+42jy&tYvGU*7hZ%@7-AaBJ3n!YFt&v*CMTUd+LueWM-aUW5EWSF$En*Ypz8H';
-
 export default async function(req, res) {
 	logger.info({
 		url: req.url,
@@ -40,17 +38,7 @@ export default async function(req, res) {
 		 */
 		const jbody = JSON.parse(req.body);
 
-		if (jbody.jwt) {
-			/**
-			 * if body contains jwt
-			 */
-			try {
-				const decoded = jwt.verify(jbody.jwt, SECRET_KEY);
-				res.status(200).json(decoded);
-			} catch(err) {
-				res.status(401).json({text: 'Not valid JWT', err: err});
-			}
-		} else if (jbody.login && jbody.password) {
+		if (jbody.login && jbody.password) {
 			/**
 			 * if body contains credentials - login and password
 			 */
@@ -78,7 +66,7 @@ export default async function(req, res) {
 						userid: accounts[0].userid,
 						usertype: accounts[0].usertype,
 						...accountInfo
-					}, SECRET_KEY);
+					}, process.env['SECRET_KEY']);
 
 					res.status(200).json({
 						jwt: token,
@@ -88,6 +76,16 @@ export default async function(req, res) {
 						...accountInfo
 					});
 				}
+			}
+		} else if (jbody.jwt) {
+			/**
+			 * if body contains jwt
+			 */
+			try {
+				const decoded = jwt.verify(jbody.jwt, process.env['SECRET_KEY']);
+				res.status(200).json(decoded);
+			} catch(err) {
+				res.status(401).json({text: 'Not valid JWT', err: err});
 			}
 		} else {
 			/**
@@ -122,7 +120,7 @@ export const jwtcheck = (body : string) : object | null => {
 		/**
 		 * return jbody with decoded if all is ok
 		 */
-		const decoded = jwt.verify(jbody.jwt, SECRET_KEY);
+		const decoded = jwt.verify(jbody.jwt, process.env['SECRET_KEY']);
 		return {
 			...jbody,
 			jwt: decoded,
