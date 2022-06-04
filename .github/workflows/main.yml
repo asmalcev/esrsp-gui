@@ -22,5 +22,8 @@ jobs:
       run: docker-compose up -d --force-recreate
     - name: Clean docker images
       run: docker image prune -af
-#       env:
-#         productionSecrets: ${{ secrets.productionSecrets }}
+      env:
+        DB: ${{ secrets.DB }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_USER: ${{ secrets.DB_USER }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
