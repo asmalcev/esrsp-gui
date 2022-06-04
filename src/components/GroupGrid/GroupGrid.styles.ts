@@ -2,16 +2,22 @@ interface LayoutProps {
 	columns: number;
 }
 
+const LayoutConsts = {
+	firstColumnWidth: 30,
+	cellHeight: 8.5,
+	minCellWidth: 6
+};
+
 export default {
 	gridLayout: (
 		props : LayoutProps,
 		{ theme }
 	) => ({
 		display: 'grid',
-		gridTemplateColumns: `${theme.spacing(30)} repeat(${props.columns - 1}, max-content)`,
+		gridTemplateColumns: `repeat(${props.columns}, max-content)`,
 
 		paddingBottom: theme.spacing(1),
-		marginRight: theme.spacing(6),
+		marginRight: theme.spacing(LayoutConsts.minCellWidth),
 
 		'&': {
 			overflowX: 'auto'
@@ -22,26 +28,20 @@ export default {
 		props : LayoutProps,
 		{ theme }
 	) => ({
-		minWidth: theme.spacing(6),
+		minWidth: theme.spacing(LayoutConsts.minCellWidth),
+		height: theme.spacing(LayoutConsts.cellHeight),
 		padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
 
-		'&': {
-			textAlign: 'center',
-		},
-
-		/**
-		 * First column
-		 */
-		[`&:nth-of-type(${props.columns}n + 1)`]: {
-			textAlign: 'left',
-		},
+		whiteSpace: 'nowrap',
+		textAlign: 'center',
 
 		/**
 		 * Not first column
 		 */
-		[`&:not(:nth-of-type(${props.columns}n + 1), :nth-of-type(${props.columns}n + 2))`]: {
+		[`&:not(:nth-of-type(${props.columns}n + 1))`]: {
 			borderLeft: `0.5px solid ${theme.palette.primary.dark}`
 		},
+
 
 		/**
 		 * Only even rows
@@ -52,11 +52,28 @@ export default {
 				(_, i) => `&:nth-of-type(${props.columns * 2}n + ${i + 1 + props.columns})`
 			).join(',')
 		]: {
-			background: 'rgba(0, 0, 0, 0.05)'
+			background: theme.palette.customBackground.dark
 		},
-		'&:hover': {
-			// background: 'rgba(0, 0, 0, 0.1)'
-		}
+
+		/**
+		 * First column special css class
+		 */
+		'&.first-column': {
+			overflow: 'hidden',
+
+			width: theme.spacing(LayoutConsts.firstColumnWidth),
+			border: 'none',
+
+			textAlign: 'left',
+			textOverflow: 'ellipsis',
+		},
+
+		/**
+		 * First column special css class - only even rows
+		 */
+		'&.first-column:nth-of-type(2n)': {
+			background: theme.palette.customBackground.dark
+		},
 	}),
 
 	iconsContainer: ({theme}) => ({
@@ -72,5 +89,24 @@ export default {
 
 	cellInput: ({theme}) => ({
 		width: theme.spacing(6)
-	})
+	}),
+
+	floatingStack: ({theme}) => ({
+		width: theme.spacing(LayoutConsts.firstColumnWidth),
+
+		'&': {
+			position: 'relative',
+		},
+
+		'&::after': {
+			content: `''`,
+			position: 'absolute',
+			top: 0,
+			left: '100%',
+
+			width: '10px',
+			height: `calc(100% - ${theme.spacing(2)})`,
+			background: 'linear-gradient(to right, #0001, #0000)',
+		}
+	}),
 };

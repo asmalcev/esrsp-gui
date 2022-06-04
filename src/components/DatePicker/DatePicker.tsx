@@ -30,7 +30,7 @@ const DatePicker = ({
 		onChangeHandler
 	} : DatePickerProps) => {
 	const [value, setValue] = useState<Date | string | number>(stdValue || new Date());
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [open, setOpen] = useState<boolean>(false);
 
 	const onChange = newValue => {
 		setValue(newValue);
@@ -40,20 +40,33 @@ const DatePicker = ({
 	/**
 	 * DatePicker was done controlled component to except user keyboard input
 	 */
-	const onFocus = () => {
-		setIsOpen(true);
+	const onInputFocus = () => {
+		setOpen(true);
 	}
 
 	const onOpen = () => {
-		setIsOpen(true);
+		setOpen(true);
 	}
 
 	const onClose = () => {
-		setIsOpen(false);
+		setOpen(false);
 	}
 
 	const onAccept = () => {
-		setIsOpen(false);
+		setOpen(false);
+	}
+
+	const onInputKeyDown = e => {
+		e.preventDefault();
+	}
+
+	const onInputMouseDown = e => {
+		e.preventDefault();
+		setOpen(true);
+	}
+
+	const onInputContextMenu = e => {
+		e.preventDefault();
 	}
 
 	const getTextField = params => (
@@ -61,7 +74,11 @@ const DatePicker = ({
 			{...params}
 			color="secondary"
 			helperText={ helperText }
-			onFocus={ onFocus } />
+			onFocus={ onInputFocus }
+			onKeyDown={ onInputKeyDown }
+			onMouseDown={ onInputMouseDown }
+			onContextMenu={ onInputContextMenu }
+		/>
 	);
 
 	return (
@@ -71,7 +88,7 @@ const DatePicker = ({
 				mask={ mask || '__.__.____'}
 				value={ value }
 				onChange={ onChange }
-				open={ isOpen }
+				open={ open }
 				onOpen={ onOpen }
 				onClose={ onClose }
 				onAccept={ onAccept }
