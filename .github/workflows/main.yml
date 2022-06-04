@@ -9,6 +9,10 @@ jobs:
   build:
 
     runs-on: beget-vps
+    
+    environment: 
+      name: productionSecrets
+      url: https://github.com
 
     steps:
     - uses: actions/checkout@v3
@@ -18,5 +22,5 @@ jobs:
       run: docker-compose up -d --force-recreate
     - name: Clean docker images
       run: docker image prune -af
-      env:
-        productionSecrets: ${{ secrets.productionSecrets }}
+#       env:
+#         productionSecrets: ${{ secrets.productionSecrets }}
