@@ -13,7 +13,7 @@ const Index = () => {
 			<title>ESRSP</title>
 		</Head>
 		<MainContainer>
-			Главная страница
+
 		</MainContainer>
 	</>;
 };

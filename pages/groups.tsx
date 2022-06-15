@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
-import { useApp } from './_app';
 import MainContainer from '../src/containers/MainContainer';
 import GroupsContainer from '../src/containers/GroupsContainer';
 import { jwtfetch } from '../src/utils';
+import { useAuth } from '../src/contexts/AuthContext';
 
 
 const Groups = () => {
-	const { user } = useApp();
+	const { user } = useAuth();
 
 	const [groupsData, setGroupsData] = useState(null);
 

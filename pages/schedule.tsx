@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
-import { useApp } from './_app';
 import MainContainer from '../src/containers/MainContainer';
 import ScheduleContainer from '../src/containers/ScheduleContainer';
+import { useAuth } from '../src/contexts/AuthContext';
 
 import { jwtfetch } from '../src/utils';
 
 const Schedule = () => {
-	const { user } = useApp();
+	const { user } = useAuth();
 
 	const [scheduleData, setScheduleData] = useState(null);
 

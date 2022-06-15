@@ -5,7 +5,7 @@ import {
 	useEffect,
 } from 'react';
 
-import { useApp, localStorageKeys } from '../../../pages/_app';
+import { useAuth, localStorageKeys } from '../../contexts/AuthContext';
 import AuthForm from '../../components/AuthForm';
 
 import { jwtfetch } from '../../utils';
@@ -14,7 +14,7 @@ import { jwtfetch } from '../../utils';
 const AuthContainer = () => {
 	const router = useRouter();
 
-	const appContext = useApp();
+	const appContext = useAuth();
 
 	const [loading, setLoading] = useState<boolean>(true);
 

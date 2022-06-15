@@ -334,7 +334,7 @@ const GroupGrid = ({
 						</IconButton>
 					</StyledTooltip>
 					<StyledTooltip
-						title="Отменить"
+						title="Выйти из режима редактирования и отменить изменения"
 						placement="left">
 						<IconButton
 							onClick={ onCancelButtonClick }

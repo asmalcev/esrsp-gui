@@ -1,8 +1,8 @@
 import { Typography, Button, Stack } from "@mui/material";
-import { useApp, localStorageKeys } from "../../../pages/_app";
+import { useAuth, localStorageKeys } from "../../contexts/AuthContext";
 
 const UserInfo = () => {
-	const { user, updateUser } = useApp();
+	const { user, updateUser } = useAuth();
 
 	const onClick = () => {
 		window.localStorage.removeItem(localStorageKeys.jwt);

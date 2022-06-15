@@ -3,17 +3,16 @@ import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';
 
-import { useApp } from '../../_app';
 import MainContainer from '../../../src/containers/MainContainer';
 import GroupContainer from '../../../src/containers/GroupContainer';
-
 import { jwtfetch } from '../../../src/utils';
+import { useAuth } from '../../../src/contexts/AuthContext';
 
 const Group = () => {
 	const router = useRouter();
 	const { groupid, disciplineid } = router.query;
 
-	const { user } = useApp();
+	const { user } = useAuth();
 
 	const [groupData, setGroupData] = useState(null);
 

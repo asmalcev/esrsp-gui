@@ -1,4 +1,4 @@
-import { localStorageKeys } from "../pages/_app";
+import { localStorageKeys } from '../src/contexts/AuthContext';
 
 const debounce = function(fn, time) {
 	let timeout;
