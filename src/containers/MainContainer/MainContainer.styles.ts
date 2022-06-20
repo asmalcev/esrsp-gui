@@ -50,4 +50,14 @@ export default {
 	footerContainer: ({theme}) => ({
 		color: theme.palette.primary.dark
 	}),
+
+	adminBlock: ({theme}) => ({
+		marginTop: theme.spacing(4),
+
+		'& .MuiTypography-body1': {
+			paddingLeft: theme.spacing(1),
+
+			color: theme.palette.primary.dark
+		}
+	})
 };

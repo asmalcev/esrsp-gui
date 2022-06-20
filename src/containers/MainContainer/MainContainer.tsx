@@ -8,12 +8,13 @@ import {
 	ListItemButton,
 	ListItemText,
 	Typography,
-	Stack
+	Stack,
 } from '@mui/material';
 
 import UserInfo from '../../components/UserInfo';
 
 import styles from './MainContainer.styles';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 const GridContainer = styled('div')( styles.gridContainer );
@@ -23,10 +24,12 @@ const FooterContainer = styled('div')( styles.footerContainer )
 const Menu = styled(Stack)( styles.menu );
 const Header = styled(AppBar)( styles.appBar );
 const Footer = styled(Stack)( styles.footer );
+const AdminBlock = styled('div')( styles.adminBlock );
 
 const MainContainer = ({ children }) => {
 
 	const router = useRouter();
+	const { user } = useAuth();
 
 	const linksData = [
 		{
@@ -37,6 +40,13 @@ const MainContainer = ({ children }) => {
 			text: 'Список групп',
 			href: '/groups'
 		},
+	];
+
+	const adminLinksData = [
+		{
+			text: 'Управление данными',
+			href: '/admin'
+		}
 	];
 
 	const links = linksData.map(linkData => {
@@ -56,6 +66,28 @@ const MainContainer = ({ children }) => {
 		)
 	});
 
+	const adminLinks = [
+		<AdminBlock key="admin-block">
+			<Typography>Администрирование</Typography>
+		</AdminBlock>
+	].concat(
+		adminLinksData.map(linkData => {
+			const isActive = router.asPath === linkData.href;
+	
+			return (
+				<ListItemButton
+					key={linkData.text}
+					component={isActive ? 'a': NextLinkComposed}
+					to={{
+						pathname: linkData.href
+					}}
+					selected={isActive}
+				>
+					<ListItemText>{linkData.text}</ListItemText>
+			</ListItemButton>
+			)
+		})
+	);
 
 	return (
 		<GridContainer>
@@ -78,7 +110,12 @@ const MainContainer = ({ children }) => {
 				justifyContent="space-between"
 			>
 				<List>
-					{ links }
+					{
+						links
+					}
+					{
+						user.usertype === 'admin' && adminLinks
+					}
 				</List>
 
 				<FooterContainer>

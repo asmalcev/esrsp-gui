@@ -67,12 +67,12 @@ export default async function(req, res) {
 	const jbody = jwtcheck(req.body);
 
 	if (!jbody) {
-		res.status(401).json({test: 'Need JWT for access'});
+		res.status(401).json({text: 'Need JWT for access'});
 		return;
 	}
 
 	if (!jbody['data'] || !jbody['disciplineid']) {
-		res.status(400).json({test: 'Need marks data and discipline id'});
+		res.status(400).json({text: 'Need marks data and discipline id'});
 		return;
 	}
 
@@ -90,5 +90,5 @@ export default async function(req, res) {
 		deleteAcademicPerformance(grouped.delete, disciplineid);
 	}
 
-	res.status(200).json({test: 'test'});
+	res.status(200).json({text: 'OK'});
 }

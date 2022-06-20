@@ -7,7 +7,7 @@ import AuthContainer from '../containers/AuthContainer';
 type userType = {
 	id?: number | null;
 	login?: string;
-	usertype?: string;
+	usertype?: 'admin' | 'teacher' | 'student';
 
 	name?: string;
 	email?: string;
