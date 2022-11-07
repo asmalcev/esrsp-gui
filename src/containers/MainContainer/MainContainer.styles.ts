@@ -1,14 +1,14 @@
 export default {
-	gridContainer: ({theme}) => ({
+	gridContainer: ({ theme }) => ({
 		display: 'grid',
-		gridTemplateColumns: 'repeat(12, 1fr)', 
-		gridTemplateRows: 'max-content 1fr', 
+		gridTemplateColumns: 'repeat(12, 1fr)',
+		gridTemplateRows: 'max-content 1fr',
 
 		height: '100vh',
-		padding: '0'
+		padding: '0',
 	}),
 
-	appBar: ({theme}) => ({
+	appBar: ({ theme }) => ({
 		gridColumn: '1 / 13',
 
 		padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
@@ -18,20 +18,21 @@ export default {
 			display: 'flex',
 			flexDirection: 'row',
 			justifyContent: 'space-between',
-		}
+		},
 	}),
 
-	menu: ({theme}) => ({
+	menu: ({ theme }) => ({
 		gridColumn: '1 / 3',
 
 		height: '100%',
 
-		'& .MuiListItemButton-root.Mui-selected, & .MuiListItemButton-root.Mui-selected:hover': {
-			backgroundColor: theme.palette.customBackground.dark
-		}
+		'& .MuiListItemButton-root.Mui-selected, & .MuiListItemButton-root.Mui-selected:hover':
+			{
+				backgroundColor: theme.palette.customBackground.dark,
+			},
 	}),
 
-	contentContainer: ({theme}) : any => ({
+	contentContainer: ({ theme }): any => ({
 		gridColumn: '3 / 13',
 
 		overflowX: 'hidden',
@@ -42,22 +43,22 @@ export default {
 		boxShadow: `inset ${theme.boxShadow}`,
 	}),
 
-	footer: ({theme}) => ({
+	footer: ({ theme }) => ({
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.customBackground.footer,
 	}),
 
-	footerContainer: ({theme}) => ({
-		color: theme.palette.primary.dark
+	footerContainer: ({ theme }) => ({
+		color: theme.palette.primary.dark,
 	}),
 
-	adminBlock: ({theme}) => ({
+	adminBlock: ({ theme }) => ({
 		marginTop: theme.spacing(4),
 
 		'& .MuiTypography-body1': {
 			paddingLeft: theme.spacing(1),
 
-			color: theme.palette.primary.dark
-		}
-	})
+			color: theme.palette.primary.dark,
+		},
+	}),
 };

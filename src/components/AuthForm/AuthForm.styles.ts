@@ -1,19 +1,19 @@
 export default {
-	container: ({theme}) => ({
+	container: ({ theme }) => ({
 		height: '100vh',
 
-		backgroundColor: theme.palette.customBackground.main
+		backgroundColor: theme.palette.customBackground.main,
 	}),
 
-	paper: ({theme}) => ({
+	paper: ({ theme }) => ({
 		width: theme.spacing(48),
 
 		padding: theme.spacing(4),
 		boxShadow: theme.boxShadow,
 	}),
 
-	inputBox: ({theme}) => ({
+	inputBox: ({ theme }) => ({
 		width: theme.spacing(40),
-		margin: `${theme.spacing(4)} 0`
-	})
+		margin: `${theme.spacing(4)} 0`,
+	}),
 };

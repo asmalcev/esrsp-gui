@@ -1,13 +1,13 @@
 export default {
-	dayName: ({theme}) => ({
+	dayName: ({ theme }) => ({
 		marginTop: theme.spacing(4),
 
-		scrollMarginTop: theme.spacing(2)
+		scrollMarginTop: theme.spacing(2),
 	}),
 
-	zeroLessons: ({theme}) => ({
+	zeroLessons: ({ theme }) => ({
 		margin: `${theme.spacing(2)} 0`,
 
-		color: theme.palette.primary.dark
-	})
+		color: theme.palette.primary.dark,
+	}),
 };

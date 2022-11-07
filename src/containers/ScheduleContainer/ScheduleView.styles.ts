@@ -1,9 +1,9 @@
 export default {
-	daysContainer: ({theme}) => ({
-		width: theme.spacing(54)
+	daysContainer: ({ theme }) => ({
+		width: theme.spacing(54),
 	}),
 
-	datePickerContainer: ({theme}) => ({
+	datePickerContainer: ({ theme }) => ({
 		left: theme.spacing(80),
 		top: theme.spacing(4),
 
@@ -11,6 +11,6 @@ export default {
 
 		'&': {
 			position: 'absolute',
-		}
+		},
 	}),
 };

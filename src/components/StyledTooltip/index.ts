@@ -1,3 +1,3 @@
-import StyledTooltip from "./StyledTooltip";
+import StyledTooltip from './StyledTooltip';
 
 export default StyledTooltip;

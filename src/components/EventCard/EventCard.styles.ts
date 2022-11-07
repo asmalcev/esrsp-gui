@@ -1,26 +1,26 @@
 export default {
-	container: ({theme}) => ({
+	container: ({ theme }) => ({
 		display: 'flex',
 
 		padding: theme.spacing(2),
 		margin: `${theme.spacing(2)} 0`,
-		boxShadow: theme.boxShadow
+		boxShadow: theme.boxShadow,
 	}),
 
-	content: ({theme}) => ({
+	content: ({ theme }) => ({
 		marginLeft: theme.spacing(2),
 		'& .MuiTypography-body1': {
-			marginBottom: theme.spacing(2)
-		}
+			marginBottom: theme.spacing(2),
+		},
 	}),
 
-	arrow: ({theme}) => ({
+	arrow: ({ theme }) => ({
 		color: theme.palette.primary.dark,
 
 		'.MuiPaper-root &': {
 			margin: `${theme.spacing(1)} 0`,
 
 			fontSize: theme.spacing(3),
-		}
-	})
+		},
+	}),
 };

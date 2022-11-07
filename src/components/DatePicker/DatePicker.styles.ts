@@ -1,7 +1,7 @@
 export default {
-	datePicker: ({theme}) => ({
+	datePicker: ({ theme }) => ({
 		'& .Mui-selected': {
-			backgroundColor: theme.palette.secondary.main
-		}
+			backgroundColor: theme.palette.secondary.main,
+		},
 	}),
 };
