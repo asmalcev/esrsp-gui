@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 import MainContainer from '../src/containers/MainContainer';
 import GroupsContainer from '../src/containers/GroupsContainer';
-import { jwtfetch } from '../src/utils';
 import { useAuth } from '../src/contexts/AuthContext';
 
 
@@ -15,7 +14,9 @@ const Groups = () => {
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await jwtfetch(`/api/groups/${user.id}`);
+			const res = await fetch(`/api/groups/${user.id}`, {
+				method: 'POST',
+			});
 			setGroupsData(await res.json());
 		}
 

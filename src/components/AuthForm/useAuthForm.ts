@@ -7,13 +7,13 @@ export type FormItem<T> = {
 };
 
 export type AuthFormItem = FormItem<{
-	login: string;
+	username: string;
 	password: string;
 }>;
 
 type UseAuthFormReturnType = [
 	credentials: AuthFormItem,
-	setLogin: (login: string) => void,
+	setUsername: (username: string) => void,
 	setPassword: (passwrod: string) => void,
 	setErr: (err: string) => void,
 ];
@@ -21,17 +21,17 @@ type UseAuthFormReturnType = [
 const useAuthForm = (): UseAuthFormReturnType => {
 	const [credentials, setCredentials] = useState<AuthFormItem>({
 		value: {
-			login: '',
+			username: '',
 			password: '',
 		},
 		err: '',
 	});
 
-	const setLogin = (login: string): void => {
+	const setUsername = (username: string): void => {
 		setCredentials(
 			(prev: AuthFormItem): AuthFormItem => ({
 				value: {
-					login,
+					username: username,
 					password: prev.value.password,
 				},
 				err: '',
@@ -43,7 +43,7 @@ const useAuthForm = (): UseAuthFormReturnType => {
 		setCredentials(
 			(prev: AuthFormItem): AuthFormItem => ({
 				value: {
-					login: prev.value.login,
+					username: prev.value.username,
 					password,
 				},
 				err: '',
@@ -55,7 +55,7 @@ const useAuthForm = (): UseAuthFormReturnType => {
 		setCredentials(
 			(prev: AuthFormItem): AuthFormItem => ({
 				value: {
-					login: prev.value.login,
+					username: prev.value.username,
 					password: prev.value.password,
 				},
 				err,
@@ -63,7 +63,7 @@ const useAuthForm = (): UseAuthFormReturnType => {
 		);
 	};
 
-	return [credentials, setLogin, setPassword, setErr];
+	return [credentials, setUsername, setPassword, setErr];
 };
 
 export default useAuthForm;

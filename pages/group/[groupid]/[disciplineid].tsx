@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 import MainContainer from '../../../src/containers/MainContainer';
 import GroupContainer from '../../../src/containers/GroupContainer';
-import { jwtfetch } from '../../../src/utils';
 import { useAuth } from '../../../src/contexts/AuthContext';
 
 const Group = () => {
@@ -19,7 +18,7 @@ const Group = () => {
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await jwtfetch(`/api/group/${groupid}/${disciplineid}`);
+			const res = await fetch(`/api/group/${groupid}/${disciplineid}`);
 			setGroupData(await res.json());
 		}
 

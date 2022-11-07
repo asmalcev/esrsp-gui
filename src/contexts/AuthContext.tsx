@@ -1,27 +1,28 @@
 import { createContext, useContext, useState } from 'react';
 import AuthContainer from '../containers/AuthContainer';
 
-/**
- * User type
- */
-type userType = {
-	id?: number | null;
-	login?: string;
-	usertype?: 'admin' | 'teacher' | 'student';
+export enum UserRole {
+	NOTaUSER = 0,
+	STUDENT = 1,
+	TEACHER = 2,
+	ADMIN = 3,
+}
 
-	name?: string;
-	email?: string;
+export type User = {
+	id?: number | null;
+	username?: string;
+	role?: UserRole;
+	roleId?: number;
+
+	fullname?: string;
 
 	loggedin: boolean;
 }
 
-/**
- * App Context Type
- */
-type AuthContextType = {
-	user: userType | null;
+export type AuthContext = {
+	user: User | null;
 
-	updateUser: (n : userType) => void;
+	updateUser: (n : User) => void;
 }
 
 
@@ -32,32 +33,22 @@ const defaultValues = {
 };
 
 
-/**
- * App Context Object
- */
-export const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext<AuthContext>({
 	user: defaultValues.user,
 
 	updateUser: () => {},
 });
 
 
-/**
- * App Provider - Next App
- */
-const AuthContextProvider = props => {
+export const AuthContextProvider = props => {
 	const { children, ...other } = props;
 
-	const [user, setUser] = useState<userType>(defaultValues.user);
+	const [user, setUser] = useState<User>(defaultValues.user);
 
 	const updateUser = user => {
 		setUser(user);
 	}
 
-
-	/**
-	 * Building app context object
-	 */
 	const contextObj = {
 		user,
 		updateUser,
@@ -74,12 +65,4 @@ const AuthContextProvider = props => {
 	);
 }
 
-export const useAuth = () => {
-	return useContext(AuthContext);
-}
-
-export const localStorageKeys = {
-	jwt: 'jwt'
-};
-
-export default AuthContextProvider;
+export const useAuth = () => useContext(AuthContext);

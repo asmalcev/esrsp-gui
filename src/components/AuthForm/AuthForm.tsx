@@ -14,7 +14,7 @@ import styles from './AuthForm.styles';
 
 
 type formSubmitHandlerProps = {
-	login: string;
+	username: string;
 	password: string;
 }
 
@@ -36,7 +36,7 @@ const AuthForm = ({
 	formSubmitHandler,
 } : AuthFormProps) => {
 
-	const [credentials, setLogin, setPassword, setErr] = useAuthForm();
+	const [credentials, setUsername, setPassword, setErr] = useAuthForm();
 
 	const onSubmitButtonClick = e => {
 		e.preventDefault();
@@ -56,10 +56,10 @@ const AuthForm = ({
 				<InputBox spacing={2}>
 					<StyledTextField
 						label="Логин"
-						name="login"
+						name="username"
 						fullWidth
-						value={credentials.value.login}
-						onChange={setLogin}
+						value={credentials.value.username}
+						onChange={setUsername}
 						required/>
 					<StyledTextField
 						label="Пароль"

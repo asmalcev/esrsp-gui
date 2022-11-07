@@ -5,8 +5,6 @@ import MainContainer from '../src/containers/MainContainer';
 import ScheduleContainer from '../src/containers/ScheduleContainer';
 import { useAuth } from '../src/contexts/AuthContext';
 
-import { jwtfetch } from '../src/utils';
-
 const Schedule = () => {
 	const { user } = useAuth();
 
@@ -15,7 +13,7 @@ const Schedule = () => {
 	useEffect(() => {
 
 		const fetchData = async () => {
-			const res = await jwtfetch(`/api/schedule/${user.id}`);
+			const res = await fetch(`/api/schedule/`);
 			setScheduleData(await res.json());
 		}
 
@@ -24,12 +22,14 @@ const Schedule = () => {
 		}
 	});
 
+	console.log(scheduleData);
+
 	return <>
 		<Head>
 			<title>Расписание - ESRSP</title>
 		</Head>
 		<MainContainer>
-			<ScheduleContainer scheduleData={ scheduleData }/>
+			{/* <ScheduleContainer scheduleData={ scheduleData }/> */}
 		</MainContainer>
 	</>;
 };

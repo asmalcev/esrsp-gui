@@ -16,7 +16,6 @@ import {
 } from 'react';
 
 import Select from '../../common/Select';
-import { jwtfetch } from '../../utils';
 
 import styles from './GroupGrid.styles';
 import StyledTooltip from '../StyledTooltip';
@@ -231,9 +230,12 @@ const GroupGrid = ({
 			const shouldSave = confirm('Несохраненные данные будут потеряны. Сохранить?');
 
 			if (shouldSave) {
-				jwtfetch('/api/academicperformance', {
-					data: formDiff,
-					disciplineid: router.query?.disciplineid
+				fetch('/api/academicperformance', {
+					method: 'POST',
+					body: {
+						data: formDiff,
+						disciplineid: router.query?.disciplineid,
+					},
 				});
 			}
 		}
@@ -271,9 +273,12 @@ const GroupGrid = ({
 		const formDiff = computeDiff();
 
 		if (formDiff.length) {
-			jwtfetch('/api/academicperformance', {
-				data: formDiff,
-				disciplineid: router.query?.disciplineid
+			fetch('/api/academicperformance', {
+				method: 'POST',
+				body: {
+					data: formDiff,
+					disciplineid: router.query?.disciplineid
+				}
 			});
 		}
 	}

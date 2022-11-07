@@ -1,11 +1,18 @@
 import { Typography, Button, Stack } from "@mui/material";
-import { useAuth, localStorageKeys } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const UserInfo = () => {
 	const { user, updateUser } = useAuth();
 
 	const onClick = () => {
-		window.localStorage.removeItem(localStorageKeys.jwt);
+
+		const logout = async () => {
+			await fetch('/api/auth/logout', {
+				method: 'POST',
+			});
+		}
+
+		logout();
 		updateUser({
 			loggedin: false
 		});
@@ -15,7 +22,7 @@ const UserInfo = () => {
 		flexDirection="row"
 		alignItems="center"
 	>
-		<Typography>{ user.name }</Typography>
+		<Typography>{ user.fullname || user.username }</Typography>
 		<Button
 			color="secondary"
 			onClick={onClick}

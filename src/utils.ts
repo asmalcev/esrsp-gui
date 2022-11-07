@@ -1,6 +1,4 @@
-import { localStorageKeys } from '../src/contexts/AuthContext';
-
-const debounce = function (fn, time) {
+const debounce = (fn: () => any, time: number) => {
 	let timeout;
 
 	return function () {
@@ -13,8 +11,8 @@ const debounce = function (fn, time) {
 	};
 };
 
-function throttle(func, ms) {
-	let isThrottled = false,
+const throttle = (func: () => any, ms: number) => {
+	let isThrottled: boolean = false,
 		savedArgs,
 		savedThis;
 
@@ -39,9 +37,9 @@ function throttle(func, ms) {
 	}
 
 	return wrapper;
-}
+};
 
-const groupBy = (xs, key) => {
+const groupBy = (xs: any[], key: string) => {
 	return xs.reduce((rv, x) => {
 		(rv[x[key]] = rv[x[key]] || []).push(x);
 		return rv;
@@ -61,22 +59,13 @@ const isOddWeek = (date: Date): Boolean => {
 };
 
 const getddmm = (date: Date): string => {
-	const dd = date.getDate();
-	const mm = date.getMonth() + 1;
+	const dd: number = date.getDate();
+	const mm: number = date.getMonth() + 1;
 
-	const sdd = dd < 10 ? `0${dd}` : dd;
-	const smm = mm < 10 ? `0${mm}` : mm;
+	const sdd: string = dd < 10 ? `0${dd}` : String(dd);
+	const smm: string = mm < 10 ? `0${mm}` : String(mm);
 
 	return `${sdd}.${smm}`;
 };
 
-const jwtfetch = (url: string, body?: object) =>
-	fetch(url, {
-		method: 'POST',
-		body: JSON.stringify({
-			jwt: window.localStorage[localStorageKeys.jwt],
-			...body,
-		}),
-	});
-
-export { debounce, throttle, groupBy, isOddWeek, getddmm, jwtfetch };
+export { debounce, throttle, groupBy, isOddWeek, getddmm };
