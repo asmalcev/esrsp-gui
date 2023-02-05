@@ -7,16 +7,18 @@ import ScheduleView from "./ScheduleView";
 
 import { isOddWeek } from '../../utils';
 import { months, weekDays } from "./dateData";
+import { TimedLesson } from "../../backend.types";
+import { ScheduleData } from "./scheduleData.type";
 
 
 /**
  * generate data for rendering
  * based on schedule and date of the first day 2 weeks
  */
-const scheduleToData = (schedule, oddMondayDate) => {
+const scheduleToData = (schedule: TimedLesson[], oddMondayDate: Date): ScheduleData[] => {
 	const currentDate = new Date(oddMondayDate);
 
-	const data = [];
+	const data: ScheduleData[] = [];
 	for (let index = 0; index < 14; index++) {
 		data.push({
 			date: {
@@ -29,8 +31,8 @@ const scheduleToData = (schedule, oddMondayDate) => {
 		currentDate.setDate(currentDate.getDate() + 1);
 	}
 
-	schedule.forEach(day => {
-		data[day.order].lessons = day.lessons;
+	schedule.forEach(lesson => {
+		data[lesson.lessonDay].lessons.push(lesson);
 	});
 
 	return data;
@@ -50,7 +52,7 @@ const fixDate = (date : Date) : [Date, number] => {
 	return [oddMonday, currentDayInOrder];
 }
 
-const Schedule = ({ scheduleData }) => {
+const Schedule = ({ scheduleData }: { scheduleData: TimedLesson[] }) => {
 
 	/**
 	 * if schedule data is null | undefined => display skeletons
@@ -68,7 +70,7 @@ const Schedule = ({ scheduleData }) => {
 
 	const currentDate = useRef<Date>(new Date());
 	const [oddMonday, currentDayInOrder] = fixDate(currentDate.current);
-	const currentIndex = useRef(currentDayInOrder);
+	const currentIndex = useRef<number>(currentDayInOrder);
 
 	const [data, updateData] = useState( scheduleToData(scheduleData, oddMonday) );
 

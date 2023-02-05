@@ -5,16 +5,31 @@ import {
 import EventCard from "../EventCard";
 
 import styles from './ScheduleDay.styles';
+import { ScheduleData } from "../../containers/ScheduleContainer/scheduleData.type";
 
 const DayName = styled(Typography)( styles.dayName );
 const ZeroLessons = styled(Typography)( styles.zeroLessons );
 
-const ScheduleDay = ({ dayData, customRef }) => {
-	const lessons = dayData.lessons.map((lesson, index) =>
-		<EventCard
-			key={ lesson.name + index }
-			data={ lesson }
-			customRef={null}/>
+const ScheduleDay = ({
+	dayData,
+	customRef
+}: {
+	dayData: ScheduleData;
+	customRef;
+}) => {
+	const lessons = dayData.lessons.map((lesson, index) => {
+		const lessonData = {
+			...lesson,
+			discipline: lesson.discipline.name,
+			studentGroups: lesson.studentGroups.map(group => group.name),
+		};
+
+		return <EventCard
+			key={ lesson.id + index }
+			data={ lessonData }
+			customRef={null}/>;
+	}
+		
 	);
 
 	return <>

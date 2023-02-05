@@ -1,4 +1,4 @@
-const debounce = (fn: () => any, time: number) => {
+const debounce = (fn: Function, time: number) => {
 	let timeout;
 
 	return function () {
@@ -11,7 +11,7 @@ const debounce = (fn: () => any, time: number) => {
 	};
 };
 
-const throttle = (func: () => any, ms: number) => {
+const throttle = (func: Function, ms: number) => {
 	let isThrottled: boolean = false,
 		savedArgs,
 		savedThis;

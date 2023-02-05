@@ -10,6 +10,7 @@ import Layout from "../Layout";
 import { throttle } from "../../utils";
 
 import styles from './ScheduleView.styles';
+import { ScheduleData } from "./scheduleData.type";
 
 
 const DaysContainer = styled('div')( styles.daysContainer );
@@ -21,6 +22,12 @@ const ScheduleView = ({
 	handleLoader,
 	updateCurrentDate,
 	currentDate
+}: {
+	scheduleData: ScheduleData[];
+	currentIndex: number;
+	handleLoader: Function;
+	updateCurrentDate: Function;
+	currentDate: Date;
 }) => {
 
 	/**
@@ -114,7 +121,7 @@ const ScheduleView = ({
 
 	const days = scheduleData.map((day, index) =>
 		<ScheduleDay
-			key={ day.date.jsdate }
+			key={ day.date.jsdate.getTime() }
 			dayData={ day }
 			customRef={
 				scrollTargetType === 'today' ?

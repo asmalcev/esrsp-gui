@@ -6,10 +6,12 @@ const SkeletonEventCard = ({ customRef, ...rest }) => {
 	const theme = useTheme();
 
 	const data = {
-		name: <Skeleton animation="wave" width={ theme.spacing(36) }/>,
-		members: <Skeleton animation="wave" width={ theme.spacing(16) }/>,
-		timeStart: <Skeleton animation="wave" width={ theme.spacing(4) }/>,
-		timeEnd: <Skeleton animation="wave" width={ theme.spacing(4) }/>,
+		discipline: <Skeleton animation="wave" width={ theme.spacing(36) }/>,
+		studentGroups: <Skeleton animation="wave" width={ theme.spacing(16) }/>,
+		lessonTime: {
+			timeStart: <Skeleton animation="wave" width={ theme.spacing(4) }/>,
+			timeEnd: <Skeleton animation="wave" width={ theme.spacing(4) }/>,
+		},
 		place: <Skeleton animation="wave" width={ theme.spacing(6) }/>
 	};
 
