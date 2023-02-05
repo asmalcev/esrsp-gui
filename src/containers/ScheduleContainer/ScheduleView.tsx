@@ -64,22 +64,6 @@ const ScheduleView = ({
 
 
 	/**
-	 * onMount
-	 * scroll to target element (often for today card)
-	 */
-	useEffect(() => {
-		const scrollArea = scrollChild.current.parentNode;
-
-		const handleScroll = throttle(e => {
-			e.target.querySelectorAll('*[data-scroll-follow]').forEach(sf => {
-				sf.style.marginTop = `${e.target.scrollTop}px`;
-			});
-		}, 5);
-		scrollArea.addEventListener('scroll', handleScroll);
-	}, []);
-
-
-	/**
 	 * onRerender
 	 * necessary to recreate Intersection Observer cause upperLoader and lowerLoader are recreating in DOM and refs drop
 	 * and handlerLoader updates with every rerender
@@ -144,13 +128,14 @@ const ScheduleView = ({
 				data-loader="lower"/>
 		</DaysContainer>
 
-		<DatePickerContainer data-scroll-follow>
+		<DatePickerContainer>
 			<DatePicker
 				label="Перейти к дате"
 				helperText="Выберете дату, чтобы перейти к ней в расписании"
 				onChangeHandler={ onDateChange }
 				stdValue={ currentDate }/>
 		</DatePickerContainer>
+
 	</Layout>;
 }
 

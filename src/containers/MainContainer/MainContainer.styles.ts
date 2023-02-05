@@ -1,15 +1,15 @@
 export default {
 	gridContainer: ({ theme }) => ({
 		display: 'grid',
-		gridTemplateColumns: 'repeat(12, 1fr)',
-		gridTemplateRows: 'max-content 1fr',
+		gridTemplateColumns: `${theme.spacing(32)} repeat(12, 1fr)`,
+		gridTemplateRows: `${theme.spacing(8)} 1fr`,
 
 		height: '100vh',
 		padding: '0',
 	}),
 
 	appBar: ({ theme }) => ({
-		gridColumn: '1 / 13',
+		gridColumn: '1 / 14',
 
 		padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
 		boxShadow: 'none',
@@ -18,11 +18,12 @@ export default {
 			display: 'flex',
 			flexDirection: 'row',
 			justifyContent: 'space-between',
+			alignItems: 'center',
 		},
 	}),
 
 	menu: ({ theme }) => ({
-		gridColumn: '1 / 3',
+		gridColumn: '1 / 2',
 
 		height: '100%',
 
@@ -33,7 +34,7 @@ export default {
 	}),
 
 	contentContainer: ({ theme }): any => ({
-		gridColumn: '3 / 13',
+		gridColumn: '2 / 14',
 
 		overflowX: 'hidden',
 		overflowY: 'scroll',

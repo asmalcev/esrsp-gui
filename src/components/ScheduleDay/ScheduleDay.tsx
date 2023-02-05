@@ -21,7 +21,7 @@ const ScheduleDay = ({
 		const lessonData = {
 			...lesson,
 			discipline: lesson.discipline.name,
-			studentGroups: lesson.studentGroups.map(group => group.name),
+			studentGroups: lesson.studentGroups.map(group => group.name).join(', '),
 		};
 
 		return <EventCard

@@ -4,13 +4,13 @@ export default {
 	}),
 
 	datePickerContainer: ({ theme }) => ({
-		left: theme.spacing(80),
-		top: theme.spacing(4),
+		left: theme.spacing(116),
+		top: theme.spacing(14),
 
 		width: theme.spacing(30),
 
 		'&': {
-			position: 'absolute',
+			position: 'fixed',
 		},
 	}),
 };
