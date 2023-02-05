@@ -30,10 +30,10 @@ const GroupsView = ({
 			// @ts-ignore
 			component={ NextLinkComposed }
 			to={{
-				pathname: `/group/${group.groupid}/${group.disciplineid}`
+				pathname: `/group/${group.studentGroupId}/${group.disciplineId}`
 			}}
 		>
-			<ListItemText>{`${group.groupname} - ${group.discipline}`}</ListItemText>
+			<ListItemText>{`${group.studentGroup} - ${group.discipline}`}</ListItemText>
 		</GroupListItem>
 	);
 
@@ -54,17 +54,17 @@ const GroupsView = ({
 			<OptionLink
 				{...params}
 				to={{
-					pathname: `/group/${option.groupid}/${option.disciplineid}`
+					pathname: `/group/${option.studentGroupId}/${option.disciplineId}`
 				}}
 			>
-				{`${option.groupname} - ${option.discipline}`}
+				{`${option.studentGroup} - ${option.discipline}`}
 			</OptionLink>
 		);
 	}
 
 	const getOptionLabel = (
-		option : { groupname, discipline }
-	) => `${option.groupname} - ${option.discipline}`;
+		option : { studentGroup, discipline }
+	) => `${option.studentGroup} - ${option.discipline}`;
 
 	return (
 		<Layout>

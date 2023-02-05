@@ -1,39 +1,39 @@
-export class Performance {
+export type Performance = {
 	id: number;
 	value: string;
 	date: Date;
-}
+};
 
-export class Teacher {
+export type Teacher = {
 	id: number;
 	fullname: string;
-}
+};
 
-export class Student {
+export type Student = {
 	id: number;
 	fullname: string;
 	recordBook: string;
 	studentGroup: StudentGroup;
 	performance: Performance[];
-}
+};
 
-export class Discipline {
+export type Discipline = {
 	id: number;
 	name: string;
-}
+};
 
-export class LessonTime {
+export type LessonTime = {
 	id: number;
 	timeStart: string;
 	timeEnd: string;
-}
+};
 
-export class StudentGroup {
+export type StudentGroup = {
 	id: number;
 	name: string;
-}
+};
 
-export class Lesson {
+export type Lesson = {
 	id: number;
 	studentGroups: StudentGroup[];
 	teacher: Teacher;
@@ -41,6 +41,13 @@ export class Lesson {
 	lessonNumber: number;
 	lessonDay: number;
 	place: string;
-}
+};
 
 export type TimedLesson = (Lesson & { lessonTime?: LessonTime });
+
+export type StudentGroupDiscipline = {
+	discipline: string;
+	disciplineId: number;
+	studentGroup: string;
+	studentGroupId: number;
+};
