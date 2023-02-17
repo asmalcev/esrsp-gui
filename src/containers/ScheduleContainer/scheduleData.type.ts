@@ -5,6 +5,6 @@ export type ScheduleData = {
 		jsdate: Date;
 		date: string;
 		weekDay: string;
-	},
-	lessons: TimedLesson[]
+	};
+	lessons: TimedLesson[];
 };

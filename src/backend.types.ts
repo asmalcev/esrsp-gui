@@ -13,8 +13,8 @@ export type Student = {
 	id: number;
 	fullname: string;
 	recordBook: string;
-	studentGroup: StudentGroup;
-	performance: Performance[];
+	studentGroup?: StudentGroup;
+	performance?: Performance[];
 };
 
 export type Discipline = {
@@ -43,11 +43,17 @@ export type Lesson = {
 	place: string;
 };
 
-export type TimedLesson = (Lesson & { lessonTime?: LessonTime });
+export type TimedLesson = Lesson & { lessonTime?: LessonTime };
 
 export type StudentGroupDiscipline = {
 	discipline: string;
 	disciplineId: number;
 	studentGroup: string;
 	studentGroupId: number;
+};
+
+export type StudentGroupPerformance = {
+	studentGroup: StudentGroup;
+	discipline: Discipline;
+	table: (Student | string)[][];
 };

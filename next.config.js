@@ -5,7 +5,7 @@ module.exports = {
 		return [
 			{
 				source: '/api/:slug*',
-				destination: 'http://localhost:3001/:slug*',
+				destination: 'http://localhost:3000/:slug*',
 				basePath: false,
 			}
 		]

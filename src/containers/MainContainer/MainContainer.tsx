@@ -17,9 +17,9 @@ import styles from './MainContainer.styles';
 import { useAuth } from '../../contexts/AuthContext';
 
 
-const GridContainer = styled('div')( styles.gridContainer );
-const ContentContainer = styled('div')( styles.contentContainer );
-const FooterContainer = styled('div')( styles.footerContainer )
+const GridContainer = styled('div', { name: 'grid-container' })( styles.gridContainer );
+const ContentContainer = styled('div', { name: 'content-container' })( styles.contentContainer );
+const FooterContainer = styled('div', { name: 'footer-container' })( styles.footerContainer );
 
 const Menu = styled(Stack)( styles.menu );
 const Header = styled(AppBar)( styles.appBar );

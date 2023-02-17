@@ -1,6 +1,6 @@
 export default {
 	layout: ({ theme }) => ({
-		padding: theme.spacing(4),
+		padding: theme.spacing(2),
 
 		'&': {
 			flexDirection: 'column',

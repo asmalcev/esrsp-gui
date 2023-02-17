@@ -1,8 +1,8 @@
 export default {
 	gridContainer: ({ theme }) => ({
 		display: 'grid',
-		gridTemplateColumns: `${theme.spacing(32)} repeat(12, 1fr)`,
-		gridTemplateRows: `${theme.spacing(8)} 1fr`,
+		gridTemplateColumns: `${theme.spacing(theme.layout.sidebarWidth)} repeat(12, 1fr)`,
+		gridTemplateRows: `${theme.spacing(theme.layout.headerHeight)} 1fr`,
 
 		height: '100vh',
 		padding: '0',

@@ -26,7 +26,7 @@ const GroupsView = ({
 
 	const groups = groupsData.map(group =>
 		<GroupListItem
-			key={`${group.groupid}-${group.disciplineid}`}
+			key={`${group.studentGroupId}-${group.disciplineId}`}
 			// @ts-ignore
 			component={ NextLinkComposed }
 			to={{
