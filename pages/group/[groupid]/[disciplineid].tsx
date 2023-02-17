@@ -17,32 +17,35 @@ const Group = () => {
 	const [groupData, setGroupData] = useState<StudentGroupPerformance>(null);
 
 	useEffect(() => {
-
 		const fetchData = async () => {
-			const res = await fetch(`/api/schedule/performance/${groupid}/${disciplineid}`);
+			const res = await fetch(
+				`/api/schedule/performance/${groupid}/${disciplineid}`,
+			);
 			setGroupData(await res.json());
-		}
+		};
 
 		if (user.loggedin && !groupData) {
 			fetchData();
 		}
 	});
 
-	return <>
-		<Head>
-			{
-				groupData ?
-					<title>{ groupData.studentGroup.name } Группа - { groupData.discipline.name } - ESRSP</title> :
+	return (
+		<>
+			<Head>
+				{groupData ? (
+					<title>
+						{groupData.studentGroup.name} Группа - {groupData.discipline.name} -
+						ESRSP
+					</title>
+				) : (
 					<title>Группа - ESRSP</title>
-			}
-		</Head>
-		<MainContainer>
-			{
-				groupData &&
-				<GroupContainer groupData={ groupData }/>
-			}
-		</MainContainer>
-	</>;
-}
+				)}
+			</Head>
+			<MainContainer>
+				{groupData && <GroupContainer groupData={groupData} />}
+			</MainContainer>
+		</>
+	);
+};
 
 export default Group;

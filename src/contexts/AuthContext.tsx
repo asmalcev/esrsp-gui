@@ -18,21 +18,19 @@ export type User = {
 	fullname?: string;
 
 	loggedin: boolean;
-}
+};
 
 export type AuthContext = {
 	user: User | null;
 
-	updateUser: (n : User) => void;
-}
-
+	updateUser: (n: User) => void;
+};
 
 const defaultValues = {
 	user: {
-		loggedin: false
-	}
+		loggedin: false,
+	},
 };
-
 
 export const AuthContext = createContext<AuthContext>({
 	user: defaultValues.user,
@@ -40,15 +38,14 @@ export const AuthContext = createContext<AuthContext>({
 	updateUser: () => {},
 });
 
-
-export const AuthContextProvider = props => {
+export const AuthContextProvider = (props) => {
 	const { children, ...other } = props;
 
 	const [user, setUser] = useState<User>(defaultValues.user);
 
-	const updateUser = user => {
+	const updateUser = (user) => {
 		setUser(user);
-	}
+	};
 
 	const contextObj = {
 		user,
@@ -57,13 +54,9 @@ export const AuthContextProvider = props => {
 
 	return (
 		<AuthContext.Provider value={contextObj} {...other}>
-			{
-				user.loggedin ?
-					children :
-					<AuthContainer />
-			}
+			{user.loggedin ? children : <AuthContainer />}
 		</AuthContext.Provider>
 	);
-}
+};
 
 export const useAuth = () => useContext(AuthContext);

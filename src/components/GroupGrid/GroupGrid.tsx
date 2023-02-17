@@ -5,57 +5,185 @@ import {
 	Table,
 	TableHead,
 	TableRow,
-	TableBody
+	TableBody,
 } from '@mui/material';
 
+import { useState } from 'react';
+
 import styles from './GroupGrid.styles';
-import { Student, StudentGroupPerformance } from "../../backend.types";
+import {
+	Student,
+	StudentGroupPerformance,
+	Performance,
+} from '../../backend.types';
 import GroupGridCell from './GroupGridCell';
+import { getMethodFromDiff, toLocalISOTime } from '../../utils';
 
 const StyledTableCell = styled(GroupGridCell)(styles.cell);
 const StickyTableCell = styled(StyledTableCell)(styles.sticky);
-const StyledTableContainer: any = styled((props) => <TableContainer component={Paper} {...props}/>)(styles.tableContainer);
+const StyledTableContainer: any = styled((props) => (
+	<TableContainer component={Paper} {...props} />
+))(styles.tableContainer);
 const StyledTableRow = styled(TableRow)(styles.row);
 
-const GroupGrid = ({
-	data
-}: {
-	data: StudentGroupPerformance;
-}) => {
-	const tableHead = [];
-	const tableContent = [];
+type updateTableInfo = {
+	column: number;
+	row: number;
+	id: number;
+};
 
-	for (let i = 0; i < data.table.length; i++) {
-		if (i > 0) {
-			tableContent.push([]);
+type nextTableWithUpdateInput = {
+	column: number;
+	row: number;
+	performance: Performance;
+};
+
+const nextTableWithUpdate = (
+	table: (Student | Performance)[][],
+	update: nextTableWithUpdateInput,
+) => {
+	const nextTable = [];
+
+	for (let i = 0; i < table.length; i++) {
+		nextTable.push([]);
+		for (let j = 0; j < table[i].length; j++) {
+			if (update.row === i && update.column === j) {
+				nextTable[i].push(update.performance);
+			} else {
+				nextTable[i].push(table[i][j]);
+			}
+		}
+	}
+
+	return nextTable;
+};
+
+const GroupGrid = ({ data }: { data: StudentGroupPerformance }) => {
+	const [table, setTable] = useState(data.table);
+
+	const updateTable = async (
+		info: updateTableInfo,
+		old: string,
+		current: string,
+	) => {
+		const method = getMethodFromDiff(old, current);
+
+		if (!info.id) {
+			const currentYear = new Date().getFullYear();
+			const mmddDate = data.tableHead[info.column]
+				.split('.')
+				.reverse()
+				.join('.');
+			const date = toLocalISOTime(new Date(`${mmddDate}.${currentYear}`));
+			const student = data.table[info.row][0];
+
+			const body = {
+				value: current,
+				date,
+				studentId: student.id,
+				disciplineId: data.discipline.id,
+			};
+
+			const res = await fetch(`/api/performance`, {
+				method,
+				body: JSON.stringify(body),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (res.status !== 201) {
+				console.log('Error:', res);
+			} else {
+				const jsonRes: Performance = await res.json();
+				setTable(nextTableWithUpdate(table, {
+					...info,
+					performance: jsonRes,
+				}));
+			}
 		}
 
-		for (let j = 0; j < data.table[i].length; j++) {
-			let Component = StyledTableCell;
-			let cell;
-			if (j === 0) {
-				const fullname = (data.table[i][j] as Student).fullname;
-				cell = fullname && fullname.substring(0, fullname.lastIndexOf(' '));
-				Component = StickyTableCell;
-			} else {
-				cell = data.table[i][j] as string;
-			}
+		if (method === 'DELETE') {
+			const res = await fetch(`/api/performance/${info.id}`, {
+				method,
+			});
 
-			if (i === 0) {
-				tableHead.push((
-					<Component key={`${i} ${j}`}>
-						{ cell }
-					</Component>
-				));
+			if (res.status !== 200) {
+				console.log('Error:', res);
 			} else {
-				tableContent[i - 1].push((
-					<Component
+				setTable(nextTableWithUpdate(table, {
+					...info,
+					performance: null,
+				}));
+			}
+		}
+
+		if (method === 'PUT') {
+			const body = {
+				value: current,
+			};
+
+			const res = await fetch(`/api/performance/${info.id}`, {
+				method,
+				body: JSON.stringify(body),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (res.status !== 200) {
+				console.log('Error:', res);
+			} else {
+				const performance = table[info.row][info.column] as Performance;
+				performance.value = current;
+
+				setTable(nextTableWithUpdate(table, {
+					...info,
+					performance,
+				}));
+			}
+		}
+	};
+
+	const tableHead = data.tableHead.map((cell, i) => (
+		<GroupGridCell key={i}>{cell}</GroupGridCell>
+	));
+	const tableContent = [];
+
+	for (let i = 0; i < table.length; i++) {
+		tableContent.push([]);
+
+		for (let j = 0; j < table[i].length; j++) {
+			const currentElement = table[i][j];
+
+			if (j === 0) {
+				const fullname = (currentElement as Student).fullname;
+				const cell =
+					fullname && fullname.substring(0, fullname.lastIndexOf(' '));
+
+				tableContent[i].push(
+					<StickyTableCell key={`${i} ${j}`} sx={{ textAlign: 'left' }}>
+						{cell}
+					</StickyTableCell>,
+				);
+			} else {
+				const performance = currentElement as Performance;
+				const cell = performance?.value;
+
+				tableContent[i].push(
+					<StyledTableCell
 						key={`${i} ${j}`}
-						sx={{ textAlign: j === 0 ? 'left' : 'center' }}
+						sx={{ textAlign: 'center' }}
+						editable={true}
+						onChange={updateTable.bind(null, {
+							column: j,
+							row: i,
+							id: performance?.id,
+						})}
 					>
-						{ cell }
-					</Component>
-				));
+						{cell}
+					</StyledTableCell>,
+				);
 			}
 		}
 	}
@@ -64,16 +192,16 @@ const GroupGrid = ({
 		<StyledTableContainer className="styled-scroll">
 			<Table stickyHeader>
 				<TableHead>
-					<TableRow>
-						{ tableHead }
-					</TableRow>
+					<TableRow>{tableHead}</TableRow>
 				</TableHead>
 				<TableBody>
-					{ tableContent.map((row, i) => <StyledTableRow key={i}>{ row }</StyledTableRow>) }
+					{tableContent.map((row, i) => (
+						<StyledTableRow key={i}>{row}</StyledTableRow>
+					))}
 				</TableBody>
 			</Table>
 		</StyledTableContainer>
 	);
-}
+};
 
 export default GroupGrid;

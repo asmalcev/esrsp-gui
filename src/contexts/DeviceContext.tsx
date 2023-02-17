@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react';
 
 export type DeviceInfo = {
 	currentWidth: number;
@@ -10,7 +10,7 @@ export type DeviceInfo = {
 	isTouches: boolean;
 	isMouse: boolean;
 	isLandscapeOrientation: boolean;
-}
+};
 
 const defaultValues = {
 	device: {
@@ -27,14 +27,13 @@ const defaultValues = {
 };
 
 export const DeviceContext = createContext<DeviceInfo>({
-	...defaultValues.device
+	...defaultValues.device,
 });
 
-export const DeviceContextProdiver = props => {
+export const DeviceContextProdiver = (props) => {
 	const { children, ...other } = props;
 
 	const [device, setDevice] = useState<DeviceInfo>(defaultValues.device);
-
 
 	const updateDevice = () => {
 		if (window.innerWidth === device.currentWidth) {
@@ -50,10 +49,11 @@ export const DeviceContextProdiver = props => {
 			isXLargeDevice: window.innerWidth > 1920,
 			isTouches: 'ontouchstart' in document.documentElement,
 			isMouse: matchMedia('(pointer: fine)').matches,
-			isLandscapeOrientation: document.documentElement.clientWidth > 968 || matchMedia('(orientation: landscape)').matches,
+			isLandscapeOrientation:
+				document.documentElement.clientWidth > 968 ||
+				matchMedia('(orientation: landscape)').matches,
 		});
-	}
-
+	};
 
 	useEffect(() => {
 		window.addEventListener('resize', updateDevice);
@@ -62,14 +62,14 @@ export const DeviceContextProdiver = props => {
 
 		return () => {
 			window.removeEventListener('resize', updateDevice);
-		}
+		};
 	}, []);
 
 	return (
 		<DeviceContext.Provider value={device} {...other}>
-			{ children }
+			{children}
 		</DeviceContext.Provider>
-	)
-}
+	);
+};
 
 export const useDevice = () => useContext(DeviceContext);

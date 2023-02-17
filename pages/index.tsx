@@ -8,14 +8,14 @@ const Index = () => {
 
 	router.push('/schedule');
 
-	return <>
-		<Head>
-			<title>ESRSP</title>
-		</Head>
-		<MainContainer>
-
-		</MainContainer>
-	</>;
+	return (
+		<>
+			<Head>
+				<title>ESRSP</title>
+			</Head>
+			<MainContainer></MainContainer>
+		</>
+	);
 };
 
 export default Index;

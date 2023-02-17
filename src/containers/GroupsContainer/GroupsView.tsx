@@ -6,38 +6,36 @@ import {
 	ListItemText,
 	Autocomplete,
 	TextField,
-} from "@mui/material";
+} from '@mui/material';
 
-import Layout from "../Layout";
-import { NextLinkComposed } from "../../components/NextLinkCompose";
+import Layout from '../Layout';
+import { NextLinkComposed } from '../../components/NextLinkCompose';
 
 import styles from './GroupsView.styles';
 
-const StyledStack = styled(Stack)( styles.stack );
-const GroupListItem = styled(ListItemButton)( styles.groupListItem );
-const OptionLink = styled(NextLinkComposed)( styles.optionLink );
+const StyledStack = styled(Stack)(styles.stack);
+const GroupListItem = styled(ListItemButton)(styles.groupListItem);
+const OptionLink = styled(NextLinkComposed)(styles.optionLink);
 
-const GroupsView = ({
-	groupsData
-}) => {
+const GroupsView = ({ groupsData }) => {
 	if (!groupsData) {
 		groupsData = [];
 	}
 
-	const groups = groupsData.map(group =>
+	const groups = groupsData.map((group) => (
 		<GroupListItem
 			key={`${group.studentGroupId}-${group.disciplineId}`}
 			// @ts-ignore
-			component={ NextLinkComposed }
+			component={NextLinkComposed}
 			to={{
-				pathname: `/group/${group.studentGroupId}/${group.disciplineId}`
+				pathname: `/group/${group.studentGroupId}/${group.disciplineId}`,
 			}}
 		>
 			<ListItemText>{`${group.studentGroup} - ${group.discipline}`}</ListItemText>
 		</GroupListItem>
-	);
+	));
 
-	const searchTextField = params => (
+	const searchTextField = (params) => (
 		<TextField
 			{...params}
 			label="Найти группу"
@@ -54,37 +52,32 @@ const GroupsView = ({
 			<OptionLink
 				{...params}
 				to={{
-					pathname: `/group/${option.studentGroupId}/${option.disciplineId}`
+					pathname: `/group/${option.studentGroupId}/${option.disciplineId}`,
 				}}
 			>
 				{`${option.studentGroup} - ${option.discipline}`}
 			</OptionLink>
 		);
-	}
+	};
 
-	const getOptionLabel = (
-		option : { studentGroup, discipline }
-	) => `${option.studentGroup} - ${option.discipline}`;
+	const getOptionLabel = (option: { studentGroup; discipline }) =>
+		`${option.studentGroup} - ${option.discipline}`;
 
 	return (
 		<Layout>
 			<StyledStack spacing={2}>
 				<Autocomplete
 					disableClearable
-					options={ groupsData }
-					getOptionLabel={ getOptionLabel }
-					renderInput={ searchTextField }
-					renderOption={ searchOption }
+					options={groupsData}
+					getOptionLabel={getOptionLabel}
+					renderInput={searchTextField}
+					renderOption={searchOption}
 					noOptionsText="Не найдено"
 				/>
-				<List>
-					{
-						groups
-					}
-				</List>
+				<List>{groups}</List>
 			</StyledStack>
 		</Layout>
-	)
+	);
 };
 
 export default GroupsView;

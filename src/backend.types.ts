@@ -2,6 +2,7 @@ export type Performance = {
 	id: number;
 	value: string;
 	date: Date;
+	student?: Student;
 };
 
 export type Teacher = {
@@ -55,5 +56,6 @@ export type StudentGroupDiscipline = {
 export type StudentGroupPerformance = {
 	studentGroup: StudentGroup;
 	discipline: Discipline;
-	table: (Student | string)[][];
+	tableHead: string[];
+	table: (Student | Performance)[][];
 };

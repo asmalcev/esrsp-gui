@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"format": "prettier --write \"src/**/*.ts\""
+		"format": "prettier --write \"(src|pages)/**/*.(ts|tsx|js)\""
 	},
 	"repository": {
 		"type": "git",

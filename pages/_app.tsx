@@ -7,8 +7,7 @@ import { theme } from '../src/theme';
 import { AuthContextProvider } from '../src/contexts/AuthContext';
 import { DeviceContextProdiver } from '../src/contexts/DeviceContext';
 
-
-const ESRSPGUI = ({ Component, pageProps } : AppProps) => (
+const ESRSPGUI = ({ Component, pageProps }: AppProps) => (
 	<ThemeProvider theme={theme}>
 		<AuthContextProvider>
 			<DeviceContextProdiver>

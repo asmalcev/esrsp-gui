@@ -12,25 +12,26 @@ const Schedule = () => {
 	const [scheduleData, setScheduleData] = useState<TimedLesson[]>(null);
 
 	useEffect(() => {
-
 		const fetchData = async () => {
 			const res = await fetch(`/api/schedule/`);
 			setScheduleData(await res.json());
-		}
+		};
 
 		if (user.loggedin && !scheduleData) {
 			fetchData();
 		}
 	});
 
-	return <>
-		<Head>
-			<title>Расписание - ESRSP</title>
-		</Head>
-		<MainContainer>
-			<ScheduleContainer scheduleData={ scheduleData }/>
-		</MainContainer>
-	</>;
+	return (
+		<>
+			<Head>
+				<title>Расписание - ESRSP</title>
+			</Head>
+			<MainContainer>
+				<ScheduleContainer scheduleData={scheduleData} />
+			</MainContainer>
+		</>
+	);
 };
 
 export default Schedule;

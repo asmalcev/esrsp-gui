@@ -68,4 +68,32 @@ const getddmm = (date: Date): string => {
 	return `${sdd}.${smm}`;
 };
 
-export { debounce, throttle, groupBy, isOddWeek, getddmm };
+const isUndefined = (value) => typeof value === 'undefined';
+
+const isObject = (value) => value instanceof Object;
+
+const getMethodFromDiff = (old, current) => {
+	if (old === '') return 'POST';
+	if (current === '' && current !== old) return 'DELETE';
+	return 'PUT';
+};
+
+/* https://stackoverflow.com/questions/10830357/javascript-toisostring-ignores-timezone-offset
+ * Author: mplungjan
+ */
+const toLocalISOTime = (date: Date) => {
+	const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+	return new Date(date.getTime() - tzoffset).toISOString().slice(0, -1);
+};
+
+export {
+	debounce,
+	throttle,
+	groupBy,
+	isOddWeek,
+	getddmm,
+	isUndefined,
+	isObject,
+	getMethodFromDiff,
+	toLocalISOTime,
+};

@@ -1,15 +1,10 @@
 import { useRouter } from 'next/router';
 
-import {
-	useState,
-	useEffect,
-} from 'react';
+import { useState, useEffect } from 'react';
 
 import { useAuth } from '../../contexts/AuthContext';
 import AuthForm from '../../components/AuthForm';
 import { UserDto } from './user.dto';
-
-
 
 const AuthContainer = () => {
 	const router = useRouter();
@@ -22,7 +17,6 @@ const AuthContainer = () => {
 	 * onMount useEffect
 	 */
 	useEffect(() => {
-
 		const checkSession = async () => {
 			const resp = await fetch('/api/auth/');
 
@@ -36,11 +30,10 @@ const AuthContainer = () => {
 			} else {
 				setLoading(false);
 			}
-		}
+		};
 
 		checkSession();
 	}, []);
-
 
 	const formSubmitHandler = async (formData, setErr) => {
 		const resp = await fetch('/api/auth/login', {
@@ -56,7 +49,7 @@ const AuthContainer = () => {
 
 			updateUser({
 				...user,
-				loggedin: true
+				loggedin: true,
 			});
 			router.push('/');
 		} else if (resp.status === 404) {
@@ -64,14 +57,13 @@ const AuthContainer = () => {
 		} else if (resp.status === 400) {
 			setErr('Логин и пароль заполнены неверно');
 		}
-	}
+	};
 
-	return <>
-		<AuthForm
-			loading={loading}
-			formSubmitHandler={formSubmitHandler}
-			/>
-	</>;
-}
+	return (
+		<>
+			<AuthForm loading={loading} formSubmitHandler={formSubmitHandler} />
+		</>
+	);
+};
 
 export default AuthContainer;

@@ -79,7 +79,7 @@ export const theme = createTheme({
 			soft: '#75757544',
 			hard: '#757575aa',
 			black: '#000',
-		}
+		},
 	},
 	boxShadow: '0 0 5px rgba(0, 0, 0, 0.05)',
 	borderRadius: '4px',

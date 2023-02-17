@@ -1,36 +1,27 @@
-import {
-	styled,
-	TextField,
-	TextFieldProps,
-} from "@mui/material";
-import { ChangeEvent } from "react";
-
+import { styled, TextField, TextFieldProps } from '@mui/material';
+import { ChangeEvent } from 'react';
 
 type StyledTextFieldProps = Omit<TextFieldProps, 'onChange'> & {
-	onChange?: (val : string) => void,
+	onChange?: (val: string) => void;
 };
 
-const Field = styled(TextField)(
-	({theme}) => ({
+const Field = styled(TextField)(({ theme }) => ({}));
 
-	})
-);
-
-const StyledTextField = (props : StyledTextFieldProps) => {
-
+const StyledTextField = (props: StyledTextFieldProps) => {
 	const { onChange, ...other } = props;
 
-	const onFieldChange = (e : ChangeEvent<HTMLInputElement>) => {
+	const onFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 
 		onChange && onChange(value);
-	}
+	};
 
 	return (
 		<Field
 			onChange={onFieldChange}
 			color="secondary"
-			{...other as TextFieldProps}/>
+			{...(other as TextFieldProps)}
+		/>
 	);
 };
 

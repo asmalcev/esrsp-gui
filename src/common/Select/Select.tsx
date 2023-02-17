@@ -1,12 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import {
-	Select as MuiSelect,
-	SelectChangeEvent
-} from '@mui/material';
+import { Select as MuiSelect, SelectChangeEvent } from '@mui/material';
 
-const Select = props => {
-
+const Select = (props) => {
 	const { selectValue, shouldClear, ...other } = props;
 
 	const [value, setValue] = useState(selectValue);
@@ -18,11 +14,9 @@ const Select = props => {
 		} else {
 			setValue(value);
 		}
-	}
+	};
 
-	return (
-		<MuiSelect onChange={onChange} value={value} {...other}/>
-	)
-}
+	return <MuiSelect onChange={onChange} value={value} {...other} />;
+};
 
 export default Select;

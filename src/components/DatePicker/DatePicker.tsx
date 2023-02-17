@@ -1,4 +1,9 @@
-import { useState, createElement, FunctionComponent, ComponentClass } from 'react';
+import {
+	useState,
+	createElement,
+	FunctionComponent,
+	ComponentClass,
+} from 'react';
 
 import { styled, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -17,84 +22,87 @@ type DatePickerProps = {
 
 	helperText?: string;
 
-	onChangeHandler?: (newValue : any) => void;
-}
+	onChangeHandler?: (newValue: any) => void;
+};
 
-const StyledMuiDatePicker = styled(MuiDatePicker)( styles.datePicker );
+const StyledMuiDatePicker = styled(MuiDatePicker)(styles.datePicker);
 
 const DatePicker = ({
-		mask,
-		label,
-		stdValue,
-		helperText,
-		onChangeHandler
-	} : DatePickerProps) => {
-	const [value, setValue] = useState<Date | string | number>(stdValue || new Date());
+	mask,
+	label,
+	stdValue,
+	helperText,
+	onChangeHandler,
+}: DatePickerProps) => {
+	const [value, setValue] = useState<Date | string | number>(
+		stdValue || new Date(),
+	);
 	const [open, setOpen] = useState<boolean>(false);
 
-	const onChange = newValue => {
+	const onChange = (newValue) => {
 		setValue(newValue);
 		onChangeHandler && onChangeHandler(newValue);
-	}
+	};
 
 	/**
 	 * DatePicker was done controlled component to except user keyboard input
 	 */
 	const onInputFocus = () => {
 		setOpen(true);
-	}
+	};
 
 	const onOpen = () => {
 		setOpen(true);
-	}
+	};
 
 	const onClose = () => {
 		setOpen(false);
-	}
+	};
 
 	const onAccept = () => {
 		setOpen(false);
-	}
+	};
 
-	const onInputKeyDown = e => {
+	const onInputKeyDown = (e) => {
 		e.preventDefault();
-	}
+	};
 
-	const onInputMouseDown = e => {
+	const onInputMouseDown = (e) => {
 		e.preventDefault();
 		setOpen(true);
-	}
+	};
 
-	const onInputContextMenu = e => {
+	const onInputContextMenu = (e) => {
 		e.preventDefault();
-	}
+	};
 
-	const getTextField = params => (
+	const getTextField = (params) => (
 		<TextField
 			{...params}
 			color="secondary"
-			helperText={ helperText }
-			onFocus={ onInputFocus }
-			onKeyDown={ onInputKeyDown }
-			onMouseDown={ onInputMouseDown }
-			onContextMenu={ onInputContextMenu }
+			helperText={helperText}
+			onFocus={onInputFocus}
+			onKeyDown={onInputKeyDown}
+			onMouseDown={onInputMouseDown}
+			onContextMenu={onInputContextMenu}
 		/>
 	);
 
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs} locale={ru_locale}>
 			<StyledMuiDatePicker
-				label={ label || 'Выберите дату' }
-				mask={ mask || '__.__.____'}
-				value={ value }
-				onChange={ onChange }
-				open={ open }
-				onOpen={ onOpen }
-				onClose={ onClose }
-				onAccept={ onAccept }
-				renderInput={ getTextField }/>
+				label={label || 'Выберите дату'}
+				mask={mask || '__.__.____'}
+				value={value}
+				onChange={onChange}
+				open={open}
+				onOpen={onOpen}
+				onClose={onClose}
+				onAccept={onAccept}
+				renderInput={getTextField}
+			/>
 		</LocalizationProvider>
 	);
-}
+};
 
 export default DatePicker;

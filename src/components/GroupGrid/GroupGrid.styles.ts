@@ -19,14 +19,16 @@ export default {
 
 	tableContainer: ({ theme }) => ({
 		'&': {
-			maxHeight: `calc(100vh - ${theme.spacing(theme.layout.headerHeight + 13)})`,
-		}
+			maxHeight: `calc(100vh - ${theme.spacing(
+				theme.layout.headerHeight + 13,
+			)})`,
+		},
 	}),
 
 	row: ({ theme }) => ({
 		'&:hover': {
 			backgroundColor: theme.palette.customBackground.dark,
-		}
+		},
 	}),
 
 	cell: ({ theme }) => ({
@@ -48,10 +50,10 @@ export default {
 		},
 
 		'&::-webkit-outer-spin-button': {
-			'WebkitAppearance': 'none',
+			WebkitAppearance: 'none',
 		},
 		'&::-webkit-inner-spin-button': {
-			'WebkitAppearance': 'none',
+			WebkitAppearance: 'none',
 		},
 	}),
 };
