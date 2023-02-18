@@ -5,6 +5,8 @@ import styles from './GroupGrid.styles';
 
 const TextField = styled('input')(styles.input);
 
+const inputFilter = new RegExp('(^[0-9]+$)|(^н$)');
+
 const GroupGridCell = ({
 	children,
 	editable,
@@ -35,7 +37,14 @@ const GroupGridCell = ({
 
 	const _onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const targetValue = e.target.value;
-		if (targetValue.length < 4) {
+
+		/* valid value is empty string or string.length less than 4 and match regexp */
+		if (
+			targetValue.length === 0 || (
+				targetValue.length < 4 &&
+				inputFilter.test(targetValue)
+			)
+		) {
 			setValue(targetValue);
 		}
 	};
@@ -55,7 +64,6 @@ const GroupGridCell = ({
 					autoFocus={true}
 					value={value}
 					onKeyDown={onKeyDown}
-					type="number"
 				/>
 			) : (
 				value
