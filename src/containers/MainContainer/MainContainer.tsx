@@ -15,6 +15,8 @@ import UserInfo from '../../components/UserInfo';
 
 import styles from './MainContainer.styles';
 import { useAuth } from '../../contexts/AuthContext';
+import { useRecord } from '../../contexts/RecordContext';
+import visitedGroupsRecordKey from '../GroupContainer/recordKey';
 
 const GridContainer = styled('div', { name: 'grid-container' })(
 	styles.gridContainer,
@@ -31,11 +33,20 @@ const Header = styled(AppBar)(styles.appBar);
 const Footer = styled(Stack)(styles.footer);
 const AdminBlock = styled('div')(styles.adminBlock);
 
+type LinkData = {
+	text: string,
+	href: string,
+	compact?: boolean;
+};
+
 const MainContainer = ({ children }) => {
 	const router = useRouter();
 	const { user } = useAuth();
+	const { getRecord } = useRecord();
 
-	const linksData = [
+	console.log();
+
+	const linksData: LinkData[] = [
 		{
 			text: 'Расписание',
 			href: '/schedule',
@@ -45,6 +56,17 @@ const MainContainer = ({ children }) => {
 			href: '/groups',
 		},
 	];
+
+	const visitedGroups = getRecord(visitedGroupsRecordKey);
+	if (visitedGroups) {
+		for (const group of visitedGroups) {
+			linksData.push({
+				text: group[0],
+				href: group[1],
+				compact: true,
+			});
+		}
+	}
 
 	const adminLinksData = [
 		{
@@ -64,8 +86,9 @@ const MainContainer = ({ children }) => {
 					pathname: linkData.href,
 				}}
 				selected={isActive}
+				sx={linkData.compact && { pl: 4 }}
 			>
-				<ListItemText>{linkData.text}</ListItemText>
+				<ListItemText primaryTypographyProps={linkData.compact && { fontSize: 14 }}>{linkData.text}</ListItemText>
 			</ListItemButton>
 		);
 	});
@@ -111,8 +134,8 @@ const MainContainer = ({ children }) => {
 
 			<Menu justifyContent="space-between">
 				<List>
-					{links}
-					{user.usertype === 'admin' && adminLinks}
+					{user.usertype === 'admin' ? adminLinks : links}
+
 				</List>
 
 				<FooterContainer>

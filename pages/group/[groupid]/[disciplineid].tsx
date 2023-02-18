@@ -7,16 +7,21 @@ import MainContainer from '../../../src/containers/MainContainer';
 import GroupContainer from '../../../src/containers/GroupContainer';
 import { useAuth } from '../../../src/contexts/AuthContext';
 import { StudentGroupPerformance } from '../../../src/backend.types';
+import { useReload } from '../../../src/contexts/ReloadContext';
 
 const Group = () => {
 	const router = useRouter();
 	const { groupid, disciplineid } = router.query;
+
+	const { _ } = useReload();
 
 	const { user } = useAuth();
 
 	const [groupData, setGroupData] = useState<StudentGroupPerformance>(null);
 
 	useEffect(() => {
+		setGroupData(null);
+
 		const fetchData = async () => {
 			const res = await fetch(
 				`/api/schedule/performance/${groupid}/${disciplineid}`,
@@ -27,7 +32,7 @@ const Group = () => {
 		if (user.loggedin && !groupData) {
 			fetchData();
 		}
-	});
+	}, [_]);
 
 	return (
 		<>

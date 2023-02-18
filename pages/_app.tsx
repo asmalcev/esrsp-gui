@@ -6,12 +6,18 @@ import { ThemeProvider } from '@mui/material';
 import { theme } from '../src/theme';
 import { AuthContextProvider } from '../src/contexts/AuthContext';
 import { DeviceContextProdiver } from '../src/contexts/DeviceContext';
+import { RecordContextProvider } from '../src/contexts/RecordContext';
+import { ReloadContextProvider } from '../src/contexts/ReloadContext';
 
 const ESRSPGUI = ({ Component, pageProps }: AppProps) => (
 	<ThemeProvider theme={theme}>
 		<AuthContextProvider>
 			<DeviceContextProdiver>
-				<Component {...pageProps} />
+				<RecordContextProvider>
+					<ReloadContextProvider>
+						<Component {...pageProps} />
+					</ReloadContextProvider>
+				</RecordContextProvider>
 			</DeviceContextProdiver>
 		</AuthContextProvider>
 	</ThemeProvider>
