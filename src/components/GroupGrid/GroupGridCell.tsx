@@ -40,10 +40,8 @@ const GroupGridCell = ({
 
 		/* valid value is empty string or string.length less than 4 and match regexp */
 		if (
-			targetValue.length === 0 || (
-				targetValue.length < 4 &&
-				inputFilter.test(targetValue)
-			)
+			targetValue.length === 0 ||
+			(targetValue.length < 4 && inputFilter.test(targetValue))
 		) {
 			setValue(targetValue);
 		}

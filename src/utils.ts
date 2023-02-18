@@ -86,6 +86,26 @@ const toLocalISOTime = (date: Date) => {
 	return new Date(date.getTime() - tzoffset).toISOString().slice(0, -1);
 };
 
+const dotObject = (storage: object, request: string) => {
+	const keys = request.split('.');
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i];
+
+		if (!storage[key] || (i < keys.length - 1 && !isObject(storage[key]))) {
+			return request;
+		} else {
+			storage = storage[key];
+		}
+	}
+	return storage;
+};
+
+const getLocalStorage = (key: string, standardValue: string) =>
+	window.localStorage.getItem(key) || standardValue;
+
+const setLocalStorage = (key: string, value: string) =>
+	window.localStorage.setItem(key, value);
+
 export {
 	debounce,
 	throttle,
@@ -96,4 +116,7 @@ export {
 	isObject,
 	getMethodFromDiff,
 	toLocalISOTime,
+	dotObject,
+	getLocalStorage,
+	setLocalStorage,
 };

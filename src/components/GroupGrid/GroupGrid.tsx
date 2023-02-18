@@ -18,6 +18,11 @@ import {
 } from '../../backend.types';
 import GroupGridCell from './GroupGridCell';
 import { getMethodFromDiff, toLocalISOTime } from '../../utils';
+import {
+	NextTableWithUpdateInput,
+	TableSize,
+	UpdateTableInfo,
+} from './GroupGrid.types';
 
 const StyledTableCell = styled(GroupGridCell)(styles.cell);
 const StickyTableCell = styled(StyledTableCell)(styles.sticky);
@@ -26,21 +31,9 @@ const StyledTableContainer: any = styled((props) => (
 ))(styles.tableContainer);
 const StyledTableRow = styled(TableRow)(styles.row);
 
-type updateTableInfo = {
-	column: number;
-	row: number;
-	id: number;
-};
-
-type nextTableWithUpdateInput = {
-	column: number;
-	row: number;
-	performance: Performance;
-};
-
 const nextTableWithUpdate = (
 	table: (Student | Performance)[][],
-	update: nextTableWithUpdateInput,
+	update: NextTableWithUpdateInput,
 ) => {
 	const nextTable = [];
 
@@ -58,11 +51,17 @@ const nextTableWithUpdate = (
 	return nextTable;
 };
 
-const GroupGrid = ({ data }: { data: StudentGroupPerformance }) => {
+const GroupGrid = ({
+	data,
+	size = TableSize.medium,
+}: {
+	data: StudentGroupPerformance;
+	size?: TableSize;
+}) => {
 	const [table, setTable] = useState(data.table);
 
 	const updateTable = async (
-		info: updateTableInfo,
+		info: UpdateTableInfo,
 		old: string,
 		current: string,
 	) => {
@@ -96,10 +95,12 @@ const GroupGrid = ({ data }: { data: StudentGroupPerformance }) => {
 				console.log('Error:', res);
 			} else {
 				const jsonRes: Performance = await res.json();
-				setTable(nextTableWithUpdate(table, {
-					...info,
-					performance: jsonRes,
-				}));
+				setTable(
+					nextTableWithUpdate(table, {
+						...info,
+						performance: jsonRes,
+					}),
+				);
 			}
 		}
 
@@ -111,10 +112,12 @@ const GroupGrid = ({ data }: { data: StudentGroupPerformance }) => {
 			if (res.status !== 200) {
 				console.log('Error:', res);
 			} else {
-				setTable(nextTableWithUpdate(table, {
-					...info,
-					performance: null,
-				}));
+				setTable(
+					nextTableWithUpdate(table, {
+						...info,
+						performance: null,
+					}),
+				);
 			}
 		}
 
@@ -137,10 +140,12 @@ const GroupGrid = ({ data }: { data: StudentGroupPerformance }) => {
 				const performance = table[info.row][info.column] as Performance;
 				performance.value = current;
 
-				setTable(nextTableWithUpdate(table, {
-					...info,
-					performance,
-				}));
+				setTable(
+					nextTableWithUpdate(table, {
+						...info,
+						performance,
+					}),
+				);
 			}
 		}
 	};
@@ -190,7 +195,7 @@ const GroupGrid = ({ data }: { data: StudentGroupPerformance }) => {
 
 	return (
 		<StyledTableContainer className="styled-scroll">
-			<Table stickyHeader>
+			<Table stickyHeader size={size}>
 				<TableHead>
 					<TableRow>{tableHead}</TableRow>
 				</TableHead>

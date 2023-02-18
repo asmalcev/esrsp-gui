@@ -20,7 +20,7 @@ export default {
 	tableContainer: ({ theme }) => ({
 		'&': {
 			maxHeight: `calc(100vh - ${theme.spacing(
-				theme.layout.headerHeight + 13,
+				theme.layout.headerHeight + 15,
 			)})`,
 		},
 	}),
