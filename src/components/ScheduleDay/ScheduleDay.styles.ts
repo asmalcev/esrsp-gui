@@ -10,4 +10,8 @@ export default {
 
 		color: theme.palette.primary.dark,
 	}),
+
+	activeDayName: ({ theme }) => ({
+		color: theme.palette.secondary.main,
+	}),
 };

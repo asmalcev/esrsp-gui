@@ -106,6 +106,14 @@ const getLocalStorage = (key: string, standardValue: string) =>
 const setLocalStorage = (key: string, value: string) =>
 	window.localStorage.setItem(key, value);
 
+const compareDates = (date1: Date, date2: Date) => {
+	return (
+		date1.getFullYear() === date2.getFullYear() &&
+		date1.getMonth() === date2.getMonth() &&
+		date1.getDate() === date2.getDate()
+	);
+};
+
 export {
 	debounce,
 	throttle,
@@ -119,4 +127,5 @@ export {
 	dotObject,
 	getLocalStorage,
 	setLocalStorage,
+	compareDates,
 };

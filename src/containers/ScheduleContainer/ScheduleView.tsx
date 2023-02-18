@@ -7,10 +7,9 @@ import ScheduleDay from '../../components/ScheduleDay';
 import DatePicker from '../../components/DatePicker';
 import Layout from '../Layout';
 
-import { throttle } from '../../utils';
-
 import styles from './ScheduleView.styles';
 import { ScheduleData } from './scheduleData.type';
+import { compareDates } from '../../utils';
 
 const DaysContainer = styled('div')(styles.daysContainer);
 const DatePickerContainer = styled('div')(styles.datePickerContainer);
@@ -106,6 +105,7 @@ const ScheduleView = ({
 		<ScheduleDay
 			key={day.date.jsdate.getTime()}
 			dayData={day}
+			active={compareDates(new Date(), day.date.jsdate)}
 			customRef={
 				scrollTargetType === 'today'
 					? currentIndex === index
