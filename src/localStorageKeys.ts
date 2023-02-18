@@ -3,6 +3,7 @@ import { dotObject } from './utils';
 export const localStorageKeys = {
 	GroupContainer: {
 		TableSize: 'GroupContainer-TableSize',
+		VisitedGroups: 'GroupContainer-VisitedGroups',
 	},
 };
 

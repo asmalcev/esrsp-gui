@@ -14,7 +14,12 @@ import { TableSize } from '../../components/GroupGrid/GroupGrid.types';
 import { useRecord } from '../../contexts/RecordContext';
 import { useReload } from '../../contexts/ReloadContext';
 import { dotLSK } from '../../localStorageKeys';
-import { getLocalStorage, setLocalStorage } from '../../utils';
+import {
+	getLocalStorage,
+	getSessionStorage,
+	setLocalStorage,
+	setSessionStorage,
+} from '../../utils';
 import Layout from '../Layout';
 
 import styles from './GroupContainer.styles';
@@ -47,7 +52,11 @@ const GroupContainer = ({
 	};
 
 	useEffect(() => {
-		const currentRecord: Array<string[]> = getRecord(recordKey) || [];
+		const fromStorage = JSON.parse(
+			getSessionStorage(dotLSK('GroupContainer.VisitedGroups'), '[]'),
+		);
+		const currentRecord: Array<string[]> =
+			getRecord(recordKey) || fromStorage || [];
 		const nextRecord = [];
 
 		let already = false;
@@ -59,10 +68,17 @@ const GroupContainer = ({
 		}
 
 		if (!already) {
-			nextRecord.unshift([groupData.studentGroup.name, router.asPath]);
+			nextRecord.unshift([
+				`${groupData.discipline.name} - ${groupData.studentGroup.name}`,
+				router.asPath,
+			]);
 			nextRecord.splice(3, 1);
 		}
 
+		setSessionStorage(
+			dotLSK('GroupContainer.VisitedGroups'),
+			JSON.stringify(nextRecord),
+		);
 		setRecord(recordKey, nextRecord);
 	}, []);
 
@@ -72,7 +88,10 @@ const GroupContainer = ({
 		 * т.к. скачивание данных расположенно в компоненте-странице
 		 */
 		const { groupid, disciplineid } = router.query;
-		if (Number(groupid) !== groupData.studentGroup.id || Number(disciplineid) !== groupData.discipline.id) {
+		if (
+			Number(groupid) !== groupData.studentGroup.id ||
+			Number(disciplineid) !== groupData.discipline.id
+		) {
 			reload();
 		}
 	});

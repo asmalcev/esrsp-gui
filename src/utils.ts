@@ -114,6 +114,12 @@ const compareDates = (date1: Date, date2: Date) => {
 	);
 };
 
+const getSessionStorage = (key: string, standardValue: string) =>
+	window.sessionStorage.getItem(key) || standardValue;
+
+const setSessionStorage = (key: string, value: string) =>
+	window.sessionStorage.setItem(key, value);
+
 export {
 	debounce,
 	throttle,
@@ -128,4 +134,6 @@ export {
 	getLocalStorage,
 	setLocalStorage,
 	compareDates,
+	getSessionStorage,
+	setSessionStorage,
 };

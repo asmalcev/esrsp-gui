@@ -34,8 +34,8 @@ const Footer = styled(Stack)(styles.footer);
 const AdminBlock = styled('div')(styles.adminBlock);
 
 type LinkData = {
-	text: string,
-	href: string,
+	text: string;
+	href: string;
 	compact?: boolean;
 };
 
@@ -88,7 +88,11 @@ const MainContainer = ({ children }) => {
 				selected={isActive}
 				sx={linkData.compact && { pl: 4 }}
 			>
-				<ListItemText primaryTypographyProps={linkData.compact && { fontSize: 14 }}>{linkData.text}</ListItemText>
+				<ListItemText
+					primaryTypographyProps={linkData.compact && { fontSize: 14 }}
+				>
+					{linkData.text}
+				</ListItemText>
 			</ListItemButton>
 		);
 	});
@@ -133,10 +137,7 @@ const MainContainer = ({ children }) => {
 			</Header>
 
 			<Menu justifyContent="space-between">
-				<List>
-					{user.usertype === 'admin' ? adminLinks : links}
-
-				</List>
+				<List>{user.usertype === 'admin' ? adminLinks : links}</List>
 
 				<FooterContainer>
 					{/* <List>

@@ -15,7 +15,7 @@ export const ReloadContextProvider = (props) => {
 
 	const reload = () => {
 		set_(_ + 1);
-	}
+	};
 
 	const contextObj = {
 		reload,
