@@ -13,7 +13,7 @@ import GroupGrid from '../../components/GroupGrid';
 import { TableSize } from '../../components/GroupGrid/GroupGrid.types';
 import { useRecord } from '../../contexts/RecordContext';
 import { useReload } from '../../contexts/ReloadContext';
-import { dotLSK } from '../../localStorageKeys';
+import { localStorageKeys } from '../../localStorageKeys';
 import {
 	getLocalStorage,
 	getSessionStorage,
@@ -23,7 +23,6 @@ import {
 import Layout from '../Layout';
 
 import styles from './GroupContainer.styles';
-import recordKey from './recordKey';
 
 const StyledLayout = styled(Layout)(styles.layout);
 
@@ -39,7 +38,7 @@ const GroupContainer = ({
 
 	const [size, setSize] = useState(
 		getLocalStorage(
-			dotLSK('GroupContainer.TableSize'),
+			localStorageKeys.GroupContainer.TableSize,
 			TableSize.medium,
 		) as TableSize,
 	);
@@ -48,15 +47,12 @@ const GroupContainer = ({
 	const onClick = () => {
 		const nextSize = isSmallSize ? TableSize.medium : TableSize.small;
 		setSize(nextSize);
-		setLocalStorage(dotLSK('GroupContainer.TableSize'), nextSize);
+		setLocalStorage(localStorageKeys.GroupContainer.TableSize, nextSize);
 	};
 
 	useEffect(() => {
-		const fromStorage = JSON.parse(
-			getSessionStorage(dotLSK('GroupContainer.VisitedGroups'), '[]'),
-		);
 		const currentRecord: Array<string[]> =
-			getRecord(recordKey) || fromStorage || [];
+			getRecord(localStorageKeys.GroupContainer.VisitedGroups) || [];
 		const nextRecord = [];
 
 		let already = false;
@@ -75,11 +71,12 @@ const GroupContainer = ({
 			nextRecord.splice(3, 1);
 		}
 
-		setSessionStorage(
-			dotLSK('GroupContainer.VisitedGroups'),
-			JSON.stringify(nextRecord),
+		setRecord(
+			localStorageKeys.GroupContainer.VisitedGroups,
+			nextRecord,
+			true,
+			'session',
 		);
-		setRecord(recordKey, nextRecord);
 	}, []);
 
 	useEffect(() => {

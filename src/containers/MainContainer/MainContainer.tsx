@@ -16,7 +16,7 @@ import UserInfo from '../../components/UserInfo';
 import styles from './MainContainer.styles';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRecord } from '../../contexts/RecordContext';
-import visitedGroupsRecordKey from '../GroupContainer/recordKey';
+import { localStorageKeys } from '../../localStorageKeys';
 
 const GridContainer = styled('div', { name: 'grid-container' })(
 	styles.gridContainer,
@@ -44,8 +44,6 @@ const MainContainer = ({ children }) => {
 	const { user } = useAuth();
 	const { getRecord } = useRecord();
 
-	console.log();
-
 	const linksData: LinkData[] = [
 		{
 			text: 'Расписание',
@@ -57,7 +55,9 @@ const MainContainer = ({ children }) => {
 		},
 	];
 
-	const visitedGroups = getRecord(visitedGroupsRecordKey);
+	const visitedGroups = getRecord(
+		localStorageKeys.GroupContainer.VisitedGroups,
+	);
 	if (visitedGroups) {
 		for (const group of visitedGroups) {
 			linksData.push({
@@ -150,7 +150,7 @@ const MainContainer = ({ children }) => {
 					</List> */}
 					<Footer direction="row" justifyContent="space-between">
 						<Typography variant="subtitle1">&copy; Alexander Malcev</Typography>
-						<Typography variant="subtitle1">v0.9.2</Typography>
+						<Typography variant="subtitle1">v0.0.1</Typography>
 					</Footer>
 				</FooterContainer>
 			</Menu>
