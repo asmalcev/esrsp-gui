@@ -14,17 +14,8 @@ import { TableSize } from '../../components/GroupGrid/GroupGrid.types';
 import { useRecord } from '../../contexts/RecordContext';
 import { useReload } from '../../contexts/ReloadContext';
 import { localStorageKeys } from '../../localStorageKeys';
-import {
-	getLocalStorage,
-	getSessionStorage,
-	setLocalStorage,
-	setSessionStorage,
-} from '../../utils';
-import Layout from '../Layout';
-
-import styles from './GroupContainer.styles';
-
-const StyledLayout = styled(Layout)(styles.layout);
+import { getLocalStorage, setLocalStorage } from '../../utils';
+import { WideLayout } from '../Layout';
 
 const GroupContainer = ({
 	groupData,
@@ -94,7 +85,7 @@ const GroupContainer = ({
 	});
 
 	return (
-		<StyledLayout>
+		<WideLayout>
 			<Stack flexDirection="row" justifyContent="space-between">
 				<Typography variant="h2">{groupData.discipline.name}</Typography>
 				<FormControlLabel
@@ -115,7 +106,7 @@ const GroupContainer = ({
 				/>
 			</Stack>
 			<GroupGrid data={groupData} size={size} />
-		</StyledLayout>
+		</WideLayout>
 	);
 };
 

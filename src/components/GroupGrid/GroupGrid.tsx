@@ -16,15 +16,15 @@ import {
 	StudentGroupPerformance,
 	Performance,
 } from '../../backend.types';
-import GroupGridCell from './GroupGridCell';
+import TableCell from '../../common/TableCell/TableCell';
 import { getMethodFromDiff, toLocalISOTime } from '../../utils';
 import {
 	NextTableWithUpdateInput,
 	TableSize,
 	UpdateTableInfo,
 } from './GroupGrid.types';
+import StyledTableCell from '../../common/TableCell';
 
-const StyledTableCell = styled(GroupGridCell)(styles.cell);
 const StickyTableCell = styled(StyledTableCell)(styles.sticky);
 const StyledTableContainer: any = styled((props) => (
 	<TableContainer component={Paper} {...props} />
@@ -151,7 +151,7 @@ const GroupGrid = ({
 	};
 
 	const tableHead = data.tableHead.map((cell, i) => (
-		<GroupGridCell key={i}>{cell}</GroupGridCell>
+		<TableCell key={i}>{cell}</TableCell>
 	));
 	const tableContent = [];
 

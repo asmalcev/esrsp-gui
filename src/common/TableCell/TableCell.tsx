@@ -1,13 +1,28 @@
-import { styled, TableCell } from '@mui/material';
+import { styled, TableCell as _TableCell } from '@mui/material';
 import { useRef, useState } from 'react';
 
-import styles from './GroupGrid.styles';
+const TextField = styled('input')(({ theme }) => ({
+	outline: 'none',
 
-const TextField = styled('input')(styles.input);
+	width: theme.spacing(4),
+	background: 'transparent',
+	border: 'none',
+
+	'&': {
+		textAlign: 'center',
+	},
+
+	'&::-webkit-outer-spin-button': {
+		WebkitAppearance: 'none',
+	},
+	'&::-webkit-inner-spin-button': {
+		WebkitAppearance: 'none',
+	},
+}));
 
 const inputFilter = new RegExp('(^[0-9]+$)|(^н$)');
 
-const GroupGridCell = ({
+const TableCell = ({
 	children,
 	editable,
 	onChange,
@@ -54,7 +69,7 @@ const GroupGridCell = ({
 	};
 
 	return (
-		<TableCell {...props} onClick={onClick}>
+		<_TableCell {...props} onClick={onClick}>
 			{editMode ? (
 				<TextField
 					onBlur={onBlur}
@@ -66,8 +81,8 @@ const GroupGridCell = ({
 			) : (
 				value
 			)}
-		</TableCell>
+		</_TableCell>
 	);
 };
 
-export default GroupGridCell;
+export default TableCell;

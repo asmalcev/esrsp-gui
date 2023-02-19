@@ -14,7 +14,7 @@ import {
 import UserInfo from '../../components/UserInfo';
 
 import styles from './MainContainer.styles';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, UserRole } from '../../contexts/AuthContext';
 import { useRecord } from '../../contexts/RecordContext';
 import { localStorageKeys } from '../../localStorageKeys';
 
@@ -31,7 +31,6 @@ const FooterContainer = styled('div', { name: 'footer-container' })(
 const Menu = styled(Stack)(styles.menu);
 const Header = styled(AppBar)(styles.appBar);
 const Footer = styled(Stack)(styles.footer);
-const AdminBlock = styled('div')(styles.adminBlock);
 
 type LinkData = {
 	text: string;
@@ -44,11 +43,16 @@ const MainContainer = ({ children }) => {
 	const { user } = useAuth();
 	const { getRecord } = useRecord();
 
-	const linksData: LinkData[] = [
+	const linksData: LinkData[] = [];
+
+	const userLinksData: LinkData[] = [
 		{
 			text: 'Расписание',
 			href: '/schedule',
 		},
+	];
+
+	const teacherLinksData: LinkData[] = [
 		{
 			text: 'Список групп',
 			href: '/groups',
@@ -60,7 +64,7 @@ const MainContainer = ({ children }) => {
 	);
 	if (visitedGroups) {
 		for (const group of visitedGroups) {
-			linksData.push({
+			teacherLinksData.push({
 				text: group[0],
 				href: group[1],
 				compact: true,
@@ -68,12 +72,29 @@ const MainContainer = ({ children }) => {
 		}
 	}
 
-	const adminLinksData = [
+	const studentLinksData: LinkData[] = [
+		{
+			text: 'Успеваемость',
+			href: '/performance',
+		},
+	];
+
+	const adminLinksData: LinkData[] = [
 		{
 			text: 'Управление данными',
 			href: '/admin',
 		},
 	];
+
+	if (user.role === UserRole.ADMIN) {
+		linksData.push(...adminLinksData);
+	} else if (user.role === UserRole.STUDENT) {
+		linksData.push(...userLinksData);
+		linksData.push(...studentLinksData);
+	} else if (user.role === UserRole.TEACHER) {
+		linksData.push(...userLinksData);
+		linksData.push(...teacherLinksData);
+	}
 
 	const links = linksData.map((linkData) => {
 		const isActive = router.asPath === linkData.href;
@@ -97,29 +118,6 @@ const MainContainer = ({ children }) => {
 		);
 	});
 
-	const adminLinks = [
-		<AdminBlock key="admin-block">
-			<Typography>Администрирование</Typography>
-		</AdminBlock>,
-	].concat(
-		adminLinksData.map((linkData) => {
-			const isActive = router.asPath === linkData.href;
-
-			return (
-				<ListItemButton
-					key={linkData.text}
-					component={isActive ? 'a' : NextLinkComposed}
-					to={{
-						pathname: linkData.href,
-					}}
-					selected={isActive}
-				>
-					<ListItemText>{linkData.text}</ListItemText>
-				</ListItemButton>
-			);
-		}),
-	);
-
 	return (
 		<GridContainer>
 			<Header position="relative">
@@ -137,7 +135,7 @@ const MainContainer = ({ children }) => {
 			</Header>
 
 			<Menu justifyContent="space-between">
-				<List>{user.usertype === 'admin' ? adminLinks : links}</List>
+				<List>{links}</List>
 
 				<FooterContainer>
 					{/* <List>

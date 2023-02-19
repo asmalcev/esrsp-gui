@@ -39,7 +39,8 @@ export const RecordContextProvider = (props) => {
 	fillRecordsFromStorage(recordsFromStorage, getSessionStorage);
 	fillRecordsFromStorage(recordsFromStorage, getLocalStorage);
 
-	const [records, setRecords] = useState<Record<string, unknown[]>>(recordsFromStorage);
+	const [records, setRecords] =
+		useState<Record<string, unknown[]>>(recordsFromStorage);
 
 	const setRecord = (
 		key: string,
@@ -66,9 +67,14 @@ export const RecordContextProvider = (props) => {
 				/* При сохранении record-а в sessionStorage, RecordContext должен запомнить
 				 * ключ, по которому затем сможет получить его значение обратно
 				 */
-				const recordsKeys = new Set(JSON.parse(
-					getSessionStorage(localStorageKeys.RecordContext, JSON.stringify([])),
-				));
+				const recordsKeys = new Set(
+					JSON.parse(
+						getSessionStorage(
+							localStorageKeys.RecordContext,
+							JSON.stringify([]),
+						),
+					),
+				);
 				recordsKeys.add(key);
 				setSessionStorage(
 					localStorageKeys.RecordContext,
@@ -78,9 +84,11 @@ export const RecordContextProvider = (props) => {
 				setSessionStorage(key, JSON.stringify(value));
 			} else {
 				// то же самое, что и выше, но для localStorage
-				const recordsKeys = new Set(JSON.parse(
-					getLocalStorage(localStorageKeys.RecordContext, JSON.stringify([])),
-				));
+				const recordsKeys = new Set(
+					JSON.parse(
+						getLocalStorage(localStorageKeys.RecordContext, JSON.stringify([])),
+					),
+				);
 				recordsKeys.add(key);
 				setLocalStorage(
 					localStorageKeys.RecordContext,

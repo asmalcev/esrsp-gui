@@ -13,7 +13,6 @@ export type User = {
 	username?: string;
 	role?: UserRole;
 	roleId?: number;
-	usertype?: string;
 
 	fullname?: string;
 

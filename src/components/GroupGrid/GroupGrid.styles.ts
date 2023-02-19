@@ -1,8 +1,4 @@
 export default {
-	cellInput: ({ theme }) => ({
-		width: theme.spacing(6),
-	}),
-
 	sticky: ({ theme }) => ({
 		left: 0,
 
@@ -28,32 +24,6 @@ export default {
 	row: ({ theme }) => ({
 		'&:hover': {
 			backgroundColor: theme.palette.customBackground.dark,
-		},
-	}),
-
-	cell: ({ theme }) => ({
-		borderRight: `1px solid`,
-		borderColor: theme.palette._common.soft,
-
-		color: theme.palette._common.black,
-	}),
-
-	input: ({ theme }) => ({
-		outline: 'none',
-
-		width: theme.spacing(4),
-		background: 'transparent',
-		border: 'none',
-
-		'&': {
-			textAlign: 'center',
-		},
-
-		'&::-webkit-outer-spin-button': {
-			WebkitAppearance: 'none',
-		},
-		'&::-webkit-inner-spin-button': {
-			WebkitAppearance: 'none',
 		},
 	}),
 };

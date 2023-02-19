@@ -21,6 +21,7 @@ export type Student = {
 export type Discipline = {
 	id: number;
 	name: string;
+	performances?: Performance[];
 };
 
 export type LessonTime = {
