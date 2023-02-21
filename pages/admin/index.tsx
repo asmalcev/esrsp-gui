@@ -4,6 +4,9 @@ import MainContainer from '../../src/containers/MainContainer';
 import { useAuth, UserRole } from '../../src/contexts/AuthContext';
 import { useRouter } from 'next/router';
 import Typography from '@mui/material/Typography';
+import { LinkData, adminLinksData as _adminLinksData } from '../../src/links';
+import { List, ListItemButton, ListItemText } from '@mui/material';
+import { NextLinkComposed } from '../../src/components/NextLinkCompose';
 
 const Admin = () => {
 	const router = useRouter();
@@ -14,13 +17,39 @@ const Admin = () => {
 		return;
 	}
 
+	const adminLinksData: LinkData[] = [..._adminLinksData];
+
+	const links = adminLinksData.map((linkData) => {
+		const isActive = router.asPath === linkData.href;
+
+		return (
+			<ListItemButton
+				key={linkData.text}
+				component={isActive ? 'a' : NextLinkComposed}
+				to={{
+					pathname: linkData.href,
+				}}
+				selected={isActive}
+				sx={linkData.compact && { pl: 4 }}
+			>
+				<ListItemText
+					primaryTypographyProps={linkData.compact && { fontSize: 14 }}
+				>
+					{linkData.text}
+				</ListItemText>
+			</ListItemButton>
+		);
+	});
+
 	return (
 		<>
 			<Head>
 				<title>Управление данными - ESRSP</title>
 			</Head>
 			<MainContainer>
-				<Typography variant="h2">Управление данными</Typography>
+				<List>
+					{links}
+				</List>
 			</MainContainer>
 		</>
 	);

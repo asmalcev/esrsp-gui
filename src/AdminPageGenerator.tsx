@@ -8,7 +8,7 @@ import { useAuth, UserRole } from './contexts/AuthContext';
 const AdminPageGenerator = ({
 	title,
 	fetchUrl,
-	ContainerComponent
+	ContainerComponent,
 }: {
 	title: string;
 	fetchUrl: string;
@@ -38,14 +38,14 @@ const AdminPageGenerator = ({
 		return (
 			<>
 				<Head>
-					<title>{ title } - ESRSP</title>
+					<title>{title} - ESRSP</title>
 				</Head>
 				<MainContainer>
-					{ data && <ContainerComponent data={data} /> }
+					{data && <ContainerComponent data={data} />}
 				</MainContainer>
 			</>
 		);
-	}
+	};
 };
 
 export default AdminPageGenerator;

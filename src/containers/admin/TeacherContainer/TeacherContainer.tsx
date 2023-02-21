@@ -7,34 +7,34 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
-import { Discipline } from '../../../backend.types';
+import { Teacher } from '../../../backend.types';
 import StyledTableCell from '../../../common/TableCell';
 import { WideLayout } from '../../Layout';
 
-const DisciplineContainer = ({ data }: { data: Discipline[] }) => {
-	const disciplines = data.map((d) => (
+const TeacherContainer = ({ data }: { data: Teacher[] }) => {
+	const teachers = data.map((d) => (
 		<TableRow key={d.id}>
 			<StyledTableCell>{`${d.id}`}</StyledTableCell>
-			<StyledTableCell>{d.name}</StyledTableCell>
+			<StyledTableCell>{d.fullname}</StyledTableCell>
 		</TableRow>
 	));
 
 	return (
 		<WideLayout>
-			<Typography variant="h2">Управление дисциплинами</Typography>
+			<Typography variant="h2">Управление преподавателями</Typography>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
 						<TableRow>
 							<StyledTableCell>id</StyledTableCell>
-							<StyledTableCell>name</StyledTableCell>
+							<StyledTableCell>fullname</StyledTableCell>
 						</TableRow>
 					</TableHead>
-					<TableBody>{disciplines}</TableBody>
+					<TableBody>{teachers}</TableBody>
 				</Table>
 			</TableContainer>
 		</WideLayout>
 	);
 };
 
-export default DisciplineContainer;
+export default TeacherContainer;

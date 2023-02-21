@@ -35,4 +35,14 @@ export const adminLinksData: LinkData[] = [
 		href: '/admin/discipline',
 		compact: true,
 	},
+	{
+		text: 'Преподаватели',
+		href: '/admin/teacher',
+		compact: true,
+	},
+	{
+		text: 'Студенты',
+		href: '/admin/student',
+		compact: true,
+	},
 ];
