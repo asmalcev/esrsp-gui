@@ -17,6 +17,13 @@ import styles from './MainContainer.styles';
 import { useAuth, UserRole } from '../../contexts/AuthContext';
 import { useRecord } from '../../contexts/RecordContext';
 import { localStorageKeys } from '../../localStorageKeys';
+import {
+	LinkData,
+	userLinksData as _userLinksData,
+	teacherLinksData as _teacherLinksData,
+	studentLinksData as _studentLinksData,
+	adminLinksData as _adminLinksData,
+} from '../../links';
 
 const GridContainer = styled('div', { name: 'grid-container' })(
 	styles.gridContainer,
@@ -32,12 +39,6 @@ const Menu = styled(Stack)(styles.menu);
 const Header = styled(AppBar)(styles.appBar);
 const Footer = styled(Stack)(styles.footer);
 
-type LinkData = {
-	text: string;
-	href: string;
-	compact?: boolean;
-};
-
 const MainContainer = ({ children }) => {
 	const router = useRouter();
 	const { user } = useAuth();
@@ -45,19 +46,9 @@ const MainContainer = ({ children }) => {
 
 	const linksData: LinkData[] = [];
 
-	const userLinksData: LinkData[] = [
-		{
-			text: 'Расписание',
-			href: '/schedule',
-		},
-	];
+	const userLinksData: LinkData[] = [..._userLinksData];
 
-	const teacherLinksData: LinkData[] = [
-		{
-			text: 'Список групп',
-			href: '/groups',
-		},
-	];
+	const teacherLinksData: LinkData[] = [..._teacherLinksData];
 
 	const visitedGroups = getRecord(
 		localStorageKeys.GroupContainer.VisitedGroups,
@@ -72,19 +63,9 @@ const MainContainer = ({ children }) => {
 		}
 	}
 
-	const studentLinksData: LinkData[] = [
-		{
-			text: 'Успеваемость',
-			href: '/performance',
-		},
-	];
+	const studentLinksData: LinkData[] = [..._studentLinksData];
 
-	const adminLinksData: LinkData[] = [
-		{
-			text: 'Управление данными',
-			href: '/admin',
-		},
-	];
+	const adminLinksData: LinkData[] = [..._adminLinksData];
 
 	if (user.role === UserRole.ADMIN) {
 		linksData.push(...adminLinksData);

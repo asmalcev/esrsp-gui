@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 const NotFound = () => {
-
 	return (
 		<>
 			<Head>
@@ -14,7 +13,7 @@ const NotFound = () => {
 				alignItems="center"
 				sx={{ height: '100vh' }}
 			>
-				<Typography variant='h1'>404 Not Found</Typography>
+				<Typography variant="h1">404 Not Found</Typography>
 				<Link href="/">На главную</Link>
 			</Stack>
 		</>
