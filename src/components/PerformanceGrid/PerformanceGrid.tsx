@@ -29,10 +29,16 @@ const PerformanceGrid = ({ data }: { data: Discipline }) => {
 				<TableContainer component={Paper}>
 					<Table>
 						<TableHead>
-							<TableRow>{dates}</TableRow>
+							<TableRow>
+								<StyledTableCell>Дата</StyledTableCell>
+								{dates}
+							</TableRow>
 						</TableHead>
 						<TableBody>
-							<TableRow>{performances}</TableRow>
+							<TableRow>
+								<StyledTableCell>Оценка</StyledTableCell>
+								{performances}
+							</TableRow>
 						</TableBody>
 					</Table>
 				</TableContainer>
