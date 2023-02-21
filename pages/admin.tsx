@@ -9,7 +9,7 @@ const Groups = () => {
 	const router = useRouter();
 	const { user } = useAuth();
 
-	if (user.usertype !== UserRole.ADMIN) {
+	if (user.role !== UserRole.ADMIN) {
 		router.push('/schedule');
 	}
 

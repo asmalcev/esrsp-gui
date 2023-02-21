@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import MainContainer from '../../../src/containers/MainContainer';
 import GroupContainer from '../../../src/containers/GroupContainer';
-import { useAuth } from '../../../src/contexts/AuthContext';
+import { useAuth, UserRole } from '../../../src/contexts/AuthContext';
 import { StudentGroupPerformance } from '../../../src/backend.types';
 import { useReload } from '../../../src/contexts/ReloadContext';
 
@@ -16,6 +16,10 @@ const Group = () => {
 	const { _ } = useReload();
 
 	const { user } = useAuth();
+
+	if (user.role !== UserRole.TEACHER && user.role !== UserRole.ADMIN) {
+		router.push('/403');
+	}
 
 	const [groupData, setGroupData] = useState<StudentGroupPerformance>(null);
 

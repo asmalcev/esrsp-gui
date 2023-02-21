@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import MainContainer from '../src/containers/MainContainer';
-
 const Index = () => {
 	const router = useRouter();
 
@@ -13,7 +11,6 @@ const Index = () => {
 			<Head>
 				<title>ESRSP</title>
 			</Head>
-			<MainContainer></MainContainer>
 		</>
 	);
 };

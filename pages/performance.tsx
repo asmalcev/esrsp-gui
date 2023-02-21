@@ -6,7 +6,7 @@ import MainContainer from '../src/containers/MainContainer';
 import PerformanceContainer from '../src/containers/PerformanceContainer';
 import { useAuth } from '../src/contexts/AuthContext';
 
-const Groups = () => {
+const Performance = () => {
 	const { user } = useAuth();
 
 	const [performanceData, setPerformanceData] = useState<Discipline[]>(null);
@@ -38,4 +38,4 @@ const Groups = () => {
 	);
 };
 
-export default Groups;
+export default Performance;

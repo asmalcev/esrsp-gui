@@ -3,11 +3,17 @@ import { useEffect, useState } from 'react';
 
 import MainContainer from '../src/containers/MainContainer';
 import GroupsContainer from '../src/containers/GroupsContainer';
-import { useAuth } from '../src/contexts/AuthContext';
+import { useAuth, UserRole } from '../src/contexts/AuthContext';
 import { StudentGroupDiscipline } from '../src/backend.types';
+import { useRouter } from 'next/router';
 
 const Groups = () => {
 	const { user } = useAuth();
+	const router = useRouter();
+
+	if (user.role !== UserRole.TEACHER && user.role !== UserRole.ADMIN) {
+		router.push('/403');
+	}
 
 	const [groupsData, setGroupsData] = useState<StudentGroupDiscipline[]>(null);
 
