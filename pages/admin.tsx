@@ -11,6 +11,7 @@ const Groups = () => {
 
 	if (user.role !== UserRole.ADMIN) {
 		router.push('/schedule');
+		return;
 	}
 
 	const [tablesData, setTablesData] = useState(null);

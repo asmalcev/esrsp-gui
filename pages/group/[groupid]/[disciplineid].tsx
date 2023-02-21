@@ -19,6 +19,7 @@ const Group = () => {
 
 	if (user.role !== UserRole.TEACHER && user.role !== UserRole.ADMIN) {
 		router.push('/403');
+		return;
 	}
 
 	const [groupData, setGroupData] = useState<StudentGroupPerformance>(null);

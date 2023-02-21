@@ -3,11 +3,18 @@ import { useEffect, useState } from 'react';
 
 import MainContainer from '../src/containers/MainContainer';
 import ScheduleContainer from '../src/containers/ScheduleContainer';
-import { useAuth } from '../src/contexts/AuthContext';
+import { useAuth, UserRole } from '../src/contexts/AuthContext';
 import { TimedLesson } from '../src/backend.types';
+import { useRouter } from 'next/router';
 
 const Schedule = () => {
 	const { user } = useAuth();
+	const router = useRouter();
+
+	if (user.role === UserRole.ADMIN) {
+		router.push('/admin');
+		return;
+	}
 
 	const [scheduleData, setScheduleData] = useState<TimedLesson[]>(null);
 
