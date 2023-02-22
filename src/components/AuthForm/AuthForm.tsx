@@ -1,8 +1,8 @@
 import { Alert, Paper, Stack, styled, Typography } from '@mui/material';
 
 import useAuthForm from './useAuthForm';
-import StyledButton from '../../components/StyledButton';
-import StyledTextField from '../../components/StyledTextField';
+import Button from '../../common/Button';
+import TextField from '../../common/TextField';
 
 import styles from './AuthForm.styles';
 
@@ -39,7 +39,7 @@ const AuthForm = ({ loading, formSubmitHandler }: AuthFormProps) => {
 				<AuthPaper>
 					<Typography variant="h1">Войти в аккаунт</Typography>
 					<InputBox spacing={2}>
-						<StyledTextField
+						<TextField
 							label="Логин"
 							name="username"
 							fullWidth
@@ -47,7 +47,7 @@ const AuthForm = ({ loading, formSubmitHandler }: AuthFormProps) => {
 							onChange={setUsername}
 							required
 						/>
-						<StyledTextField
+						<TextField
 							label="Пароль"
 							type="password"
 							name="password"
@@ -60,9 +60,9 @@ const AuthForm = ({ loading, formSubmitHandler }: AuthFormProps) => {
 							<Alert severity="error">{credentials.err}</Alert>
 						)}
 					</InputBox>
-					<StyledButton onClick={onSubmitButtonClick} fullWidth type="submit">
+					<Button onClick={onSubmitButtonClick} fullWidth type="submit">
 						Войти
-					</StyledButton>
+					</Button>
 				</AuthPaper>
 			)}
 		</AuthLayout>

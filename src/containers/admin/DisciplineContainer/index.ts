@@ -1,3 +1,4 @@
 import DisciplineContainer from './DisciplineContainer';
+import DisciplinesContainer from './DisciplinesContainer';
 
-export default DisciplineContainer;
+export { DisciplinesContainer, DisciplineContainer };

@@ -27,7 +27,7 @@ const Schedule = () => {
 		if (user.loggedin && !scheduleData) {
 			fetchData();
 		}
-	});
+	}, []);
 
 	return (
 		<>

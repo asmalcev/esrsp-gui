@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 
 import { Discipline } from '../../backend.types';
-import StyledTableCell from '../../common/TableCell';
+import { StyledTableCell } from '../../common/TableCell';
 import { getddmm } from '../../utils';
 
 const PerformanceGrid = ({ data }: { data: Discipline }) => {

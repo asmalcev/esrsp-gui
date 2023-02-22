@@ -16,14 +16,13 @@ import {
 	StudentGroupPerformance,
 	Performance,
 } from '../../backend.types';
-import TableCell from '../../common/TableCell/TableCell';
 import { getMethodFromDiff, toLocalISOTime } from '../../utils';
 import {
 	NextTableWithUpdateInput,
 	TableSize,
 	UpdateTableInfo,
 } from './GroupGrid.types';
-import StyledTableCell from '../../common/TableCell';
+import { StyledTableCell, StyledEditableTableCell } from '../../common/TableCell';
 
 const StickyTableCell = styled(StyledTableCell)(styles.sticky);
 const StyledTableContainer: any = styled((props) => (
@@ -151,7 +150,7 @@ const GroupGrid = ({
 	};
 
 	const tableHead = data.tableHead.map((cell, i) => (
-		<TableCell key={i}>{cell}</TableCell>
+		<StyledTableCell key={i}>{cell}</StyledTableCell>
 	));
 	const tableContent = [];
 
@@ -176,7 +175,7 @@ const GroupGrid = ({
 				const cell = performance?.value;
 
 				tableContent[i].push(
-					<StyledTableCell
+					<StyledEditableTableCell
 						key={`${i} ${j}`}
 						sx={{ textAlign: 'center' }}
 						editable={true}
@@ -187,7 +186,7 @@ const GroupGrid = ({
 						})}
 					>
 						{cell}
-					</StyledTableCell>,
+					</StyledEditableTableCell>,
 				);
 			}
 		}

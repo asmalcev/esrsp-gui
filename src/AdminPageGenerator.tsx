@@ -9,10 +9,14 @@ const AdminPageGenerator = ({
 	title,
 	fetchUrl,
 	ContainerComponent,
+	dynamicUrl,
 }: {
 	title: string;
 	fetchUrl: string;
 	ContainerComponent: any;
+	dynamicUrl?: {
+		router: string[];
+	}
 }) => {
 	return () => {
 		const router = useRouter();
@@ -23,17 +27,25 @@ const AdminPageGenerator = ({
 			return;
 		}
 
+		let backendFetchUrl = fetchUrl;
+
+		if (dynamicUrl) {
+			for (const name of dynamicUrl.router) {
+				backendFetchUrl = fetchUrl.replace(`[${name}]`, router.query[name].toString());
+			}
+		}
+
 		const [data, setData] = useState(null);
 		useEffect(() => {
 			const fetchData = async () => {
-				const res = await fetch(fetchUrl);
+				const res = await fetch(backendFetchUrl);
 				setData(await res.json());
 			};
 
 			if (user.loggedin && !data) {
 				fetchData();
 			}
-		});
+		}, []);
 
 		return (
 			<>

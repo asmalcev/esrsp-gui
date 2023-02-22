@@ -1,3 +1,3 @@
-import TeacherContainer from './TeacherContainer';
+import TeachersContainer from './TeachersContainer';
 
-export default TeacherContainer;
+export { TeachersContainer };

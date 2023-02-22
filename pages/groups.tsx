@@ -27,7 +27,7 @@ const Groups = () => {
 		if (user.loggedin && !groupsData) {
 			fetchData();
 		}
-	});
+	}, []);
 
 	return (
 		<>

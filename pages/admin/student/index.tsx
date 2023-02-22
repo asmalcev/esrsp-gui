@@ -1,10 +1,10 @@
 import AdminPageGenerator from '../../../src/AdminPageGenerator';
-import StudentContainer from '../../../src/containers/admin/StudentContainer';
+import { StudentsContainer } from '../../../src/containers/admin/StudentContainer';
 
 const AdminDiscipline = AdminPageGenerator({
 	title: 'Управление дисциплинами',
 	fetchUrl: '/api/roles/student',
-	ContainerComponent: StudentContainer,
+	ContainerComponent: StudentsContainer,
 });
 
 export default AdminDiscipline;

@@ -1,3 +1,3 @@
-import StudentContainer from './StudentContainer';
+import StudentsContainer from './StudentsContainer';
 
-export default StudentContainer;
+export { StudentsContainer };

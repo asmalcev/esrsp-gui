@@ -22,7 +22,7 @@ const Performance = () => {
 		if (user.loggedin && !performanceData) {
 			fetchData();
 		}
-	});
+	}, []);
 
 	return (
 		<>

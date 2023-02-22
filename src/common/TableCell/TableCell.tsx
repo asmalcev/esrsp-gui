@@ -1,4 +1,4 @@
-import { styled, TableCell as _TableCell } from '@mui/material';
+import { styled, TableCell } from '@mui/material';
 import { useRef, useState } from 'react';
 
 const TextField = styled('input')(({ theme }) => ({
@@ -20,9 +20,7 @@ const TextField = styled('input')(({ theme }) => ({
 	},
 }));
 
-const inputFilter = new RegExp('(^[0-9]+$)|(^н$)');
-
-const TableCell = ({
+const EditableTableCell = ({
 	children,
 	editable,
 	onChange,
@@ -35,6 +33,8 @@ const TableCell = ({
 	const [value, setValue] = useState(children || '');
 	const [editMode, setEditMode] = useState(false);
 	const savedValue = useRef<string>(value);
+
+	const inputFilter = new RegExp('(^[0-9]+$)|(^н$)');
 
 	const onClick = () => {
 		if (editable && !editMode) {
@@ -69,7 +69,7 @@ const TableCell = ({
 	};
 
 	return (
-		<_TableCell {...props} onClick={onClick}>
+		<TableCell {...props} onClick={onClick}>
 			{editMode ? (
 				<TextField
 					onBlur={onBlur}
@@ -81,8 +81,8 @@ const TableCell = ({
 			) : (
 				value
 			)}
-		</_TableCell>
+		</TableCell>
 	);
 };
 
-export default TableCell;
+export default EditableTableCell;

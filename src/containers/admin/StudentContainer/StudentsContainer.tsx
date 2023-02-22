@@ -8,10 +8,10 @@ import {
 	Typography,
 } from '@mui/material';
 import { Student } from '../../../backend.types';
-import StyledTableCell from '../../../common/TableCell';
+import { StyledTableCell } from '../../../common/TableCell';
 import { WideLayout } from '../../Layout';
 
-const StudentContainer = ({ data }: { data: Student[] }) => {
+const StudentsContainer = ({ data }: { data: Student[] }) => {
 	const students = data.map((d) => (
 		<TableRow key={d.id}>
 			<StyledTableCell>{`${d.id}`}</StyledTableCell>
@@ -39,4 +39,4 @@ const StudentContainer = ({ data }: { data: Student[] }) => {
 	);
 };
 
-export default StudentContainer;
+export default StudentsContainer;
