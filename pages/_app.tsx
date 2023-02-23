@@ -8,6 +8,7 @@ import { AuthContextProvider } from '../src/contexts/AuthContext';
 import { DeviceContextProdiver } from '../src/contexts/DeviceContext';
 import { RecordContextProvider } from '../src/contexts/RecordContext';
 import { ReloadContextProvider } from '../src/contexts/ReloadContext';
+import { SnackbarProvider } from 'notistack';
 
 const ESRSPGUI = ({ Component, pageProps }: AppProps) => (
 	<ThemeProvider theme={theme}>
@@ -15,7 +16,13 @@ const ESRSPGUI = ({ Component, pageProps }: AppProps) => (
 			<DeviceContextProdiver>
 				<RecordContextProvider>
 					<ReloadContextProvider>
-						<Component {...pageProps} />
+						<SnackbarProvider
+							maxSnack={3}
+							autoHideDuration={3000}
+							preventDuplicate={true}
+						>
+							<Component {...pageProps} />
+						</SnackbarProvider>
 					</ReloadContextProvider>
 				</RecordContextProvider>
 			</DeviceContextProdiver>
