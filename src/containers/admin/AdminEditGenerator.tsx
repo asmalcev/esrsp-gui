@@ -1,0 +1,103 @@
+import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
+import Button from '../../common/Button';
+import InputBox from '../../common/InputBox';
+import TextField from '../../common/TextField';
+import { WideLayout } from '../Layout';
+
+export type AdminEditType = {
+	type: 'string';
+	disabled?: boolean;
+	validate?: (value) => { isOk: boolean; error: string };
+	prepare?: (value) => any;
+};
+
+const AdminEditGenerator = ({
+	title,
+	fields,
+	fetchUrl,
+}: {
+	title: string;
+	fields: Record<string, AdminEditType>;
+	fetchUrl: string;
+}) => {
+	return ({ data }: { data }) => {
+		const storage = {};
+
+		for (const field of Object.keys(fields)) {
+			storage[field] = useState(data[field]);
+		}
+
+		const { enqueueSnackbar } = useSnackbar();
+
+		const onSave = async (e) => {
+			e.preventDefault();
+
+			for (const field of Object.keys(fields)) {
+				if (!fields[field].disabled && fields[field].validate) {
+					const { isOk, error } = fields[field].validate(storage[field][0]);
+
+					if (!isOk) {
+						enqueueSnackbar(`Error: ${error}`, {
+							variant: 'error',
+						});
+						return;
+					}
+				}
+			}
+
+			const body = {};
+			for (const field of Object.keys(fields)) {
+				body[field] = fields[field].prepare
+					? fields[field].prepare(storage[field][0])
+					: storage[field][0];
+			}
+
+			const res = await fetch(fetchUrl + String(data.id), {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(body),
+			});
+
+			if (res.status === 200) {
+				enqueueSnackbar(`Success: saved`, { variant: 'success' });
+			} else {
+				enqueueSnackbar(`Error ${res.status}`, { variant: 'error' });
+			}
+		};
+
+		const inputs = Object.keys(storage).map((field) => {
+			if (fields[field].type === 'string') {
+				return (
+					<InputBox sx={{ width: 'auto' }} key={field}>
+						<TextField
+							label={field}
+							value={storage[field][0]}
+							disabled={fields[field].disabled}
+							onChange={storage[field][1]}
+						/>
+					</InputBox>
+				);
+			}
+		});
+
+		return (
+			<WideLayout>
+				<Typography variant="h2">{title}</Typography>
+				<form onSubmit={onSave}>
+					{inputs}
+					<InputBox sx={{ width: 'auto' }}>
+						<Button onClick={onSave} type="submit">
+							Сохранить
+						</Button>
+					</InputBox>
+				</form>
+			</WideLayout>
+		);
+	};
+};
+
+export default AdminEditGenerator;

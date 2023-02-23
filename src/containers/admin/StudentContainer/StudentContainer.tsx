@@ -12,11 +12,13 @@ const StudentContainer = ({ data }: { data: Student }) => {
 	const [recordBook, setRecordBook] = useState<string>(data.recordBook);
 	const { enqueueSnackbar } = useSnackbar();
 
-	const onSave = async e => {
+	const onSave = async (e) => {
 		e.preventDefault();
 
 		if (fullname.length === 0) {
-			enqueueSnackbar(`Error: discipline name cannot be empty`, { variant: 'error' });
+			enqueueSnackbar(`Error: discipline name cannot be empty`, {
+				variant: 'error',
+			});
 			return;
 		}
 
@@ -26,7 +28,7 @@ const StudentContainer = ({ data }: { data: Student }) => {
 			recordBook,
 		};
 
-		const res = await fetch(`/api/schedule/discipline/${data.id}`, {
+		const res = await fetch(`/api/schedule/student/${data.id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',

@@ -7,6 +7,7 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
+import Link from 'next/link';
 import { Teacher } from '../../../backend.types';
 import { StyledTableCell } from '../../../common/TableCell';
 import { WideLayout } from '../../Layout';
@@ -16,6 +17,9 @@ const TeachersContainer = ({ data }: { data: Teacher[] }) => {
 		<TableRow key={d.id}>
 			<StyledTableCell>{`${d.id}`}</StyledTableCell>
 			<StyledTableCell>{d.fullname}</StyledTableCell>
+			<StyledTableCell>
+				<Link href={`/admin/teacher/${d.id}`}>Изменить</Link>
+			</StyledTableCell>
 		</TableRow>
 	));
 
@@ -28,6 +32,7 @@ const TeachersContainer = ({ data }: { data: Teacher[] }) => {
 						<TableRow>
 							<StyledTableCell>id</StyledTableCell>
 							<StyledTableCell>fullname</StyledTableCell>
+							<StyledTableCell>action</StyledTableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>{teachers}</TableBody>

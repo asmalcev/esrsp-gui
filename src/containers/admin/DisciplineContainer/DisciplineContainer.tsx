@@ -11,11 +11,13 @@ const DisciplineContainer = ({ data }: { data: Discipline }) => {
 	const [name, setName] = useState<string>(data.name);
 	const { enqueueSnackbar } = useSnackbar();
 
-	const onSave = async e => {
+	const onSave = async (e) => {
 		e.preventDefault();
 
 		if (name.length === 0) {
-			enqueueSnackbar(`Error: discipline name cannot be empty`, { variant: 'error' });
+			enqueueSnackbar(`Error: discipline name cannot be empty`, {
+				variant: 'error',
+			});
 			return;
 		}
 
