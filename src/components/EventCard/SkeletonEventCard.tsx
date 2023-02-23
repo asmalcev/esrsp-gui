@@ -8,6 +8,7 @@ const SkeletonEventCard = ({ customRef, ...rest }) => {
 	const data = {
 		discipline: <Skeleton animation="wave" width={theme.spacing(36)} />,
 		studentGroups: <Skeleton animation="wave" width={theme.spacing(16)} />,
+		teacher: <Skeleton animation="wave" width={theme.spacing(16)} />,
 		lessonTime: {
 			timeStart: <Skeleton animation="wave" width={theme.spacing(4)} />,
 			timeEnd: <Skeleton animation="wave" width={theme.spacing(4)} />,

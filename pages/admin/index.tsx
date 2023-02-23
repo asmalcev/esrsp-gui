@@ -47,9 +47,7 @@ const Admin = () => {
 				<title>Управление данными - ESRSP</title>
 			</Head>
 			<MainContainer>
-				<List>
-					{links}
-				</List>
+				<List>{links}</List>
 			</MainContainer>
 		</>
 	);

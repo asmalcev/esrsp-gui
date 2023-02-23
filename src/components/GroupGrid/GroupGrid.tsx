@@ -22,7 +22,10 @@ import {
 	TableSize,
 	UpdateTableInfo,
 } from './GroupGrid.types';
-import { StyledTableCell, StyledEditableTableCell } from '../../common/TableCell';
+import {
+	StyledTableCell,
+	StyledEditableTableCell,
+} from '../../common/TableCell';
 
 const StickyTableCell = styled(StyledTableCell)(styles.sticky);
 const StyledTableContainer: any = styled((props) => (

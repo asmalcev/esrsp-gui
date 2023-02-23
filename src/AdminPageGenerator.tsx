@@ -16,7 +16,7 @@ const AdminPageGenerator = ({
 	ContainerComponent: any;
 	dynamicUrl?: {
 		router: string[];
-	}
+	};
 }) => {
 	return () => {
 		const router = useRouter();
@@ -31,7 +31,10 @@ const AdminPageGenerator = ({
 
 		if (dynamicUrl) {
 			for (const name of dynamicUrl.router) {
-				backendFetchUrl = fetchUrl.replace(`[${name}]`, router.query[name].toString());
+				backendFetchUrl = fetchUrl.replace(
+					`[${name}]`,
+					router.query[name].toString(),
+				);
 			}
 		}
 

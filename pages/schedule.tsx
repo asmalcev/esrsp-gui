@@ -35,7 +35,7 @@ const Schedule = () => {
 				<title>Расписание - ESRSP</title>
 			</Head>
 			<MainContainer>
-				<ScheduleContainer scheduleData={scheduleData} />
+				{scheduleData && <ScheduleContainer scheduleData={scheduleData} />}
 			</MainContainer>
 		</>
 	);

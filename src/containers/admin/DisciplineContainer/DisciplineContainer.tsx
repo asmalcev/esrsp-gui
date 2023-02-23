@@ -1,6 +1,4 @@
-import {
-	Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import { useState } from 'react';
 import { Discipline } from '../../../backend.types';
 import Button from '../../../common/Button';
@@ -12,19 +10,13 @@ const DisciplineContainer = ({ data }: { data: Discipline }) => {
 
 	const onSave = () => {
 		console.log('onSave', name);
-	}
+	};
 
 	return (
 		<WideLayout>
 			<Typography variant="h2">Управление дисциплинами</Typography>
-			<TextField
-				label="id"
-				value={data.id}
-				disabled/>
-			<TextField
-				label="name"
-				value={name}
-				onChange={setName}/>
+			<TextField label="id" value={data.id} disabled />
+			<TextField label="name" value={name} onChange={setName} />
 			<Button onClick={onSave}>Сохранить</Button>
 		</WideLayout>
 	);
