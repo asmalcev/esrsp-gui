@@ -5,6 +5,7 @@ import Button from '../../common/Button';
 import TextField from '../../common/TextField';
 
 import styles from './AuthForm.styles';
+import InputBox from '../../common/InputBox';
 
 type formSubmitHandlerProps = {
 	username: string;
@@ -21,8 +22,6 @@ type AuthFormProps = {
 
 const AuthLayout = styled(Stack)(styles.container);
 const AuthPaper = styled(Paper)(styles.paper);
-
-const InputBox = styled(Stack)(styles.inputBox);
 
 const AuthForm = ({ loading, formSubmitHandler }: AuthFormProps) => {
 	const [credentials, setUsername, setPassword, setErr] = useAuthForm();

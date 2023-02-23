@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Discipline } from '../../../backend.types';
 import Button from '../../../common/Button';
+import InputBox from '../../../common/InputBox';
 import TextField from '../../../common/TextField';
 import { WideLayout } from '../../Layout';
 
@@ -42,15 +43,17 @@ const DisciplineContainer = ({ data }: { data: Discipline }) => {
 		<WideLayout>
 			<Typography variant="h2">Управление дисциплинами</Typography>
 			<form onSubmit={onSave}>
-				<TextField label="id" value={data.id} disabled />
-				<br />
-				<br />
-				<TextField label="name" value={name} onChange={setName} />
-				<br />
-				<br />
-				<Button onClick={onSave} type="submit">
-					Сохранить
-				</Button>
+				<InputBox sx={{ width: 'auto' }}>
+					<TextField label="id" value={data.id} disabled />
+				</InputBox>
+				<InputBox sx={{ width: 'auto' }}>
+					<TextField label="name" value={name} onChange={setName} />
+				</InputBox>
+				<InputBox sx={{ width: 'auto' }}>
+					<Button onClick={onSave} type="submit">
+						Сохранить
+					</Button>
+				</InputBox>
 			</form>
 		</WideLayout>
 	);
