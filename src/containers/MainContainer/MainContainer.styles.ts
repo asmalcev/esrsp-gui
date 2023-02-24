@@ -17,6 +17,7 @@ export default {
 		boxShadow: 'none',
 
 		'&': {
+			position: 'relative',
 			display: 'flex',
 			flexDirection: 'row',
 			justifyContent: 'space-between',
@@ -46,22 +47,20 @@ export default {
 		boxShadow: `inset ${theme.boxShadow}`,
 	}),
 
-	footer: ({ theme }) => ({
-		padding: theme.spacing(2),
-		backgroundColor: theme.palette.customBackground.footer,
-	}),
-
 	footerContainer: ({ theme }) => ({
 		color: theme.palette.primary.dark,
 	}),
 
-	adminBlock: ({ theme }) => ({
-		marginTop: theme.spacing(4),
+	drawer: ({ theme }) => ({
+		width: '100%',
+	}),
 
-		'& .MuiTypography-body1': {
-			paddingLeft: theme.spacing(1),
+	mobileContentContainer: ({ theme }): any => ({
+		overflowX: 'hidden',
+		overflowY: 'scroll',
 
-			color: theme.palette.primary.dark,
-		},
+		padding: theme.spacing(2),
+		backgroundColor: theme.palette.customBackground.main,
+		boxShadow: `inset ${theme.boxShadow}`,
 	}),
 };

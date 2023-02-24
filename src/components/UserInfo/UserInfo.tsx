@@ -18,7 +18,7 @@ const UserInfo = () => {
 	};
 
 	return (
-		<Stack flexDirection="row" alignItems="center">
+		<Stack flexDirection="row" alignItems="center" p={2}>
 			<Typography>{user.fullname || user.username}</Typography>
 			<Button
 				color="secondary"

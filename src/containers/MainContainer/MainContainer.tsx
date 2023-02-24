@@ -1,19 +1,3 @@
-import { useRouter } from 'next/router';
-import { NextLinkComposed } from '../../components/NextLinkCompose';
-import {
-	styled,
-	AppBar,
-	List,
-	Link,
-	ListItemButton,
-	ListItemText,
-	Typography,
-	Stack,
-} from '@mui/material';
-
-import UserInfo from '../../components/UserInfo';
-
-import styles from './MainContainer.styles';
 import { useAuth, UserRole } from '../../contexts/AuthContext';
 import { useRecord } from '../../contexts/RecordContext';
 import { localStorageKeys } from '../../localStorageKeys';
@@ -24,25 +8,14 @@ import {
 	studentLinksData as _studentLinksData,
 	adminLinksData as _adminLinksData,
 } from '../../links';
-
-const GridContainer = styled('div', { name: 'grid-container' })(
-	styles.gridContainer,
-);
-const ContentContainer = styled('div', { name: 'content-container' })(
-	styles.contentContainer,
-);
-const FooterContainer = styled('div', { name: 'footer-container' })(
-	styles.footerContainer,
-);
-
-const Menu = styled(Stack)(styles.menu);
-const Header = styled(AppBar)(styles.appBar);
-const Footer = styled(Stack)(styles.footer);
+import { useDevice } from '../../contexts/DeviceContext';
+import MainContainerView from './MainContainer.view';
+import MainContainerMobile from './MainContainer.mobile';
 
 const MainContainer = ({ children }) => {
-	const router = useRouter();
 	const { user } = useAuth();
 	const { getRecord } = useRecord();
+	const { isSmallDevice } = useDevice();
 
 	const linksData: LinkData[] = [];
 
@@ -77,65 +50,10 @@ const MainContainer = ({ children }) => {
 		linksData.push(...teacherLinksData);
 	}
 
-	const links = linksData.map((linkData) => {
-		const isActive = router.asPath === linkData.href;
-
-		return (
-			<ListItemButton
-				key={linkData.text}
-				component={isActive ? 'a' : NextLinkComposed}
-				to={{
-					pathname: linkData.href,
-				}}
-				selected={isActive}
-				sx={linkData.compact && { pl: 4 }}
-			>
-				<ListItemText
-					primaryTypographyProps={linkData.compact && { fontSize: 14 }}
-				>
-					{linkData.text}
-				</ListItemText>
-			</ListItemButton>
-		);
-	});
-
-	return (
-		<GridContainer>
-			<Header position="relative">
-				<Link
-					component={NextLinkComposed}
-					to={{
-						pathname: '/',
-					}}
-					underline="none"
-				>
-					<Typography variant="h1">Электронный журнал</Typography>
-				</Link>
-
-				<UserInfo />
-			</Header>
-
-			<Menu justifyContent="space-between">
-				<List>{links}</List>
-
-				<FooterContainer>
-					{/* <List>
-						<ListItemButton>
-							<ListItemText>Настройки</ListItemText>
-						</ListItemButton>
-						<ListItemButton>
-							<ListItemText>Справка</ListItemText>
-						</ListItemButton>
-					</List> */}
-					<Footer direction="row" justifyContent="space-between">
-						<Typography variant="subtitle1">&copy; Alexander Malcev</Typography>
-						<Typography variant="subtitle1">v0.0.1</Typography>
-					</Footer>
-				</FooterContainer>
-			</Menu>
-
-			<ContentContainer className="styled-scroll">{children}</ContentContainer>
-		</GridContainer>
+	return isSmallDevice ? (
+		<MainContainerMobile linksData={linksData}>{children}</MainContainerMobile>
+	) : (
+		<MainContainerView linksData={linksData}>{children}</MainContainerView>
 	);
 };
 
