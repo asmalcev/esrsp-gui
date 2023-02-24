@@ -31,6 +31,12 @@ const Group = () => {
 			const res = await fetch(
 				`/api/schedule/performance/${groupid}/${disciplineid}`,
 			);
+
+			if (res.status === 404) {
+				router.push('/404');
+				return;
+			}
+
 			setGroupData(await res.json());
 		};
 

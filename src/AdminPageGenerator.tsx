@@ -42,6 +42,12 @@ const AdminPageGenerator = ({
 		useEffect(() => {
 			const fetchData = async () => {
 				const res = await fetch(backendFetchUrl);
+
+				if (res.status === 404) {
+					router.push('/404');
+					return;
+				}
+
 				setData(await res.json());
 			};
 
