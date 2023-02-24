@@ -90,9 +90,7 @@ const AdminEditGenerator = ({
 				<form onSubmit={onSave}>
 					{inputs}
 					<InputBox sx={{ width: 'auto' }}>
-						<Button onClick={onSave} type="submit">
-							Сохранить
-						</Button>
+						<Button type="submit">Сохранить</Button>
 					</InputBox>
 				</form>
 			</WideLayout>

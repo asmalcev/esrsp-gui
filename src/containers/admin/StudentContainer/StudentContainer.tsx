@@ -26,7 +26,7 @@ const StudentContainer = AdminEditGenerator({
 				return { isOk: false, error: 'recordBook cannot be empty' };
 			},
 			prepare: (v: string) => v.trim(),
-		}
+		},
 	},
 	fetchUrl: '/api/roles/student/',
 });

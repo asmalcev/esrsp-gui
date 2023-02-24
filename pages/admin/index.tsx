@@ -3,7 +3,6 @@ import Head from 'next/head';
 import MainContainer from '../../src/containers/MainContainer';
 import { useAuth, UserRole } from '../../src/contexts/AuthContext';
 import { useRouter } from 'next/router';
-import Typography from '@mui/material/Typography';
 import { LinkData, adminLinksData as _adminLinksData } from '../../src/links';
 import { List, ListItemButton, ListItemText } from '@mui/material';
 import { NextLinkComposed } from '../../src/components/NextLinkCompose';

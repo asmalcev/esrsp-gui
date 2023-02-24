@@ -31,6 +31,16 @@ export const adminLinksData: LinkData[] = [
 		href: '/admin',
 	},
 	{
+		text: 'Загрузка',
+		href: '/admin/upload',
+		compact: true,
+	},
+	// {
+	// 	text: 'Пользователи',
+	// 	href: '/admin/users',
+	// 	compact: true,
+	// },
+	{
 		text: 'Дисциплины',
 		href: '/admin/discipline',
 		compact: true,
