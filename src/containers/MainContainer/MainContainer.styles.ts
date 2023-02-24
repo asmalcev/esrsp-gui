@@ -59,6 +59,7 @@ export default {
 		overflowX: 'hidden',
 		overflowY: 'scroll',
 
+		height: `calc(100vh - ${theme.spacing(theme.layout.headerHeight)})`,
 		padding: theme.spacing(2),
 		backgroundColor: theme.palette.customBackground.main,
 		boxShadow: `inset ${theme.boxShadow}`,

@@ -79,7 +79,7 @@ const MainContainerMobile = ({
 					<Icon color="secondary">menu</Icon>
 				</IconButton>
 			</Header>
-			{/* <ContentContainer className="styled-scroll">{children}</ContentContainer> */}
+			<ContentContainer className="styled-scroll">{children}</ContentContainer>
 		</>
 	);
 };
