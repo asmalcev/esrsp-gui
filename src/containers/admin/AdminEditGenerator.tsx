@@ -72,7 +72,7 @@ const AdminEditGenerator = ({
 		const inputs = Object.keys(storage).map((field) => {
 			if (fields[field].type === 'string') {
 				return (
-					<InputBox sx={{ width: 'auto' }} key={field}>
+					<InputBox key={field}>
 						<TextField
 							label={field}
 							value={storage[field][0]}
@@ -89,7 +89,7 @@ const AdminEditGenerator = ({
 				<Typography variant="h2">{title}</Typography>
 				<form onSubmit={onSave}>
 					{inputs}
-					<InputBox sx={{ width: 'auto' }}>
+					<InputBox>
 						<Button type="submit">Сохранить</Button>
 					</InputBox>
 				</form>

@@ -6,7 +6,8 @@ export default {
 	}),
 
 	paper: ({ theme }) => ({
-		width: theme.spacing(48),
+		maxWidth: theme.spacing(48),
+		width: '100%',
 
 		padding: theme.spacing(4),
 		boxShadow: theme.boxShadow,

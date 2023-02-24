@@ -59,11 +59,7 @@ const AuthContainer = () => {
 		}
 	};
 
-	return (
-		<>
-			<AuthForm loading={loading} formSubmitHandler={formSubmitHandler} />
-		</>
-	);
+	return <AuthForm loading={loading} formSubmitHandler={formSubmitHandler} />;
 };
 
 export default AuthContainer;
