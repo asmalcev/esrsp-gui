@@ -1,7 +1,7 @@
 import { styled } from '@mui/system';
 import { useDevice } from '../../contexts/DeviceContext';
 
-const _Layout = styled('div')(({ theme }) => ({
+const _Layout = styled('div', { name: 'layout' })(({ theme }) => ({
 	display: 'flex',
 
 	paddingLeft: theme.spacing(22),
@@ -11,7 +11,7 @@ const _Layout = styled('div')(({ theme }) => ({
 	},
 }));
 
-const MobileLayout = styled('div')(({ theme }) => ({
+const MobileLayout = styled('div', { name: 'mobile-layout' })(({ theme }) => ({
 	display: 'flex',
 
 	'&': {
@@ -20,12 +20,13 @@ const MobileLayout = styled('div')(({ theme }) => ({
 }));
 
 const Layout = props => {
+	const { _ref, ...other } = props;
 	const { isSmallDevice } = useDevice();
 
 	if (isSmallDevice) {
-		return <MobileLayout {...props}/>;
+		return <MobileLayout ref={_ref} {...other}/>;
 	} else {
-		return <_Layout {...props}/>;
+		return <_Layout ref={_ref} {...other}/>;
 	}
 }
 

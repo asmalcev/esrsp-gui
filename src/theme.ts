@@ -84,7 +84,7 @@ export const theme = createTheme({
 	boxShadow: '0 0 5px rgba(0, 0, 0, 0.05)',
 	borderRadius: '4px',
 	layout: {
-		headerHeight: 7,
+		headerHeight: 8,
 		sidebarWidth: 28,
 	},
 

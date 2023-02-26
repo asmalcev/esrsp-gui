@@ -19,6 +19,7 @@ import { Header } from './common';
 import styles from './MainContainer.styles';
 
 const ContentContainer = styled('div')(styles.mobileContentContainer);
+const RelativeHeader = styled(Header)(styles.relativeHeader);
 
 const MainContainerMobile = ({
 	linksData,
@@ -59,11 +60,11 @@ const MainContainerMobile = ({
 	return (
 		<>
 			<Drawer open={isMenuOpen} onClose={onMenuToggle}>
-				<Header>
+				<RelativeHeader>
 					<IconButton onClick={onMenuToggle}>
 						<Icon color="secondary">menu</Icon>
 					</IconButton>
-				</Header>
+				</RelativeHeader>
 				<Stack
 					flexDirection="column"
 					justifyContent="space-between"

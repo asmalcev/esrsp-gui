@@ -11,8 +11,8 @@ import styles from './ScheduleView.styles';
 import { ScheduleData } from './scheduleData.type';
 import { compareDates } from '../../utils';
 
-const DaysContainer = styled('div')(styles.daysContainer);
-const DatePickerContainer = styled('div')(styles.datePickerContainer);
+const DaysContainer = styled('div', { name: 'days-container' })(styles.daysContainer);
+const DatePickerContainer = styled('div', { name: 'date-picker-container' })(styles.datePickerContainer);
 
 const ScheduleView = ({
 	scheduleData,
@@ -64,6 +64,7 @@ const ScheduleView = ({
 	 * and handlerLoader updates with every rerender
 	 */
 	useEffect(() => {
+		console.log(scrollChild);
 		const scrollArea = scrollChild.current.parentNode;
 
 		loaderObserver.current = new IntersectionObserver(
@@ -121,7 +122,7 @@ const ScheduleView = ({
 	));
 
 	return (
-		<Layout ref={scrollChild}>
+		<Layout _ref={scrollChild}>
 			<DaysContainer>
 				<SkeletonEventCard customRef={upperLoader} data-loader="upper" />
 				{days}

@@ -1,6 +1,7 @@
 export default {
 	daysContainer: ({ theme }) => ({
-		width: theme.spacing(54),
+		width: '100%',
+		maxWidth: theme.spacing(54),
 	}),
 
 	datePickerContainer: ({ theme }) => ({
