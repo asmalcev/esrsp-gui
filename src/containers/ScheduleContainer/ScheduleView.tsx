@@ -110,20 +110,20 @@ const ScheduleView = ({
 		};
 	});
 
-	useEffect(() => {
-		setPlace(
-			'header',
-			<DatePicker
-				label="Перейти к дате"
-				onChangeHandler={onDateChange}
-				stdValue={currentDate}
-			/>,
-		);
+	// useEffect(() => {
+	// 	setPlace(
+	// 		'header',
+	// 		<DatePicker
+	// 			label="Перейти к дате"
+	// 			onChangeHandler={onDateChange}
+	// 			stdValue={currentDate}
+	// 		/>,
+	// 	);
 
-		return () => {
-			setPlace('header', null);
-		};
-	}, []);
+	// 	return () => {
+	// 		setPlace('header', null);
+	// 	};
+	// }, []);
 
 	const days = scheduleData.map((day, index) => (
 		<ScheduleDay
