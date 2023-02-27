@@ -5,6 +5,8 @@ export default {
 		maxWidth: theme.spacing(25),
 		backgroundColor: theme.palette.primary.main,
 
+		fontSize: '0.8rem',
+
 		'&': {
 			overflow: 'hidden',
 			position: 'sticky',

@@ -122,7 +122,7 @@ const ScheduleView = ({
 
 		return () => {
 			setPlace('header', null);
-		}
+		};
 	}, []);
 
 	const days = scheduleData.map((day, index) => (

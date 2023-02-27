@@ -8,7 +8,12 @@ import {
 } from '../utils';
 
 export type RecordContext = {
-	setRecord: (key: string, value: unknown[]) => void;
+	setRecord: (
+		key: string,
+		value: unknown[],
+		saveInStorage: boolean,
+		storage: 'session' | 'local',
+	) => void;
 	getRecord: (key: string) => unknown;
 };
 

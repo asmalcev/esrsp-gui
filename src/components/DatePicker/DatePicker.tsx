@@ -82,8 +82,8 @@ const DatePicker = ({
 			onKeyDown={onInputKeyDown}
 			onMouseDown={onInputMouseDown}
 			onContextMenu={onInputContextMenu}
-			sx={{ width: 120 }}
-			size="small"
+			sx={isSmallDevice && { width: 120 }}
+			size={isSmallDevice && 'small'}
 		/>
 	);
 
