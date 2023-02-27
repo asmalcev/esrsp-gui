@@ -13,6 +13,7 @@ export default {
 	appBar: ({ theme }) => ({
 		gridColumn: '1 / 14',
 
+		height: theme.spacing(theme.layout.headerHeight),
 		padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
 		boxShadow: 'none',
 
@@ -61,9 +62,9 @@ export default {
 		boxShadow: `inset ${theme.boxShadow}`,
 	}),
 
-	relativeHeader: ({theme}) => ({
+	relativeHeader: ({ theme }) => ({
 		'&': {
 			position: 'relative',
 		},
-	})
+	}),
 };

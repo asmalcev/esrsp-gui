@@ -19,15 +19,15 @@ const MobileLayout = styled('div', { name: 'mobile-layout' })(({ theme }) => ({
 	},
 }));
 
-const Layout = props => {
+const Layout = (props) => {
 	const { _ref, ...other } = props;
 	const { isSmallDevice } = useDevice();
 
 	if (isSmallDevice) {
-		return <MobileLayout ref={_ref} {...other}/>;
+		return <MobileLayout ref={_ref} {...other} />;
 	} else {
-		return <_Layout ref={_ref} {...other}/>;
+		return <_Layout ref={_ref} {...other} />;
 	}
-}
+};
 
 export default Layout;

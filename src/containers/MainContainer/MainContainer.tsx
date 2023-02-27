@@ -25,7 +25,7 @@ const MainContainer = ({ children }) => {
 
 	const visitedGroups = getRecord(
 		localStorageKeys.GroupContainer.VisitedGroups,
-	);
+	) as LinkData[];
 	if (visitedGroups) {
 		for (const group of visitedGroups) {
 			teacherLinksData.push({

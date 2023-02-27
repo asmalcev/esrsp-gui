@@ -9,6 +9,7 @@ import { DeviceContextProdiver } from '../src/contexts/DeviceContext';
 import { RecordContextProvider } from '../src/contexts/RecordContext';
 import { ReloadContextProvider } from '../src/contexts/ReloadContext';
 import { SnackbarProvider } from 'notistack';
+import { PlaceContextProvider } from '../src/contexts/PlaceContext';
 
 const ESRSPGUI = ({ Component, pageProps }: AppProps) => (
 	<ThemeProvider theme={theme}>
@@ -21,7 +22,9 @@ const ESRSPGUI = ({ Component, pageProps }: AppProps) => (
 							autoHideDuration={3000}
 							preventDuplicate={true}
 						>
-							<Component {...pageProps} />
+							<PlaceContextProvider>
+								<Component {...pageProps} />
+							</PlaceContextProvider>
 						</SnackbarProvider>
 					</ReloadContextProvider>
 				</RecordContextProvider>

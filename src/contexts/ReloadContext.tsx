@@ -1,11 +1,11 @@
 import { createContext, useState, useContext } from 'react';
 
 export type ReloadContext = {
-	reload: () => {};
+	reload: () => void;
 	_: number;
 };
 
-export const ReloadContext = createContext({
+export const ReloadContext = createContext<ReloadContext>({
 	reload: () => {},
 	_: 1,
 });

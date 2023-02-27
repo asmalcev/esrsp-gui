@@ -1,14 +1,10 @@
-import {
-	useState,
-	createElement,
-	FunctionComponent,
-	ComponentClass,
-} from 'react';
+import { useState } from 'react';
 
 import { styled, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useDevice } from '../../contexts/DeviceContext';
 
 import ru_locale from 'dayjs/locale/ru';
 
@@ -34,6 +30,7 @@ const DatePicker = ({
 	helperText,
 	onChangeHandler,
 }: DatePickerProps) => {
+	const { isSmallDevice } = useDevice();
 	const [value, setValue] = useState<Date | string | number>(
 		stdValue || new Date(),
 	);
@@ -85,13 +82,15 @@ const DatePicker = ({
 			onKeyDown={onInputKeyDown}
 			onMouseDown={onInputMouseDown}
 			onContextMenu={onInputContextMenu}
+			sx={{ width: 120 }}
+			size="small"
 		/>
 	);
 
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs} locale={ru_locale}>
 			<StyledMuiDatePicker
-				label={label || 'Выберите дату'}
+				label={label}
 				mask={mask || '__.__.____'}
 				value={value}
 				onChange={onChange}

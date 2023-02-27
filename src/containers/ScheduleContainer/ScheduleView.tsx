@@ -10,9 +10,15 @@ import Layout from '../Layout';
 import styles from './ScheduleView.styles';
 import { ScheduleData } from './scheduleData.type';
 import { compareDates } from '../../utils';
+import { usePlaces } from '../../contexts/PlaceContext';
+import { useDevice } from '../../contexts/DeviceContext';
 
-const DaysContainer = styled('div', { name: 'days-container' })(styles.daysContainer);
-const DatePickerContainer = styled('div', { name: 'date-picker-container' })(styles.datePickerContainer);
+const DaysContainer = styled('div', { name: 'days-container' })(
+	styles.daysContainer,
+);
+const DatePickerContainer = styled('div', { name: 'date-picker-container' })(
+	styles.datePickerContainer,
+);
 
 const ScheduleView = ({
 	scheduleData,
@@ -27,6 +33,9 @@ const ScheduleView = ({
 	updateCurrentDate: Function;
 	currentDate: Date;
 }) => {
+	const { isSmallDevice } = useDevice();
+	const { setPlace } = usePlaces();
+
 	/**
 	 * useRef for HTML Elements
 	 */
@@ -64,7 +73,6 @@ const ScheduleView = ({
 	 * and handlerLoader updates with every rerender
 	 */
 	useEffect(() => {
-		console.log(scrollChild);
 		const scrollArea = scrollChild.current.parentNode;
 
 		loaderObserver.current = new IntersectionObserver(
@@ -102,6 +110,21 @@ const ScheduleView = ({
 		};
 	});
 
+	useEffect(() => {
+		setPlace(
+			'header',
+			<DatePicker
+				label="Перейти к дате"
+				onChangeHandler={onDateChange}
+				stdValue={currentDate}
+			/>,
+		);
+
+		return () => {
+			setPlace('header', null);
+		}
+	}, []);
+
 	const days = scheduleData.map((day, index) => (
 		<ScheduleDay
 			key={day.date.jsdate.getTime()}
@@ -129,14 +152,16 @@ const ScheduleView = ({
 				<SkeletonEventCard customRef={lowerLoader} data-loader="lower" />
 			</DaysContainer>
 
-			<DatePickerContainer>
-				<DatePicker
-					label="Перейти к дате"
-					helperText="Выберете дату, чтобы перейти к ней в расписании"
-					onChangeHandler={onDateChange}
-					stdValue={currentDate}
-				/>
-			</DatePickerContainer>
+			{!isSmallDevice && (
+				<DatePickerContainer>
+					<DatePicker
+						label="Перейти к дате"
+						helperText="Выберете дату, чтобы перейти к ней в расписании"
+						onChangeHandler={onDateChange}
+						stdValue={currentDate}
+					/>
+				</DatePickerContainer>
+			)}
 		</Layout>
 	);
 };

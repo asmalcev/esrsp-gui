@@ -13,6 +13,7 @@ import { useState } from 'react';
 import Footer from '../../common/Footer';
 import { NextLinkComposed } from '../../components/NextLinkCompose';
 import UserInfo from '../../components/UserInfo';
+import { usePlaces } from '../../contexts/PlaceContext';
 import { LinkData } from '../../links';
 import { Header } from './common';
 
@@ -28,6 +29,7 @@ const MainContainerMobile = ({
 	linksData: LinkData[];
 	children: any;
 }) => {
+	const { places } = usePlaces();
 	const router = useRouter();
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -79,6 +81,7 @@ const MainContainerMobile = ({
 				<IconButton onClick={onMenuToggle}>
 					<Icon color="secondary">menu</Icon>
 				</IconButton>
+				{places?.header}
 			</Header>
 			<ContentContainer className="styled-scroll">{children}</ContentContainer>
 		</>

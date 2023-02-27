@@ -12,7 +12,7 @@ export type RecordContext = {
 	getRecord: (key: string) => unknown;
 };
 
-export const RecordContext = createContext({
+export const RecordContext = createContext<RecordContext>({
 	getRecord: (key: string) => null,
 	setRecord: (
 		key: string,
