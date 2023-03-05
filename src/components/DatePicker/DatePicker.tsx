@@ -38,7 +38,8 @@ const DatePicker = ({
 
 	const onChange = (newValue) => {
 		setValue(newValue);
-		onChangeHandler && onChangeHandler(newValue);
+		setOpen(false);
+		onChangeHandler && onChangeHandler(newValue?.$d);
 	};
 
 	/**

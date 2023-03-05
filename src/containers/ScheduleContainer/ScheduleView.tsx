@@ -63,8 +63,10 @@ const ScheduleView = ({
 	 * date picker change handler
 	 */
 	const onDateChange = (value) => {
-		updateCurrentDate(value?.$d);
-		setScrollTargetType('today');
+		if (!compareDates(currentDate, value)) {
+			updateCurrentDate(value);
+			setScrollTargetType('today');
+		}
 	};
 
 	/**
@@ -110,20 +112,20 @@ const ScheduleView = ({
 		};
 	});
 
-	// useEffect(() => {
-	// 	setPlace(
-	// 		'header',
-	// 		<DatePicker
-	// 			label="Перейти к дате"
-	// 			onChangeHandler={onDateChange}
-	// 			stdValue={currentDate}
-	// 		/>,
-	// 	);
+	useEffect(() => {
+		setPlace(
+			'header',
+			<DatePicker
+				label="Перейти к дате"
+				onChangeHandler={onDateChange}
+				stdValue={currentDate}
+			/>,
+		);
 
-	// 	return () => {
-	// 		setPlace('header', null);
-	// 	};
-	// }, []);
+		return () => {
+			setPlace('header', null);
+		};
+	}, []);
 
 	const days = scheduleData.map((day, index) => (
 		<ScheduleDay

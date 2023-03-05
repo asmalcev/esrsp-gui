@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { Stack } from '@mui/material';
 import Layout from '../Layout';
@@ -103,15 +103,20 @@ const Schedule = ({ scheduleData }: { scheduleData: TimedLesson[] }) => {
 		updateData(scheduleToData(scheduleData, oddMonday));
 	};
 
-	return (
-		<ScheduleView
-			scheduleData={data}
-			currentIndex={currentIndex.current}
-			handleLoader={handleLoader}
-			updateCurrentDate={onCurrentDateUpdate}
-			currentDate={currentDate.current}
-		/>
+	const MemoizedScheduleView = useMemo(
+		() => (
+			<ScheduleView
+				scheduleData={data}
+				currentIndex={currentIndex.current}
+				handleLoader={handleLoader}
+				updateCurrentDate={onCurrentDateUpdate}
+				currentDate={currentDate.current}
+			/>
+		),
+		[currentDate.current, currentIndex.current, data.length],
 	);
+
+	return MemoizedScheduleView;
 };
 
 export default Schedule;

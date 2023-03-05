@@ -106,6 +106,9 @@ const getLocalStorage = (key: string, standardValue: string) =>
 const setLocalStorage = (key: string, value: string) =>
 	window.localStorage.setItem(key, value);
 
+/**
+ * @returns {boolean} is date1 the same day as date2
+ */
 const compareDates = (date1: Date, date2: Date) => {
 	return (
 		date1.getFullYear() === date2.getFullYear() &&
