@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import Button from '../../common/Button';
@@ -7,22 +7,29 @@ import TextField from '../../common/TextField';
 import { WideLayout } from '../Layout';
 
 export type AdminEditType = {
-	type: 'string';
+	type: 'string' | 'generate';
 	disabled?: boolean;
 	validate?: (value) => { isOk: boolean; error: string };
 	prepare?: (value) => any;
+	generate?: (...props) => Promise<any>;
+	generateButtonText?: string,
+	inputType?: string;
+};
+
+export type AdminEditGeneratorType = {
+	title: string;
+	fields: Record<string, AdminEditType>;
+	fetchUrl: string;
+	hideSave?: boolean;
 };
 
 const AdminEditGenerator = ({
 	title,
 	fields,
 	fetchUrl,
-}: {
-	title: string;
-	fields: Record<string, AdminEditType>;
-	fetchUrl: string;
-}) => {
-	return ({ data }: { data }) => {
+	hideSave,
+}: AdminEditGeneratorType) => {
+	return ({ data }) => {
 		const storage = {};
 
 		for (const field of Object.keys(fields)) {
@@ -69,6 +76,13 @@ const AdminEditGenerator = ({
 			}
 		};
 
+		const onGenerate = async (field, e) => {
+			e.preventDefault();
+
+			const value = await fields[field]?.generate(data);
+			storage[field][1](value);
+		}
+
 		const inputs = Object.keys(storage).map((field) => {
 			if (fields[field].type === 'string') {
 				return (
@@ -78,7 +92,17 @@ const AdminEditGenerator = ({
 							value={storage[field][0]}
 							disabled={fields[field].disabled}
 							onChange={storage[field][1]}
+							type={fields[field].inputType || 'text'}
 						/>
+					</InputBox>
+				);
+			} else if (fields[field].type === 'generate') {
+				const onGenerateHandler = onGenerate.bind(null, field);
+
+				return (
+					<InputBox key={field}>
+						<Paper variant="outlined" sx={{ p: 2 }}>{field}: {storage[field][0] || 'не сгенерированно'}</Paper>
+						<Button onClick={onGenerateHandler}>{fields[field].generateButtonText}</Button>
 					</InputBox>
 				);
 			}
@@ -89,9 +113,11 @@ const AdminEditGenerator = ({
 				<Typography variant="h2">{title}</Typography>
 				<form onSubmit={onSave}>
 					{inputs}
-					<InputBox>
-						<Button type="submit">Сохранить</Button>
-					</InputBox>
+					{!hideSave && (
+						<InputBox>
+							<Button type="submit">Сохранить</Button>
+						</InputBox>
+					)}
 				</form>
 			</WideLayout>
 		);

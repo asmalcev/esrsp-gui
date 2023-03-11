@@ -35,11 +35,11 @@ export const adminLinksData: LinkData[] = [
 		href: '/admin/upload',
 		compact: true,
 	},
-	// {
-	// 	text: 'Пользователи',
-	// 	href: '/admin/users',
-	// 	compact: true,
-	// },
+	{
+		text: 'Пользователи',
+		href: '/admin/users',
+		compact: true,
+	},
 	{
 		text: 'Дисциплины',
 		href: '/admin/discipline',
