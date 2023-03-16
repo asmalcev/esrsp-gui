@@ -6,8 +6,10 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
+		"start": "next start",
+		"prod": "ESRSP_PROD=1 next start",
 		"format": "prettier --write \"(src|pages)/**/*.(ts|tsx|js)\"",
-		"dev:server": "npm run --prefix ../esrsp-backend start:dev"
+		"dev:server": "npm run --prefix ../esrsp-backend start:docker"
 	},
 	"repository": {
 		"type": "git",

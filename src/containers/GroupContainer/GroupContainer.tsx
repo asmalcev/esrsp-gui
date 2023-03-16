@@ -42,6 +42,7 @@ const GroupContainer = ({
 	};
 
 	useEffect(() => {
+		// @ts-ignore
 		const currentRecord: Array<string[]> =
 			getRecord(localStorageKeys.GroupContainer.VisitedGroups) || [];
 		const nextRecord = [];
