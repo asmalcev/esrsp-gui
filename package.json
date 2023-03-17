@@ -31,6 +31,7 @@
 		"datejs": "^1.0.0-rc3",
 		"dayjs": "^1.11.1",
 		"dotenv": "^16.0.1",
+		"http-proxy-middleware": "^2.0.6",
 		"jsonwebtoken": "^8.5.1",
 		"next": "^12.1.5",
 		"notistack": "^2.0.8",
