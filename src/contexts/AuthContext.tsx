@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import AuthContainer from '../containers/AuthContainer';
 
 export enum UserRole {
@@ -48,11 +48,10 @@ export const AuthContextProvider = (props) => {
 		setUser(user);
 	};
 
-	const logout = async () => {
-		await fetch('/api/auth/logout', {
+	const logout = () => {
+		fetch('/api/auth/logout', {
 			method: 'POST',
 		});
-
 		updateUser(defaultValues.user);
 	};
 
