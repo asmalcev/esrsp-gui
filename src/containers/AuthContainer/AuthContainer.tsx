@@ -18,9 +18,11 @@ const AuthContainer = () => {
 	 */
 	useEffect(() => {
 		const checkSession = async () => {
-			const resp = await fetch('/api/auth/');
+			const resp = await fetch('/api/auth/check', {
+				method: 'POST',
+			});
 
-			if (resp.status === 200) {
+			if (resp.status === 201) {
 				const user: UserDto = await resp.json();
 
 				updateUser({
