@@ -2,19 +2,10 @@ import { Typography, Button, Stack } from '@mui/material';
 import { useAuth } from '../../contexts/AuthContext';
 
 const UserInfo = () => {
-	const { user, updateUser } = useAuth();
+	const { user, logout } = useAuth();
 
 	const onClick = () => {
-		const logout = async () => {
-			await fetch('/api/auth/logout', {
-				method: 'POST',
-			});
-		};
-
 		logout();
-		updateUser({
-			loggedin: false,
-		});
 	};
 
 	return (

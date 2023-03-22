@@ -23,6 +23,7 @@ export type AuthContext = {
 	user: User | null;
 
 	updateUser: (n: User) => void;
+	logout: () => void;
 };
 
 const defaultValues = {
@@ -35,6 +36,7 @@ export const AuthContext = createContext<AuthContext>({
 	user: defaultValues.user,
 
 	updateUser: () => {},
+	logout: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -46,9 +48,18 @@ export const AuthContextProvider = (props) => {
 		setUser(user);
 	};
 
+	const logout = async () => {
+		await fetch('/api/auth/logout', {
+			method: 'POST',
+		});
+
+		updateUser(defaultValues.user);
+	};
+
 	const contextObj = {
 		user,
 		updateUser,
+		logout,
 	};
 
 	return (
